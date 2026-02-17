@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generative UI Platform — Syntux + Tambo + MCP Ecosystem</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #111114;
+    --surface-raised: #18181c;
+    --border: #2a2a30;
+    --border-accent: #3d3d45;
+    --text: #e8e8ec;
+    --text-muted: #8a8a95;
+    --text-dim: #55555f;
+    --accent-blue: #4e8cff;
+    --accent-cyan: #22d3ee;
+    --accent-purple: #a78bfa;
+    --accent-green: #34d399;
+    --accent-orange: #fb923c;
+    --accent-rose: #fb7185;
+    --accent-yellow: #fbbf24;
+    --glow-blue: rgba(78, 140, 255, 0.15);
+    --glow-cyan: rgba(34, 211, 238, 0.12);
+    --glow-purple: rgba(167, 139, 250, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-cyan);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section headers */
+  .section {
+    padding: 60px 0;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .section h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 32px;
+  }
+
+  /* Comparison Table */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .compare-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .compare-card:hover { border-color: var(--border-accent); }
+
+  .compare-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+
+  .compare-card.syntux::before { background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow)); }
+  .compare-card.tambo::before { background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); }
+
+  .compare-card h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .compare-card .stars {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  .compare-card .tagline {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .trait-list { list-style: none; }
+
+  .trait-list li {
+    font-size: 13px;
+    padding: 5px 0;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .trait-list li .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .syntux .dot { background: var(--accent-orange); }
+  .tambo .dot { background: var(--accent-cyan); }
+
+  /* Versus badge */
+  .vs-row {
+    text-align: center;
+    margin: -8px 0 16px;
+  }
+
+  .vs-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 4px 16px;
+    border-radius: 20px;
+    background: var(--surface);
+  }
+
+  /* Architecture Diagram */
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .arch-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, var(--glow-purple) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, var(--glow-cyan) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .arch-layers {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .arch-layer {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    background: rgba(17, 17, 20, 0.7);
+    backdrop-filter: blur(8px);
+  }
+
+  .arch-layer-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .arch-layer-header .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .badge-user { background: rgba(78, 140, 255, 0.15); color: var(--accent-blue); }
+  .badge-agent { background: rgba(167, 139, 250, 0.15); color: var(--accent-purple); }
+  .badge-compose { background: rgba(251, 146, 60, 0.15); color: var(--accent-orange); }
+  .badge-theme { background: rgba(52, 211, 153, 0.15); color: var(--accent-green); }
+  .badge-mcp { background: rgba(34, 211, 238, 0.15); color: var(--accent-cyan); }
+
+  .arch-layer-header h4 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .arch-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .arch-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--surface-raised);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .arch-arrow {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 18px;
+    line-height: 1;
+    padding: 4px 0;
+  }
+
+  /* Capabilities Grid */
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+  }
+
+  .cap-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .cap-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+  }
+
+  .cap-card .cap-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .cap-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .cap-card .cap-shot {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent-green);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+
+  .cap-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .cap-card .tech-stack {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .cap-card .tech-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .tech-tag.tambo { border-color: rgba(34, 211, 238, 0.3); color: var(--accent-cyan); }
+  .tech-tag.syntux { border-color: rgba(251, 146, 60, 0.3); color: var(--accent-orange); }
+  .tech-tag.mcp { border-color: rgba(167, 139, 250, 0.3); color: var(--accent-purple); }
+  .tech-tag.theme { border-color: rgba(52, 211, 153, 0.3); color: var(--accent-green); }
+
+  /* MCP Ecosystem */
+  .mcp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .mcp-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    transition: border-color 0.3s;
+  }
+
+  .mcp-item:hover { border-color: var(--accent-purple); }
+
+  .mcp-item h5 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .mcp-item .mcp-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+
+  .mcp-item .mcp-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  /* Theming Section */
+  .theme-flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .theme-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+
+  .theme-step .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(52, 211, 153, 0.15);
+    position: absolute;
+    top: 12px;
+    right: 16px;
+  }
+
+  .theme-step h5 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+
+  .theme-step p {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: left;
+    font-weight: 300;
+  }
+
+  .theme-step .theme-tools {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .theme-step .theme-tool {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: rgba(52, 211, 153, 0.08);
+    color: var(--accent-green);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+  }
+
+  /* Growth / ceiling */
+  .growth-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .growth-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .growth-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .growth-card ul {
+    list-style: none;
+  }
+
+  .growth-card ul li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 4px 0;
+    font-weight: 300;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .growth-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 60px 0 40px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .comparison, .growth-cols { grid-template-columns: 1fr; }
+    .theme-flow { grid-template-columns: 1fr; }
+    .cap-grid { grid-template-columns: 1fr; }
+    .mcp-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-label">Architecture Reference</div>
+    <h1>Generative UI Platform<br>Syntux + Tambo + <em>MCP Ecosystem</em></h1>
+    <p class="hero-sub">What can be built when you combine declarative layout composition, agent-orchestrated UI rendering, 25+ MCP component servers, and AI-driven theming — in a single shot.</p>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="section">
+    <div class="section-label">01 — The Two Repos</div>
+    <h2>How They Differ</h2>
+
+    <div class="comparison">
+      <div class="compare-card syntux">
+        <h3>Syntux</h3>
+        <div class="stars">★ 15 · v0.1.0 · puffinsoft</div>
+        <div class="tagline">Layout composition engine — "arrange my components smartly"</div>
+        <ul class="trait-list">
+          <li><span class="dot"></span>Generates a React Interface Schema (AST) from your component palette + data</li>
+          <li><span class="dot"></span>LLM never sees source code — only auto-generated docs (llmContext via Babel)</li>
+          <li><span class="dot"></span>Output is cacheable & reusable with different data values</li>
+          <li><span class="dot"></span>Stateless by design — no dynamic state generation</li>
+          <li><span class="dot"></span>Works with allowedComponents constraint — enforces design consistency</li>
+          <li><span class="dot"></span>Uses Vercel AI SDK for LLM provider abstraction</li>
+          <li><span class="dot"></span>Lightweight: compose once, hydrate many times</li>
+        </ul>
+      </div>
+
+      <div class="compare-card tambo">
+        <h3>Tambo</h3>
+        <div class="stars">★ 9.1k · v1.0 · tambo-ai · SOC 2 + HIPAA</div>
+        <div class="tagline">Full-stack agent runtime — "pick, stream, render, interact"</div>
+        <ul class="trait-list">
+          <li><span class="dot"></span>Agent included — runs the full LLM conversation loop for you</li>
+          <li><span class="dot"></span>Component registration via Zod schemas → become LLM tool definitions</li>
+          <li><span class="dot"></span>Streaming props in real-time as LLM generates them</li>
+          <li><span class="dot"></span>Generative + Interactable components (persist & refine via conversation)</li>
+          <li><span class="dot"></span>Built-in MCP support (tools, prompts, elicitations, sampling)</li>
+          <li><span class="dot"></span>Local browser-side tools (DOM, authenticated fetches, React state)</li>
+          <li><span class="dot"></span>Self-hostable (Docker) or Tambo Cloud hosted backend</li>
+          <li><span class="dot"></span>Multi-LLM: OpenAI, Anthropic, Gemini, Mistral, any OpenAI-compatible</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="vs-row">
+      <span class="vs-badge">SYNTUX = WHAT TO SHOW &nbsp;&nbsp;·&nbsp;&nbsp; TAMBO = HOW TO ORCHESTRATE</span>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="section">
+    <div class="section-label">02 — Combined Architecture</div>
+    <h2>How They Work Together</h2>
+
+    <div class="arch-diagram">
+      <div class="arch-layers">
+
+        <div class="arch-layer">
+          <div class="arch-layer-header">
+            <span class="badge badge-user">User Layer</span>
+            <h4>Natural Language Input</h4>
+          </div>
+          <div class="arch-chips">
+            <span class="arch-chip">"Build me a sales dashboard"</span>
+            <span class="arch-chip">"Create a learning page for React hooks"</span>
+            <span class="arch-chip">"Theme it in our brand colors, dark mode"</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-header">
+            <span class="badge badge-agent">Agent</span>
+            <h4>Tambo — Orchestration & Streaming</h4>
+          </div>
+          <div class="arch-chips">
+            <span class="arch-chip">LLM Conversation Loop</span>
+            <span class="arch-chip">Component Selection (Zod)</span>
+            <span class="arch-chip">Prop Streaming</span>
+            <span class="arch-chip">MCP Tool Discovery</span>
+            <span class="arch-chip">Conversation State</span>
+            <span class="arch-chip">Local Browser Tools</span>
+            <span class="arch-chip">Context Helpers</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-header">
+            <span class="badge badge-compose">Composition</span>
+            <h4>Syntux — Layout & Schema Generation</h4>
+          </div>
+          <div class="arch-chips">
+            <span class="arch-chip">React Interface Schema (AST)</span>
+            <span class="arch-chip">allowedComponents constraint</span>
+            <span class="arch-chip">Cacheable layouts</span>
+            <span class="arch-chip">llmContext auto-docs (Babel)</span>
+            <span class="arch-chip">GeneratedPage / GeneratedContent</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-header">
+            <span class="badge badge-theme">Theming</span>
+            <h4>Theme Intelligence Layer</h4>
+          </div>
+          <div class="arch-chips">
+            <span class="arch-chip">Tailwind MCP (tokens)</span>
+            <span class="arch-chip">Flowbite MCP (themes)</span>
+            <span class="arch-chip">DaisyUI Blueprint</span>
+            <span class="arch-chip">Tailwind Gemini (AI themes)</span>
+            <span class="arch-chip">CSS @theme variables</span>
+            <span class="arch-chip">Brand color → full palette</span>
+          </div>
+        </div>
+
+        <div class="arch-arrow">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-header">
+            <span class="badge badge-mcp">MCP</span>
+            <h4>Component Supply Chain — 25+ MCP Servers</h4>
+          </div>
+          <div class="arch-chips">
+            <span class="arch-chip">shadcn/ui</span>
+            <span class="arch-chip">Chakra UI</span>
+            <span class="arch-chip">21st.dev Magic</span>
+            <span class="arch-chip">Magic UI</span>
+            <span class="arch-chip">ReactBits (135+)</span>
+            <span class="arch-chip">Aceternity UI</span>
+            <span class="arch-chip">Flowbite</span>
+            <span class="arch-chip">DaisyUI</span>
+            <span class="arch-chip">its-just-ui</span>
+            <span class="arch-chip">MCP-UI (protocol)</span>
+            <span class="arch-chip">Figma → React</span>
+            <span class="arch-chip">use-mcp (Cloudflare)</span>
+            <span class="arch-chip">+ Data MCPs (Linear, Slack, DB)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SINGLE-SHOT CAPABILITIES -->
+  <section class="section">
+    <div class="section-label">03 — Single-Shot Capabilities</div>
+    <h2>What It Can Build in One Prompt</h2>
+
+    <div class="cap-grid">
+
+      <div class="cap-card">
+        <div class="cap-icon">📊</div>
+        <div class="cap-shot">Single Shot ✓</div>
+        <h4>Analytics Dashboards</h4>
+        <p>"Show me sales by region with trends" → Tambo selects Chart + DataTable + KPI cards, Syntux composes the page layout (sidebar nav, grid of widgets), theme MCP applies brand tokens. Streamed live.</p>
+        <div class="tech-stack">
+          <span class="tech-tag tambo">tambo agent</span>
+          <span class="tech-tag syntux">syntux layout</span>
+          <span class="tech-tag mcp">recharts</span>
+          <span class="tech-tag mcp">shadcn/ui</span>
+          <span class="tech-tag theme">tailwind theme</span>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">📚</div>
+        <div class="cap-shot">Single Shot ✓</div>
+        <h4>Learning Pages & Tutorials</h4>
+        <p>"Create a lesson on React hooks with interactive examples" → Tambo generates CodePlayground, QuizCard, ProgressBar components. Syntux arranges them as a scrollable lesson with sidebar navigation. Theme adapts to educational/reading-friendly mode.</p>
+        <div class="tech-stack">
+          <span class="tech-tag tambo">tambo interactable</span>
+          <span class="tech-tag syntux">syntux GeneratedPage</span>
+          <span class="tech-tag mcp">magic-ui</span>
+          <span class="tech-tag theme">daisy blueprint</span>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🛒</div>
+        <div class="cap-shot">Single Shot + Iterative</div>
+        <h4>E-Commerce Product Pages</h4>
+        <p>"Show me laptops under $1500 with 16GB RAM" → renders ProductCards with filters, comparison table, and cart — all interactable. User refines conversationally: "sort by battery life" updates props via streaming.</p>
+        <div class="tech-stack">
+          <span class="tech-tag tambo">tambo withInteractable</span>
+          <span class="tech-tag mcp">shadcn/ui</span>
+          <span class="tech-tag mcp">local tools (fetch API)</span>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">📋</div>
+        <div class="cap-shot">Single Shot ✓</div>
+        <h4>Project Management Boards</h4>
+        <p>"Create a kanban board from our Linear tasks" → Tambo connects Linear MCP server, pulls tasks, renders KanbanBoard + TaskCards. Syntux composes the layout. Interactable so users drag-drop AND refine via chat.</p>
+        <div class="tech-stack">
+          <span class="tech-tag tambo">tambo MCP</span>
+          <span class="tech-tag mcp">linear MCP</span>
+          <span class="tech-tag syntux">syntux layout</span>
+          <span class="tech-tag theme">brand theme</span>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">📝</div>
+        <div class="cap-shot">Single Shot ✓</div>
+        <h4>Forms & Surveys</h4>
+        <p>"Build a user onboarding form with validation" → Agent selects Form, Input, Select, Stepper from shadcn/ui via MCP. Syntux assembles multi-step layout. Theme MCP applies brand styling. Local tools handle validation.</p>
+        <div class="tech-stack">
+          <span class="tech-tag tambo">tambo tools</span>
+          <span class="tech-tag mcp">shadcn MCP</span>
+          <span class="tech-tag syntux">syntux schema</span>
+          <span class="tech-tag theme">flowbite theme</span>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🗄️</div>
+        <div class="cap-shot">Single Shot ✓</div>
+        <h4>Database Schema Visualizers</h4>
+        <p>"Design a schema for a social media app" → renders ERD diagram, entity cards, relationship lines, SQL export. Already demonstrated in Tambo's showcase apps.</p>
+        <div class="tech-stack">
+          <span class="tech-tag tambo">tambo generative</span>
+          <span class="tech-tag mcp">db MCP</span>
+          <span class="tech-tag mcp">mermaid</span>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">🎨</div>
+        <div class="cap-shot">Single Shot ✓</div>
+        <h4>Landing Pages & Marketing</h4>
+        <p>"Build a SaaS landing page for our AI product in dark mode" → 21st.dev Magic generates hero + feature grid + testimonial + CTA. Syntux composes full-page layout. Tailwind theme MCP generates brand palette from one hex color.</p>
+        <div class="tech-stack">
+          <span class="tech-tag syntux">syntux full-page</span>
+          <span class="tech-tag mcp">21st.dev magic</span>
+          <span class="tech-tag mcp">reactbits animations</span>
+          <span class="tech-tag theme">tailwind-gemini</span>
+        </div>
+      </div>
+
+      <div class="cap-card">
+        <div class="cap-icon">💬</div>
+        <div class="cap-shot">Single Shot + Iterative</div>
+        <h4>Internal Tools & Admin Panels</h4>
+        <p>"Build an admin panel to manage users and permissions" → DataTable + RoleSelector + UserForm. Connected to database MCP for live data. Interactable components for CRUD operations. Theme-consistent with your design system.</p>
+        <div class="tech-stack">
+          <span class="tech-tag tambo">tambo full-stack</span>
+          <span class="tech-tag mcp">db MCP</span>
+          <span class="tech-tag mcp">chakra MCP</span>
+          <span class="tech-tag syntux">syntux layout</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MCP ECOSYSTEM -->
+  <section class="section">
+    <div class="section-label">04 — The MCP Supply Chain</div>
+    <h2>Available Component & Tool Servers</h2>
+
+    <div class="mcp-grid">
+      <div class="mcp-item">
+        <div class="mcp-type">Component Library</div>
+        <h5>shadcn/ui</h5>
+        <div class="mcp-desc">v4 components, blocks, demos. React/Svelte/Vue.</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Component Library</div>
+        <h5>Chakra UI</h5>
+        <div class="mcp-desc">Official MCP. @chakra-ui/react-mcp</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">AI Generation</div>
+        <h5>21st.dev Magic</h5>
+        <div class="mcp-desc">Generate components from natural language</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Component Library</div>
+        <h5>Magic UI</h5>
+        <div class="mcp-desc">Animated, design-engineered components</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Component Library</div>
+        <h5>ReactBits</h5>
+        <div class="mcp-desc">135+ animated components, caching, scoring</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Component Library</div>
+        <h5>Aceternity UI</h5>
+        <div class="mcp-desc">Via component harvester MCP server</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Theme + Components</div>
+        <h5>Flowbite</h5>
+        <div class="mcp-desc">Components + theme generation from brand color</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Theme + Components</div>
+        <h5>DaisyUI Blueprint</h5>
+        <div class="mcp-desc">Components + Figma-to-code + theme tokens</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Component Library</div>
+        <h5>its-just-ui</h5>
+        <div class="mcp-desc">Modern React component library + MCP</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Protocol</div>
+        <h5>MCP-UI</h5>
+        <div class="mcp-desc">Any MCP server returns interactive UI resources</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Theming</div>
+        <h5>Tailwind CSS MCP</h5>
+        <div class="mcp-desc">Utilities, colors, config, CSS→Tailwind conversion</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">AI Theming</div>
+        <h5>Tailwind Gemini</h5>
+        <div class="mcp-desc">AI-generated themes, palettes, design tokens</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Design Bridge</div>
+        <h5>Figma → React</h5>
+        <div class="mcp-desc">Convert Figma designs to React components</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Client Hook</div>
+        <h5>use-mcp (Cloudflare)</h5>
+        <div class="mcp-desc">3-line React hook to any remote MCP server</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Data Source</div>
+        <h5>Linear / Slack / DB</h5>
+        <div class="mcp-desc">Connect real data to UI generation pipeline</div>
+      </div>
+      <div class="mcp-item">
+        <div class="mcp-type">Code Context</div>
+        <h5>Context7</h5>
+        <div class="mcp-desc">Version-specific docs and code examples for any lib</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THEMING -->
+  <section class="section">
+    <div class="section-label">05 — Theming Intelligence</div>
+    <h2>Yes, Theming Can Be Built In</h2>
+
+    <p style="color: var(--text-muted); font-size: 14px; font-weight: 300; max-width: 700px; margin-bottom: 24px;">
+      Multiple MCP servers already handle theming. The pipeline: user provides a brand color (or even just a logo/screenshot) → the theme MCP generates a full design token system → Tailwind CSS v4 @theme variables propagate to every component → Syntux and Tambo render everything consistently.
+    </p>
+
+    <div class="theme-flow">
+      <div class="theme-step">
+        <div class="step-num">01</div>
+        <h5>Brand Input</h5>
+        <p>User provides one brand color, a Figma file, or says "modern dark SaaS theme." Agent routes to theme MCP.</p>
+        <div class="theme-tools">
+          <span class="theme-tool">Flowbite MCP</span>
+          <span class="theme-tool">Tailwind Gemini</span>
+          <span class="theme-tool">Figma MCP</span>
+        </div>
+      </div>
+
+      <div class="theme-step">
+        <div class="step-num">02</div>
+        <h5>Token Generation</h5>
+        <p>MCP generates full palette (9 shades), typography scale, spacing tokens, border radii, shadows. Outputs as Tailwind @theme CSS variables or config.</p>
+        <div class="theme-tools">
+          <span class="theme-tool">@theme { --color-* }</span>
+          <span class="theme-tool">CSS custom properties</span>
+          <span class="theme-tool">Dark mode variants</span>
+        </div>
+      </div>
+
+      <div class="theme-step">
+        <div class="step-num">03</div>
+        <h5>Propagation</h5>
+        <p>Tailwind v4 makes tokens available as CSS variables AND utility classes. Every component from every MCP server inherits the theme automatically. Syntux layouts and Tambo-rendered components all stay consistent.</p>
+        <div class="theme-tools">
+          <span class="theme-tool">bg-primary-500</span>
+          <span class="theme-tool">var(--color-primary)</span>
+          <span class="theme-tool">Runtime swappable</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROWTH & CEILING -->
+  <section class="section">
+    <div class="section-label">06 — Growth Ceiling & Realistic Limits</div>
+    <h2>Where This Tops Out</h2>
+
+    <div class="growth-cols">
+      <div class="growth-card">
+        <h4>🟢 What Works Today</h4>
+        <ul>
+          <li>Single-shot dashboards, forms, data viz, landing pages</li>
+          <li>Multi-component page composition with cached layouts</li>
+          <li>Real-time streaming of component props as LLM generates</li>
+          <li>MCP integration for data (Linear, Slack, databases)</li>
+          <li>Interactable components that persist & refine conversationally</li>
+          <li>Brand color → full theme pipeline via existing MCP servers</li>
+          <li>Dark/light mode switching via CSS variables at runtime</li>
+          <li>Component selection from 25+ libraries via MCP</li>
+          <li>Self-hostable end-to-end (Tambo Docker + MCP servers)</li>
+        </ul>
+      </div>
+
+      <div class="growth-card">
+        <h4>🟡 Current Limits & Growth Areas</h4>
+        <ul>
+          <li>Syntux is v0.1.0 — no stateful generation, no complex interactivity in layouts</li>
+          <li>Cross-MCP component mixing can have style conflicts (no universal adapter yet)</li>
+          <li>Complex multi-page apps still need manual wiring between generated pages</li>
+          <li>Real-time collaboration (multi-user on same generated UI) is not yet solved</li>
+          <li>LLM quality ceiling — very complex layouts may need 2-3 refinement turns</li>
+          <li>Theme MCP servers don't yet auto-detect existing design systems</li>
+          <li>No unified "component marketplace" protocol — each MCP has its own API shape</li>
+          <li>Animations/transitions between generated components are inconsistent</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Generated reference · Syntux + Tambo + MCP Ecosystem · February 2026
+  </div>
+
+</div>
+
+</body>
+</html>
