@@ -1,0 +1,13 @@
+{
+  "extends": "@generative-ui/typescript-config/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@generative-ui/themes": ["../themes/src"],
+      "@generative-ui/types": ["../types/src"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules"]
+}

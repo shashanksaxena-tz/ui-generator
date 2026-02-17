@@ -1,0 +1,27 @@
+{
+  "extends": "@generative-ui/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@generative-ui/ui": ["../../packages/ui/src"],
+      "@generative-ui/ui/*": ["../../packages/ui/src/*"],
+      "@generative-ui/themes": ["../../packages/themes/src"],
+      "@generative-ui/types": ["../../packages/types/src"],
+      "@generative-ui/agents": ["../../packages/agents/src"],
+      "@generative-ui/mcp": ["../../packages/mcp/src"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", ".next", "dist"]
+}

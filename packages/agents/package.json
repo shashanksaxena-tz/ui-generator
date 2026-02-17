@@ -1,0 +1,64 @@
+{
+  "name": "@generative-ui/agents",
+  "version": "1.0.0",
+  "description": "Agent Orchestrator for Generative UI Platform - Multi-agent coordination, workflow management, and MCP integration",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./orchestrator": {
+      "types": "./dist/orchestrator.d.ts",
+      "import": "./dist/orchestrator.mjs",
+      "require": "./dist/orchestrator.js"
+    },
+    "./memory": {
+      "types": "./dist/memory.d.ts",
+      "import": "./dist/memory.mjs",
+      "require": "./dist/memory.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.mjs",
+      "require": "./dist/tools/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.0",
+    "@ai-sdk/openai": "^1.0.0",
+    "@anthropic-ai/sdk": "^0.32.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "ai": "^4.0.22",
+    "chroma-js": "^3.0.0",
+    "openai": "^4.77.0",
+    "pino": "^9.0.0",
+    "pino-pretty": "^13.0.0",
+    "uuid": "^11.0.0",
+    "zod": "^3.24.1",
+    "zod-to-json-schema": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/chroma-js": "^2.4.0",
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^10.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  }
+}

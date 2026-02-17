@@ -1,0 +1,15 @@
+{
+  "extends": "./packages/typescript-config/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ui/*": ["./packages/ui/src/*"],
+      "@themes/*": ["./packages/themes/src/*"],
+      "@agents/*": ["./packages/agents/src/*"],
+      "@mcp/*": ["./packages/mcp/src/*"],
+      "@types/*": ["./packages/types/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next", "build"]
+}

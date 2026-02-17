@@ -1,0 +1,15 @@
+project_name: "Generative UI Platform"
+project_type: "web-app"
+project_level: 4
+output_folder: "docs"
+communication_language: "English"
+description: "End-to-end Generative UI Platform combining Syntux layout composition, Tambo agent orchestration, and MCP ecosystem for AI-driven UI generation"
+key_technologies:
+  - "Next.js 15"
+  - "TypeScript"
+  - "Tailwind CSS v4"
+  - "Tambo AI"
+  - "Syntux"
+  - "MCP Protocol"
+  - "shadcn/ui"
+  - "Vercel AI SDK"

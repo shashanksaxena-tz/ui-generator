@@ -1,0 +1,60 @@
+{
+  "name": "@generative-ui/themes",
+  "version": "1.0.0",
+  "description": "Theme System for Generative UI Platform - Comprehensive theming with color generation, typography, and CSS framework transformers",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./presets": {
+      "import": "./dist/presets/index.mjs",
+      "require": "./dist/presets/index.js",
+      "types": "./dist/presets/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "themes",
+    "design-system",
+    "colors",
+    "typography",
+    "tailwind",
+    "css-variables",
+    "wcag",
+    "accessibility",
+    "oklch"
+  ],
+  "author": "UI Generator Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ui-generator/ui-generator.git",
+    "directory": "packages/themes"
+  }
+}

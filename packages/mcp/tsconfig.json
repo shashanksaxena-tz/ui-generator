@@ -1,0 +1,5 @@
+{
+  "extends": "@generative-ui/typescript-config/base.json",
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules"]
+}

@@ -1,0 +1,151 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Colors */
+  --color-primary-50: var(--primary-50, #eff6ff);
+  --color-primary-100: var(--primary-100, #dbeafe);
+  --color-primary-200: var(--primary-200, #bfdbfe);
+  --color-primary-300: var(--primary-300, #93c5fd);
+  --color-primary-400: var(--primary-400, #60a5fa);
+  --color-primary-500: var(--primary-500, #3b82f6);
+  --color-primary-600: var(--primary-600, #2563eb);
+  --color-primary-700: var(--primary-700, #1d4ed8);
+  --color-primary-800: var(--primary-800, #1e40af);
+  --color-primary-900: var(--primary-900, #1e3a8a);
+  --color-primary-950: var(--primary-950, #172554);
+
+  --color-secondary-50: var(--secondary-50, #faf5ff);
+  --color-secondary-100: var(--secondary-100, #f3e8ff);
+  --color-secondary-200: var(--secondary-200, #e9d5ff);
+  --color-secondary-300: var(--secondary-300, #d8b4fe);
+  --color-secondary-400: var(--secondary-400, #c084fc);
+  --color-secondary-500: var(--secondary-500, #a855f7);
+  --color-secondary-600: var(--secondary-600, #9333ea);
+  --color-secondary-700: var(--secondary-700, #7e22ce);
+  --color-secondary-800: var(--secondary-800, #6b21a8);
+  --color-secondary-900: var(--secondary-900, #581c87);
+  --color-secondary-950: var(--secondary-950, #3b0764);
+
+  --color-accent-50: var(--accent-50, #ecfdf5);
+  --color-accent-100: var(--accent-100, #d1fae5);
+  --color-accent-200: var(--accent-200, #a7f3d0);
+  --color-accent-300: var(--accent-300, #6ee7b7);
+  --color-accent-400: var(--accent-400, #34d399);
+  --color-accent-500: var(--accent-500, #10b981);
+  --color-accent-600: var(--accent-600, #059669);
+  --color-accent-700: var(--accent-700, #047857);
+  --color-accent-800: var(--accent-800, #065f46);
+  --color-accent-900: var(--accent-900, #064e3b);
+  --color-accent-950: var(--accent-950, #022c22);
+
+  --color-muted-50: var(--muted-50, #f8fafc);
+  --color-muted-100: var(--muted-100, #f1f5f9);
+  --color-muted-200: var(--muted-200, #e2e8f0);
+  --color-muted-300: var(--muted-300, #cbd5e1);
+  --color-muted-400: var(--muted-400, #94a3b8);
+  --color-muted-500: var(--muted-500, #64748b);
+  --color-muted-600: var(--muted-600, #475569);
+  --color-muted-700: var(--muted-700, #334155);
+  --color-muted-800: var(--muted-800, #1e293b);
+  --color-muted-900: var(--muted-900, #0f172a);
+  --color-muted-950: var(--muted-950, #020617);
+
+  --color-destructive-50: var(--destructive-50, #fef2f2);
+  --color-destructive-100: var(--destructive-100, #fee2e2);
+  --color-destructive-200: var(--destructive-200, #fecaca);
+  --color-destructive-300: var(--destructive-300, #fca5a5);
+  --color-destructive-400: var(--destructive-400, #f87171);
+  --color-destructive-500: var(--destructive-500, #ef4444);
+  --color-destructive-600: var(--destructive-600, #dc2626);
+  --color-destructive-700: var(--destructive-700, #b91c1c);
+  --color-destructive-800: var(--destructive-800, #991b1b);
+  --color-destructive-900: var(--destructive-900, #7f1d1d);
+  --color-destructive-950: var(--destructive-950, #450a0a);
+
+  --color-success-50: var(--success-50, #f0fdf4);
+  --color-success-100: var(--success-100, #dcfce7);
+  --color-success-200: var(--success-200, #bbf7d0);
+  --color-success-300: var(--success-300, #86efac);
+  --color-success-400: var(--success-400, #4ade80);
+  --color-success-500: var(--success-500, #22c55e);
+  --color-success-600: var(--success-600, #16a34a);
+  --color-success-700: var(--success-700, #15803d);
+  --color-success-800: var(--success-800, #166534);
+  --color-success-900: var(--success-900, #14532d);
+  --color-success-950: var(--success-950, #052e16);
+
+  --color-warning-50: var(--warning-50, #fffbeb);
+  --color-warning-100: var(--warning-100, #fef3c7);
+  --color-warning-200: var(--warning-200, #fde68a);
+  --color-warning-300: var(--warning-300, #fcd34d);
+  --color-warning-400: var(--warning-400, #fbbf24);
+  --color-warning-500: var(--warning-500, #f59e0b);
+  --color-warning-600: var(--warning-600, #d97706);
+  --color-warning-700: var(--warning-700, #b45309);
+  --color-warning-800: var(--warning-800, #92400e);
+  --color-warning-900: var(--warning-900, #78350f);
+  --color-warning-950: var(--warning-950, #451a03);
+
+  --color-info-50: var(--info-50, #f0f9ff);
+  --color-info-100: var(--info-100, #e0f2fe);
+  --color-info-200: var(--info-200, #bae6fd);
+  --color-info-300: var(--info-300, #7dd3fc);
+  --color-info-400: var(--info-400, #38bdf8);
+  --color-info-500: var(--info-500, #0ea5e9);
+  --color-info-600: var(--info-600, #0284c7);
+  --color-info-700: var(--info-700, #0369a1);
+  --color-info-800: var(--info-800, #075985);
+  --color-info-900: var(--info-900, #0c4a6e);
+  --color-info-950: var(--info-950, #082f49);
+
+  --color-background: var(--background, #ffffff);
+  --color-foreground: var(--foreground, #0f172a);
+
+  /* Typography */
+  --font-sans: var(--font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+  --font-mono: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+
+  --font-size-xs: var(--font-size-xs, 0.75rem);
+  --font-size-sm: var(--font-size-sm, 0.875rem);
+  --font-size-base: var(--font-size-base, 1rem);
+  --font-size-lg: var(--font-size-lg, 1.125rem);
+  --font-size-xl: var(--font-size-xl, 1.25rem);
+  --font-size-2xl: var(--font-size-2xl, 1.5rem);
+  --font-size-3xl: var(--font-size-3xl, 1.875rem);
+  --font-size-4xl: var(--font-size-4xl, 2.25rem);
+
+  /* Spacing */
+  --spacing-0: var(--spacing-0, 0px);
+  --spacing-1: var(--spacing-1, 0.25rem);
+  --spacing-2: var(--spacing-2, 0.5rem);
+  --spacing-3: var(--spacing-3, 0.75rem);
+  --spacing-4: var(--spacing-4, 1rem);
+  --spacing-5: var(--spacing-5, 1.25rem);
+  --spacing-6: var(--spacing-6, 1.5rem);
+  --spacing-8: var(--spacing-8, 2rem);
+  --spacing-10: var(--spacing-10, 2.5rem);
+  --spacing-12: var(--spacing-12, 3rem);
+  --spacing-16: var(--spacing-16, 4rem);
+
+  /* Border Radius */
+  --radius-none: var(--radius-none, 0px);
+  --radius-sm: var(--radius-sm, 0.125rem);
+  --radius-md: var(--radius-md, 0.375rem);
+  --radius-lg: var(--radius-lg, 0.5rem);
+  --radius-xl: var(--radius-xl, 0.75rem);
+  --radius-2xl: var(--radius-2xl, 1rem);
+  --radius-3xl: var(--radius-3xl, 1.5rem);
+  --radius-full: var(--radius-full, 9999px);
+
+  /* Shadows */
+  --shadow-sm: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --shadow-md: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+  --shadow-lg: var(--shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 0.1));
+  --shadow-xl: var(--shadow-xl, 0 20px 25px -5px rgb(0 0 0 / 0.1));
+}
+
+/* Dark mode overrides */
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+}
