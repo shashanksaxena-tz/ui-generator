@@ -42,6 +42,30 @@ const registry: Record<ComponentName, RegistryEntry> = {
     tags: ["layout", "section", "grouping"],
     allowedChildren: ["*"],
   },
+  Stack: {
+    description: "Linear layout container that arranges children vertically or horizontally with consistent spacing and optional dividers.",
+    category: "layout",
+    tags: ["layout", "stack", "spacing", "container"],
+    allowedChildren: ["*"],
+  },
+  AspectRatio: {
+    description: "Constrains child content to a specific aspect ratio (1:1, 4:3, 16:9, 21:9). Useful for media containers.",
+    category: "layout",
+    tags: ["layout", "aspect-ratio", "media", "container"],
+    allowedChildren: ["*"],
+  },
+  Center: {
+    description: "Centers its children both horizontally and vertically within the available space.",
+    category: "layout",
+    tags: ["layout", "center", "alignment", "container"],
+    allowedChildren: ["*"],
+  },
+  Wrap: {
+    description: "Wrapping layout that flows children into the next line when they exceed the container width.",
+    category: "layout",
+    tags: ["layout", "wrap", "flow", "container"],
+    allowedChildren: ["*"],
+  },
 
   // Display
   Heading: {
@@ -74,6 +98,46 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "display",
     tags: ["image", "media", "picture"],
   },
+  Icon: {
+    description: "Icon display component. Renders named icons at configurable sizes with optional color.",
+    category: "display",
+    tags: ["icon", "symbol", "graphic"],
+  },
+  Code: {
+    description: "Syntax-highlighted code block with line numbers, language detection, and optional title. Supports max height for scrolling.",
+    category: "display",
+    tags: ["code", "syntax", "programming", "snippet"],
+  },
+  Blockquote: {
+    description: "Styled blockquote for quotations with optional author and source attribution.",
+    category: "display",
+    tags: ["blockquote", "quote", "citation"],
+  },
+  Callout: {
+    description: "Highlighted information box with variants: info, warning, error, success, tip. Use for important notices.",
+    category: "display",
+    tags: ["callout", "notice", "alert", "info"],
+  },
+  Kbd: {
+    description: "Keyboard shortcut display. Renders key combinations with a configurable separator.",
+    category: "display",
+    tags: ["keyboard", "shortcut", "keys"],
+  },
+  Timeline: {
+    description: "Vertical or horizontal timeline showing a sequence of events with status, date, and description.",
+    category: "display",
+    tags: ["timeline", "events", "history", "steps"],
+  },
+  Skeleton: {
+    description: "Loading placeholder skeleton. Variants: text, circular, rectangular, card. Mimics content layout while loading.",
+    category: "display",
+    tags: ["skeleton", "loading", "placeholder"],
+  },
+  Spinner: {
+    description: "Loading spinner indicator with configurable size and optional label text.",
+    category: "display",
+    tags: ["spinner", "loading", "indicator"],
+  },
 
   // Card
   Card: {
@@ -91,6 +155,21 @@ const registry: Record<ComponentName, RegistryEntry> = {
     description: "Statistics card with value, label, and optional trend indicator. Use in analytics dashboards.",
     category: "data",
     tags: ["stat", "metric", "analytics"],
+  },
+  ProfileCard: {
+    description: "User profile card displaying name, role, avatar, bio, stats, and social links.",
+    category: "display",
+    tags: ["profile", "card", "user", "bio"],
+  },
+  MediaCard: {
+    description: "Content media card with image, title, description, category, author, and read time. Ideal for blog posts and articles.",
+    category: "display",
+    tags: ["media", "card", "article", "blog", "content"],
+  },
+  InfoCard: {
+    description: "Informational card with icon, title, value, and description. Variants: default, bordered, filled.",
+    category: "display",
+    tags: ["info", "card", "detail", "summary"],
   },
 
   // Input
@@ -119,6 +198,41 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "input",
     tags: ["checkbox", "toggle", "form"],
   },
+  RadioGroup: {
+    description: "Radio button group for single-option selection. Supports vertical/horizontal orientation with optional descriptions per option.",
+    category: "input",
+    tags: ["radio", "group", "form", "selection"],
+  },
+  Switch: {
+    description: "Toggle switch input with label and optional description. Binary on/off control.",
+    category: "input",
+    tags: ["switch", "toggle", "form", "boolean"],
+  },
+  Slider: {
+    description: "Range slider input with configurable min, max, and step values. Optional value display.",
+    category: "input",
+    tags: ["slider", "range", "form", "number"],
+  },
+  DatePicker: {
+    description: "Date picker input with configurable format and placeholder. Supports default value.",
+    category: "input",
+    tags: ["date", "picker", "form", "calendar"],
+  },
+  FileUpload: {
+    description: "File upload input with drag-and-drop support. Configurable accepted types, multiple files, and max size.",
+    category: "input",
+    tags: ["file", "upload", "form", "attachment"],
+  },
+  ColorPicker: {
+    description: "Color picker input with optional preset color swatches and default value.",
+    category: "input",
+    tags: ["color", "picker", "form", "swatch"],
+  },
+  Rating: {
+    description: "Star rating input with configurable max stars and size. Supports read-only display mode.",
+    category: "input",
+    tags: ["rating", "stars", "form", "review"],
+  },
 
   // Data
   DataTable: {
@@ -131,6 +245,36 @@ const registry: Record<ComponentName, RegistryEntry> = {
     description: "Structured list of items with title, description, icon, and optional badge. Variants: default, bordered, card.",
     category: "data",
     tags: ["list", "items", "menu"],
+  },
+  Tree: {
+    description: "Hierarchical tree view with expandable/collapsible nodes. Supports nested children and icons.",
+    category: "data",
+    tags: ["tree", "hierarchy", "nested", "explorer"],
+  },
+  DescriptionList: {
+    description: "Key-value description list with term/description pairs. Layouts: vertical, horizontal, grid.",
+    category: "data",
+    tags: ["description", "list", "key-value", "details"],
+  },
+  Pagination: {
+    description: "Pagination control for navigating through pages of data. Shows first/last page buttons.",
+    category: "data",
+    tags: ["pagination", "pages", "navigation", "data"],
+  },
+  EmptyState: {
+    description: "Placeholder display for empty data states. Shows icon, title, description, and optional action button.",
+    category: "data",
+    tags: ["empty", "state", "placeholder", "no-data"],
+  },
+  InfiniteScroll: {
+    description: "Infinite scrolling container that loads more items as the user scrolls. Shows loading indicator.",
+    category: "data",
+    tags: ["infinite", "scroll", "lazy-load", "list"],
+  },
+  CommandPalette: {
+    description: "Searchable command palette with grouped actions. Supports icons and keyboard shortcuts.",
+    category: "data",
+    tags: ["command", "palette", "search", "actions"],
   },
 
   // Chart
@@ -154,6 +298,16 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "chart",
     tags: ["chart", "area", "trend", "analytics"],
   },
+  RadarChart: {
+    description: "Radar/spider chart for comparing multiple variables across categories. Supports multiple data series.",
+    category: "chart",
+    tags: ["chart", "radar", "spider", "comparison", "analytics"],
+  },
+  ScatterChart: {
+    description: "Scatter plot for showing correlation between two variables. Supports optional size and color encoding.",
+    category: "chart",
+    tags: ["chart", "scatter", "plot", "correlation", "analytics"],
+  },
 
   // Navigation
   Tabs: {
@@ -176,6 +330,36 @@ const registry: Record<ComponentName, RegistryEntry> = {
     description: "Side navigation with grouped sections and items. Supports icons, badges, and active state.",
     category: "navigation",
     tags: ["sidebar", "navigation", "menu"],
+  },
+  Stepper: {
+    description: "Step-by-step progress indicator. Shows completed, current, and upcoming steps. Horizontal or vertical orientation.",
+    category: "navigation",
+    tags: ["stepper", "steps", "wizard", "progress"],
+  },
+  CommandMenu: {
+    description: "Searchable command menu with grouped items. Supports icons and keyboard shortcuts.",
+    category: "navigation",
+    tags: ["command", "menu", "search", "shortcut"],
+  },
+  MenuBar: {
+    description: "Horizontal menu bar with dropdown menus. Supports keyboard shortcuts, disabled items, and separators.",
+    category: "navigation",
+    tags: ["menubar", "menu", "dropdown", "navigation"],
+  },
+  BottomNav: {
+    description: "Mobile bottom navigation bar with icon-based items. Supports active state and badges.",
+    category: "navigation",
+    tags: ["bottom", "navigation", "mobile", "tab-bar"],
+  },
+  Dock: {
+    description: "macOS-style dock with icon items. Configurable position: bottom, left, or right.",
+    category: "navigation",
+    tags: ["dock", "launcher", "navigation", "desktop"],
+  },
+  PaginationNav: {
+    description: "Navigation-focused pagination control for page-level navigation with first/last page buttons.",
+    category: "navigation",
+    tags: ["pagination", "navigation", "pages"],
   },
 
   // Composite
@@ -209,10 +393,159 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "composite",
     tags: ["form", "input", "survey", "onboarding"],
   },
+  FAQ: {
+    description: "Frequently asked questions section. Variants: accordion, grid, list. Expandable question/answer pairs.",
+    category: "composite",
+    tags: ["faq", "questions", "answers", "help"],
+  },
+  Changelog: {
+    description: "Changelog display with versioned entries. Entry types: feature, fix, improvement, breaking.",
+    category: "composite",
+    tags: ["changelog", "release", "version", "updates"],
+  },
+  Team: {
+    description: "Team member grid with avatars, roles, bios, and social links. Configurable columns.",
+    category: "composite",
+    tags: ["team", "members", "people", "about"],
+  },
+  StatsGrid: {
+    description: "Grid of statistics with labels, values, icons, and change indicators. Configurable columns.",
+    category: "composite",
+    tags: ["stats", "grid", "metrics", "dashboard"],
+  },
+  CTA: {
+    description: "Call-to-action section with headline, description, and action buttons. Variants: simple, split, centered, banner.",
+    category: "composite",
+    tags: ["cta", "call-to-action", "marketing", "conversion"],
+  },
+  Footer: {
+    description: "Page footer with brand, description, link columns, copyright, and social links.",
+    category: "composite",
+    tags: ["footer", "navigation", "links", "copyright"],
+  },
+  Newsletter: {
+    description: "Newsletter signup form with email input. Variants: inline, card, hero.",
+    category: "composite",
+    tags: ["newsletter", "email", "subscribe", "marketing"],
+  },
+  LogoCloud: {
+    description: "Logo cloud displaying partner/client logos. Variants: grid, scroll, simple.",
+    category: "composite",
+    tags: ["logo", "cloud", "partners", "clients", "brands"],
+  },
+  Comparison: {
+    description: "Feature comparison table with headers and boolean/text values per row. Supports column highlighting.",
+    category: "composite",
+    tags: ["comparison", "table", "features", "pricing"],
+  },
+  FileExplorer: {
+    description: "File explorer tree with files and folders. Shows name, type, size, modified date, and nested children.",
+    category: "composite",
+    tags: ["file", "explorer", "directory", "browser"],
+  },
+  Chat: {
+    description: "Chat interface with message history and input. Supports user, assistant, and system roles with timestamps.",
+    category: "composite",
+    tags: ["chat", "messaging", "conversation", "ai"],
+    allowedChildren: ["*"],
+  },
+  Calendar: {
+    description: "Calendar with events. Views: month, week, day. Events have title, date, time, color, and description.",
+    category: "composite",
+    tags: ["calendar", "events", "schedule", "date"],
+  },
+  Weather: {
+    description: "Weather widget with current conditions and optional forecast. Supports celsius and fahrenheit.",
+    category: "composite",
+    tags: ["weather", "forecast", "temperature", "widget"],
+  },
+  MusicPlayer: {
+    description: "Music player with track info, playback controls, progress bar, and optional queue.",
+    category: "composite",
+    tags: ["music", "player", "audio", "media"],
+  },
+  VideoPlayer: {
+    description: "Video player with title, description, thumbnail, and configurable aspect ratio.",
+    category: "composite",
+    tags: ["video", "player", "media", "streaming"],
+  },
+  Gallery: {
+    description: "Image gallery with grid, masonry, or carousel layouts. Configurable columns and gap.",
+    category: "composite",
+    tags: ["gallery", "images", "photos", "media"],
+  },
+  Map: {
+    description: "Interactive map display with markers, center coordinates, and zoom level.",
+    category: "composite",
+    tags: ["map", "location", "markers", "geography"],
+  },
+  Terminal: {
+    description: "Terminal emulator display with input/output/error lines and configurable prompt.",
+    category: "composite",
+    tags: ["terminal", "console", "cli", "shell"],
+  },
+  CodeEditor: {
+    description: "Multi-file code editor with tabs, syntax highlighting, line numbers, and dark/light themes.",
+    category: "composite",
+    tags: ["code", "editor", "ide", "programming"],
+  },
+  Markdown: {
+    description: "Markdown content renderer. Displays formatted markdown text with proper styling.",
+    category: "composite",
+    tags: ["markdown", "content", "text", "documentation"],
+  },
   Progress: {
     description: "Progress bar with value, label, and variant. Sizes: sm, md, lg.",
     category: "feedback",
     tags: ["progress", "loading", "status"],
+  },
+  Alert: {
+    description: "Alert message box with variants: default, info, success, warning, error. Supports icon and dismissible option.",
+    category: "feedback",
+    tags: ["alert", "message", "notification", "status"],
+  },
+  Toast: {
+    description: "Temporary toast notification with auto-dismiss. Variants: default, success, error, warning, info.",
+    category: "feedback",
+    tags: ["toast", "notification", "popup", "snackbar"],
+  },
+  Dialog: {
+    description: "Modal dialog with title, description, and confirm/cancel actions. Variants: default, destructive.",
+    category: "feedback",
+    tags: ["dialog", "modal", "popup", "confirmation"],
+    allowedChildren: ["*"],
+  },
+  Drawer: {
+    description: "Slide-out drawer panel from any edge. Configurable side (left, right, top, bottom) and size.",
+    category: "feedback",
+    tags: ["drawer", "panel", "slide", "overlay"],
+    allowedChildren: ["*"],
+  },
+  Popover: {
+    description: "Popover floating content triggered by click. Configurable placement side.",
+    category: "feedback",
+    tags: ["popover", "popup", "floating", "overlay"],
+    allowedChildren: ["*"],
+  },
+  Tooltip: {
+    description: "Hover tooltip that displays additional text. Configurable placement side.",
+    category: "feedback",
+    tags: ["tooltip", "hover", "hint", "info"],
+  },
+  Banner: {
+    description: "Full-width banner for announcements. Variants: info, success, warning, error. Supports dismiss and action link.",
+    category: "feedback",
+    tags: ["banner", "announcement", "notification", "bar"],
+  },
+  Notification: {
+    description: "Notification list with read/unread state, timestamps, icons, and type-based styling.",
+    category: "feedback",
+    tags: ["notification", "alerts", "inbox", "updates"],
+  },
+  ConfirmDialog: {
+    description: "Confirmation dialog for destructive or important actions. Variants: default, destructive.",
+    category: "feedback",
+    tags: ["confirm", "dialog", "modal", "action"],
   },
 };
 

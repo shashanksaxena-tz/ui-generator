@@ -12,11 +12,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
     }
 
-    // Check if AI keys are configured
+    // Check if any AI key is configured
+    const hasGoogle = !!process.env.GOOGLE_GENERATIVE_AI_API_KEY;
     const hasOpenAI = !!process.env.OPENAI_API_KEY;
     const hasAnthropic = !!process.env.ANTHROPIC_API_KEY;
 
-    if (!hasOpenAI && !hasAnthropic) {
+    if (!hasGoogle && !hasOpenAI && !hasAnthropic) {
       // No AI keys — use demo/fallback generation
       const demoSchema = generateDemoSchema(prompt);
       return NextResponse.json({
