@@ -206,11 +206,26 @@ export interface ChatSession {
 export interface MCPServerConfig {
   id: string;
   name: string;
-  url: string;
+  /** Transport type: stdio (local process), sse, or streamable-http (remote) */
+  transport: "stdio" | "sse" | "streamable-http";
+  /** For stdio: the command to spawn (e.g., "npx") */
+  command?: string;
+  /** For stdio: arguments to pass (e.g., ["-y", "@21st-dev/magic@latest"]) */
+  args?: string[];
+  /** For remote transports: the HTTP/SSE endpoint URL */
+  url?: string;
+  /** Environment variables required by this server (key names, not values) */
+  env?: Record<string, string>;
+  /** npm package name for documentation/install purposes */
+  npmPackage?: string;
   type: MCPServerType;
   description: string;
   capabilities: string[];
+  /** Known tools this server exposes */
+  knownTools?: string[];
   enabled: boolean;
+  /** Whether this server requires a paid license/API key */
+  requiresApiKey?: boolean;
 }
 
 export type MCPServerType =

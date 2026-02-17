@@ -8,7 +8,7 @@ interface UseMCPReturn {
   servers: MCPServerConfig[];
   tools: MCPTool[];
   isDiscovering: boolean;
-  enableServer: (id: string, url: string) => void;
+  enableServer: (id: string, config?: Partial<MCPServerConfig>) => void;
   disableServer: (id: string) => void;
   discoverTools: () => Promise<void>;
   executeTool: (serverId: string, toolName: string, args: Record<string, unknown>) => Promise<unknown>;
@@ -19,9 +19,9 @@ export function useMCP(): UseMCPReturn {
   const [tools, setTools] = useState<MCPTool[]>([]);
   const [isDiscovering, setIsDiscovering] = useState(false);
 
-  const enableServer = useCallback((id: string, url: string) => {
+  const enableServer = useCallback((id: string, config?: Partial<MCPServerConfig>) => {
     setServers((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, enabled: true, url } : s))
+      prev.map((s) => (s.id === id ? { ...s, ...config, enabled: true } : s))
     );
   }, []);
 
