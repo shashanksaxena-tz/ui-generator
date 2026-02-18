@@ -548,6 +548,26 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "feedback",
     tags: ["confirm", "dialog", "modal", "action"],
   },
+
+  // Aceternity UI Components
+  ThreeDCard: {
+    description: "Interactive 3D card container with tilt effect on mouse move. Use with ThreeDCardBody and ThreeDCardItem.",
+    category: "display",
+    tags: ["3d", "animation", "interactive", "card", "aceternity"],
+    allowedChildren: ["ThreeDCardBody"],
+  },
+  ThreeDCardBody: {
+    description: "Body container for 3D card content. Use inside ThreeDCard.",
+    category: "display",
+    tags: ["3d", "animation", "card", "aceternity"],
+    allowedChildren: ["ThreeDCardItem"],
+  },
+  ThreeDCardItem: {
+    description: "Individual item inside 3D card that can be transformed in 3D space. Set translateX/Y/Z and rotateX/Y/Z for 3D positioning.",
+    category: "display",
+    tags: ["3d", "animation", "card", "aceternity"],
+    allowedChildren: ["*"],
+  },
 };
 
 /**

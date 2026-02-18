@@ -1023,6 +1023,147 @@ export const MarkdownSchema = z.object({
 });
 
 // ============================================================================
+// Aceternity UI Components
+// ============================================================================
+
+// Helper for recursive children (used by many Aceternity components)
+const nodeArray = z.lazy(() => z.array(z.union([z.string(), z.record(z.any())])));
+
+export const ThreeDCardSchema = z.object({
+  className: z.string().optional(),
+  containerClassName: z.string().optional(),
+});
+
+export const ThreeDCardBodySchema = z.object({
+  className: z.string().optional(),
+});
+
+export const ThreeDCardItemSchema = z.object({
+  as: z.enum(["div", "p", "h1", "h2", "h3", "button", "a", "img"]).optional(),
+  className: z.string().optional(),
+  translateX: z.union([z.number(), z.string()]).optional(),
+  translateY: z.union([z.number(), z.string()]).optional(),
+  translateZ: z.union([z.number(), z.string()]).optional(),
+  rotateX: z.union([z.number(), z.string()]).optional(),
+  rotateY: z.union([z.number(), z.string()]).optional(),
+  rotateZ: z.union([z.number(), z.string()]).optional(),
+});
+
+// ============================================================================
+// React Bits Components (18)
+// ============================================================================
+
+export const GlassmorphismCardSchema = z.object({
+  className: z.string().optional(),
+  blur: z.enum(["sm", "md", "lg"]).default("md"),
+});
+
+export const NeonButtonSchema = z.object({
+  text: z.string(),
+  color: z.string().default("#00ff88"),
+  className: z.string().optional(),
+});
+
+export const GradientTextSchema = z.object({
+  text: z.string(),
+  gradient: z.string().default("linear-gradient(90deg, #667eea 0%, #764ba2 100%)"),
+  className: z.string().optional(),
+  animate: z.boolean().default(false),
+});
+
+export const AnimatedBorderSchema = z.object({
+  className: z.string().optional(),
+  borderWidth: z.number().default(2),
+  duration: z.number().default(3),
+});
+
+export const GlitchTextSchema = z.object({
+  text: z.string(),
+  className: z.string().optional(),
+});
+
+export const MorphingTextSchema = z.object({
+  texts: z.array(z.string()),
+  duration: z.number().default(2000),
+  className: z.string().optional(),
+});
+
+export const TiltCardSchema = z.object({
+  className: z.string().optional(),
+  tiltMaxAngle: z.number().default(15),
+});
+
+export const ParallaxCardSchema = z.object({
+  className: z.string().optional(),
+  intensity: z.number().default(20),
+});
+
+export const HoverCardRBSchema = z.object({
+  className: z.string().optional(),
+  scaleOnHover: z.boolean().default(true),
+  glowOnHover: z.boolean().default(true),
+});
+
+export const ShinyButtonSchema = z.object({
+  text: z.string(),
+  className: z.string().optional(),
+});
+
+export const FloatingLabelSchema = z.object({
+  label: z.string(),
+  type: z.enum(["text", "email", "password", "number", "search", "url", "tel"]).default("text"),
+  placeholder: z.string().optional(),
+  className: z.string().optional(),
+});
+
+export const AnimatedInputSchema = z.object({
+  label: z.string().optional(),
+  placeholder: z.string().optional(),
+  type: z.enum(["text", "email", "password", "number", "search", "url", "tel"]).default("text"),
+  className: z.string().optional(),
+});
+
+export const RippleButtonSchema = z.object({
+  text: z.string(),
+  className: z.string().optional(),
+});
+
+export const MagneticButtonSchema = z.object({
+  text: z.string(),
+  strength: z.number().default(30),
+  className: z.string().optional(),
+});
+
+export const SmoothScrollSchema = z.object({
+  className: z.string().optional(),
+  speed: z.number().default(0.1),
+});
+
+export const RevealTextSchema = z.object({
+  text: z.string(),
+  delay: z.number().default(50),
+  className: z.string().optional(),
+});
+
+export const CountUpSchema = z.object({
+  end: z.number(),
+  start: z.number().default(0),
+  duration: z.number().default(2000),
+  decimals: z.number().default(0),
+  suffix: z.string().default(""),
+  prefix: z.string().default(""),
+  className: z.string().optional(),
+});
+
+export const TypeWriterSchema = z.object({
+  text: z.string(),
+  speed: z.number().default(100),
+  delay: z.number().default(0),
+  showCursor: z.boolean().default(true),
+  className: z.string().optional(),
+});
+
+// ============================================================================
 // Schema Map — 100 components
 // ============================================================================
 
@@ -1136,6 +1277,29 @@ export const componentSchemas = {
   Terminal: TerminalSchema,
   CodeEditor: CodeEditorSchema,
   Markdown: MarkdownSchema,
+  // Aceternity UI (3)
+  ThreeDCard: ThreeDCardSchema,
+  ThreeDCardBody: ThreeDCardBodySchema,
+  ThreeDCardItem: ThreeDCardItemSchema,
+  // React Bits (18)
+  GlassmorphismCard: GlassmorphismCardSchema,
+  NeonButton: NeonButtonSchema,
+  GradientText: GradientTextSchema,
+  AnimatedBorder: AnimatedBorderSchema,
+  GlitchText: GlitchTextSchema,
+  MorphingText: MorphingTextSchema,
+  TiltCard: TiltCardSchema,
+  ParallaxCard: ParallaxCardSchema,
+  HoverCardRB: HoverCardRBSchema,
+  ShinyButton: ShinyButtonSchema,
+  FloatingLabel: FloatingLabelSchema,
+  AnimatedInput: AnimatedInputSchema,
+  RippleButton: RippleButtonSchema,
+  MagneticButton: MagneticButtonSchema,
+  SmoothScroll: SmoothScrollSchema,
+  RevealText: RevealTextSchema,
+  CountUp: CountUpSchema,
+  TypeWriter: TypeWriterSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;

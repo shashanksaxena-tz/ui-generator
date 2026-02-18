@@ -100,6 +100,7 @@ import {
   Scatter,
   ZAxis,
 } from "recharts";
+import { CardContainer, CardBody, CardItem } from "@/components/aceternity/3d-card";
 
 // ============================================================================
 // Icon resolver
@@ -2660,6 +2661,46 @@ function MarkdownComponent({ props }: { props: Record<string, unknown> }) {
 }
 
 // ============================================================================
+// Aceternity UI Components
+// ============================================================================
+
+function ThreeDCardComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <CardContainer
+      className={props.className as string}
+      containerClassName={props.containerClassName as string}
+    >
+      {children}
+    </CardContainer>
+  );
+}
+
+function ThreeDCardBodyComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <CardBody className={props.className as string}>
+      {children}
+    </CardBody>
+  );
+}
+
+function ThreeDCardItemComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <CardItem
+      as={props.as as any}
+      className={props.className as string}
+      translateX={props.translateX as number}
+      translateY={props.translateY as number}
+      translateZ={props.translateZ as number}
+      rotateX={props.rotateX as number}
+      rotateY={props.rotateY as number}
+      rotateZ={props.rotateZ as number}
+    >
+      {children}
+    </CardItem>
+  );
+}
+
+// ============================================================================
 // Component Map — maps type names to React components
 // ============================================================================
 
@@ -2782,6 +2823,10 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
+  // Aceternity UI (3)
+  ThreeDCard: ThreeDCardComponent,
+  ThreeDCardBody: ThreeDCardBodyComponent,
+  ThreeDCardItem: ThreeDCardItemComponent,
 };
 
 // ============================================================================
