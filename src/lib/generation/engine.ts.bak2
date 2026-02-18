@@ -13,8 +13,6 @@ import { validateSchema, extractComponentNames, applyDefaults } from "./schema";
 import { schemaCache } from "./cache";
 import { generateTheme, defaultDarkTheme } from "@/lib/theme/engine";
 import { logGeneration } from "@/lib/logging";
-import { selectRelevantComponents, getComponentsWithFallback } from "./component-selection";
-import { getAllComponentNames } from "@/lib/registry/components";
 
 /**
  * Get the AI provider based on environment configuration.
@@ -146,28 +144,8 @@ export async function generateUI(
     };
   }
 
-
-  // Component selection using LLM
-  const selectionStartTime = Date.now();
-  const selectedComponents = await selectRelevantComponents(request.prompt);
-  const selectionTime = Date.now() - selectionStartTime;
-
-  console.log(`[Generation] Component selection took ${selectionTime}ms`);
-  console.log(`[Generation] Selected ${selectedComponents.length} components`);
-
-  // Get all components as fallback
-  const allComponents = getAllComponentNames();
-  const componentsToUse = getComponentsWithFallback(selectedComponents, allComponents);
-
-  // Update constraints to use filtered components
-  const updatedConstraints = {
-    ...request.constraints,
-    allowedComponents: componentsToUse,
-  };
-
   const systemPrompt = buildSystemPrompt(
-    updatedConstraints,
-
+    request.constraints,
     request.theme as ThemeConfig,
     request.styleHint
   );
@@ -284,10 +262,6 @@ export async function generateUI(
       generationTimeMs: Date.now() - startTime,
       componentsUsed,
       cachedLayout: false,
-      // Component selection metrics
-      componentSelectionTime: selectionTime,
-      totalComponents: allComponents.length,
-      selectedComponents: componentsToUse.length,
     },
   };
 }

@@ -176,10 +176,6 @@ export interface GenerationMetadata {
   generationTimeMs: number;
   componentsUsed: string[];
   cachedLayout: boolean;
-  // Component selection metrics
-  componentSelectionTime?: number;
-  totalComponents?: number;
-  selectedComponents?: number;
 }
 
 // ============================================================================
