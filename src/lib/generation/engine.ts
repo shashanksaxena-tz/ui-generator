@@ -12,6 +12,7 @@ import { buildSystemPrompt, buildRefinementPrompt } from "./prompts";
 import { validateSchema, extractComponentNames, applyDefaults } from "./schema";
 import { schemaCache } from "./cache";
 import { generateTheme, defaultDarkTheme } from "@/lib/theme/engine";
+import { logGeneration } from "@/lib/logging";
 
 /**
  * Get the AI provider based on environment configuration.
@@ -121,6 +122,8 @@ export async function generateUI(
   request: GenerationRequest
 ): Promise<GenerationResult> {
   const startTime = Date.now();
+  const generationId = `gen-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+  const loggingEnabled = process.env.ENABLE_GENERATION_LOGGING === 'true';
 
   // Check cache first
   const cached = schemaCache.get(request.prompt);
@@ -157,6 +160,20 @@ export async function generateUI(
     throw new Error("No AI provider configured. Set GOOGLE_GENERATIVE_AI_API_KEY, OPENAI_API_KEY, or ANTHROPIC_API_KEY.");
   }
 
+  // Point A: Log before LLM call
+  if (loggingEnabled) {
+    const providerName = process.env.AI_PROVIDER ?? "google";
+    const modelName = process.env.AI_MODEL ?? (providerName === "google" ? "gemini-2.0-flash" : "default");
+    await logGeneration(generationId, 'llm-input', {
+      prompt: request.prompt,
+      systemPromptPreview: systemPrompt.substring(0, 500) + '...',
+      systemPromptLength: systemPrompt.length,
+      provider: providerName,
+      model: modelName,
+      hasContext: !!request.context?.previousSchema,
+    });
+  }
+
   const result = await generateText({
     model,
     system: systemPrompt,
@@ -164,6 +181,15 @@ export async function generateUI(
     maxTokens: 16384,
     temperature: 0.7,
   });
+
+  // Point B: Log after LLM response
+  if (loggingEnabled) {
+    await logGeneration(generationId, 'llm-output', {
+      rawResponsePreview: result.text.substring(0, 2000),
+      fullLength: result.text.length,
+      tokensUsed: result.usage?.totalTokens ?? 0,
+    });
+  }
 
   // Parse the schema from LLM response
   let schema: ReactInterfaceSchema;
@@ -175,8 +201,27 @@ export async function generateUI(
     );
   }
 
+  // Point C: Log after schema parsing
+  if (loggingEnabled) {
+    await logGeneration(generationId, 'schema-parsed', {
+      schema: schema,
+      componentsUsed: extractComponentNames(schema),
+      hasRoot: !!schema.root,
+      version: schema.version,
+    });
+  }
+
   // Validate and apply defaults
   const validationErrors = validateSchema(schema);
+
+  // Point D: Log validation warnings
+  if (loggingEnabled && validationErrors.length > 0) {
+    await logGeneration(generationId, 'validation-warnings', {
+      warnings: validationErrors,
+      warningCount: validationErrors.length,
+    });
+  }
+
   if (validationErrors.length > 0) {
     console.warn("Schema validation warnings:", validationErrors);
   }

@@ -121,6 +121,16 @@ function resolveIcon(name?: string): LucideIcon | null {
 }
 
 // ============================================================================
+// Component Logging Utility
+// ============================================================================
+
+function logComponentRender(component: string, props: Record<string, unknown>) {
+  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_LOG_COMPONENT_RENDERS === 'true') {
+    console.log(`[RENDER] ${component}:`, JSON.stringify(props, null, 2));
+  }
+}
+
+// ============================================================================
 // Layout Components
 // ============================================================================
 
@@ -154,13 +164,29 @@ function FlexComponent({ props, children }: { props: Record<string, unknown>; ch
 }
 
 function GridComponent({ props, children }: { props: Record<string, unknown>; children?: React.ReactNode }) {
+  // Log props for diagnostic purposes
+  logComponentRender('Grid', {
+    cols: props.cols,
+    gap: props.gap,
+    gapType: typeof props.gap,
+  });
+
   const cols = Math.min(Math.max(Number(props.cols) || 3, 1), 12);
-  const gap = `gap-${props.gap ?? 4}`;
+
+  // Handle both Tailwind classes (gap-4) and pixel values (24px)
+  const gapValue = props.gap ?? 4;
+  const gapStyle = typeof gapValue === 'string' && gapValue.includes('px')
+    ? { gap: gapValue }
+    : undefined;
+  const gapClass = !gapStyle ? `gap-${gapValue}` : '';
 
   return (
     <div
-      className={cn("grid", gap, props.className as string)}
-      style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+      className={cn("grid", gapClass, props.className as string)}
+      style={{
+        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+        ...gapStyle,
+      }}
     >
       {children}
     </div>
@@ -210,7 +236,24 @@ function SectionComponent({ props, children }: { props: Record<string, unknown>;
 // ============================================================================
 
 function HeadingComponent({ props }: { props: Record<string, unknown> }) {
-  const level = (props.level as string) ?? "h2";
+  // Log props for diagnostic purposes
+  logComponentRender('Heading', {
+    level: props.level,
+    levelType: typeof props.level,
+    text: props.text,
+  });
+
+  // Handle both number (1, 2, 3) and string ("h1", "h2", "h3") level formats
+  const rawLevel = props.level;
+  let level: string;
+
+  if (typeof rawLevel === "number") {
+    // Convert number to heading tag (1 -> "h1", 2 -> "h2", etc.)
+    level = `h${Math.max(1, Math.min(6, rawLevel))}`;
+  } else {
+    level = (rawLevel as string) ?? "h2";
+  }
+
   const sizeMap: Record<string, string> = {
     h1: "text-4xl font-bold",
     h2: "text-2xl font-semibold",
@@ -1479,18 +1522,29 @@ function ProfileCardComponent({ props }: { props: Record<string, unknown> }) {
 }
 
 function MediaCardComponent({ props }: { props: Record<string, unknown> }) {
+  // Log props for diagnostic purposes
+  logComponentRender('MediaCard', {
+    image: props.image,
+    title: props.title,
+    hasImage: !!props.image,
+  });
+
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden flex flex-col h-full">
       {Boolean(props.image) && (
-        <div className="h-48 bg-[var(--color-muted)] flex items-center justify-center">
-          <img src={props.image as string} alt={props.title as string} className="w-full h-full object-cover" />
+        <div className="relative w-full aspect-[16/9] bg-[var(--color-muted)]">
+          <img
+            src={props.image as string}
+            alt={props.title as string}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </div>
       )}
-      <CardContent className="p-4 space-y-2">
+      <CardContent className="p-4 space-y-2 flex-1 flex flex-col">
         {Boolean(props.category) && <Badge variant="outline">{props.category as string}</Badge>}
         <h3 className="font-semibold">{props.title as string}</h3>
-        {Boolean(props.description) && <p className="text-sm text-[var(--color-muted-foreground)] line-clamp-2">{props.description as string}</p>}
-        <div className="flex items-center gap-3 text-xs text-[var(--color-muted-foreground)]">
+        {Boolean(props.description) && <p className="text-sm text-[var(--color-muted-foreground)] line-clamp-3 flex-1">{props.description as string}</p>}
+        <div className="flex items-center gap-3 text-xs text-[var(--color-muted-foreground)] pt-2">
           {Boolean(props.author) && <span>{props.author as string}</span>}
           {Boolean(props.date) && <span>{props.date as string}</span>}
           {Boolean(props.readTime) && <span>{props.readTime as string}</span>}
@@ -2187,22 +2241,37 @@ function TeamComponent({ props }: { props: Record<string, unknown> }) {
 }
 
 function StatsGridComponent({ props }: { props: Record<string, unknown> }) {
+  // Log props for diagnostic purposes
+  logComponentRender('StatsGrid', {
+    columns: props.columns,
+    columnsType: typeof props.columns,
+    hasStats: !!props.stats,
+    statsCount: Array.isArray(props.stats) ? props.stats.length : 0,
+  });
+
   const stats = props.stats as Array<{ label: string; value: string; description?: string; icon?: string; change?: string; changeType?: string }>;
   const columns = (props.columns as number) ?? 4;
+
+  // Generate responsive grid classes
+  const gridCols = columns === 4 ? 'grid-cols-2 md:grid-cols-4' :
+                   columns === 3 ? 'grid-cols-1 md:grid-cols-3' :
+                   columns === 2 ? 'grid-cols-1 md:grid-cols-2' :
+                   'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+
   return (
-    <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}>
+    <div className={cn("grid gap-4 md:gap-6", gridCols)}>
       {stats?.map((stat, i) => {
         const Icon = resolveIcon(stat.icon);
         return (
-          <Card key={i}>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
+          <Card key={i} className="h-full">
+            <CardContent className="p-6 flex flex-col justify-between h-full">
+              <div className="flex items-center justify-between mb-2">
                 <p className="text-sm text-[var(--color-muted-foreground)]">{stat.label}</p>
                 {Icon && <Icon className="h-4 w-4 text-[var(--color-muted-foreground)]" />}
               </div>
-              <p className="text-2xl font-bold mt-1">{stat.value}</p>
+              <p className="text-3xl md:text-2xl font-bold">{stat.value}</p>
               {stat.change && (
-                <div className="flex items-center gap-1 mt-1">
+                <div className="flex items-center gap-1 mt-2">
                   {stat.changeType === "positive" ? <TrendingUp className="h-3 w-3 text-[var(--color-success-500)]" /> : stat.changeType === "negative" ? <TrendingDown className="h-3 w-3 text-[var(--color-error-500)]" /> : null}
                   <span className={cn("text-xs", stat.changeType === "positive" && "text-[var(--color-success-500)]", stat.changeType === "negative" && "text-[var(--color-error-500)]")}>{stat.change}</span>
                 </div>

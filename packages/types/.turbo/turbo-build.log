@@ -1,0 +1,4 @@
+
+> @generative-ui/types@0.1.0 build
+> tsup src/index.ts src/syntux.ts src/tambo.ts src/mcp.ts src/theme.ts src/generation.ts src/agent.ts --format cjs,esm --dts
+

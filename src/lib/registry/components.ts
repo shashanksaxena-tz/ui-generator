@@ -1,5 +1,6 @@
 import type { ComponentDefinition, ComponentCategory } from "@/types";
 import { componentSchemas, type ComponentName } from "./schemas";
+import { zodToJsonSchema } from "zod-to-json-schema";
 
 /**
  * Full component registry with metadata for each registered component.
@@ -598,6 +599,7 @@ export function generateLLMComponentDocs(): string {
 
   docs.push("# Available Components\n");
   docs.push("Use these components to compose the UI. Each component has typed props.\n");
+  docs.push("IMPORTANT: Follow the prop type constraints exactly as specified.\n");
 
   const categories = [...new Set(definitions.map((d) => d.category))];
 
@@ -612,6 +614,74 @@ export function generateLLMComponentDocs(): string {
       if (comp.allowedChildren) {
         docs.push(`Children: ${comp.allowedChildren.join(", ")}`);
       }
+
+      // Add prop schema info
+      const schema = comp.propsSchema;
+      if (schema && '_def' in schema && 'shape' in (schema._def as any)) {
+        const shape = (schema._def as any).shape() as Record<string, any>;
+        const propDocs: string[] = [];
+
+        for (const [key, value] of Object.entries(shape)) {
+          let propType = value._def?.typeName || 'unknown';
+          let typeStr = '';
+
+          // Handle ZodEffects (schemas with .transform())
+          if (propType === 'ZodEffects') {
+            propType = value._def?.schema?._def?.typeName || 'unknown';
+          }
+
+          if (propType === 'ZodNumber') {
+            const min = value._def?.checks?.find((c: any) => c.kind === 'min')?.value;
+            const max = value._def?.checks?.find((c: any) => c.kind === 'max')?.value;
+            typeStr = `number${min !== undefined ? ` (${min}-${max})` : ''}`;
+          } else if (propType === 'ZodString') {
+            typeStr = 'string';
+          } else if (propType === 'ZodBoolean') {
+            typeStr = 'boolean';
+          } else if (propType === 'ZodEnum') {
+            // Get enum values (handle both direct ZodEnum and those wrapped in ZodEffects)
+            const enumDef = value._def?.typeName === 'ZodEffects' ? value._def?.schema?._def : value._def;
+            const values = enumDef?.values || [];
+            const firstValue = values[0];
+            // Add example showing the CORRECT enum value (not AI's intuitive one)
+            typeStr = `enum: ${values.join(' | ')} (example: "${firstValue}")`;
+          } else if (propType === 'ZodArray') {
+            typeStr = 'array';
+          } else {
+            typeStr = propType.replace('Zod', '').toLowerCase();
+          }
+
+          const optional = value.isOptional() ? ' (optional)' : '';
+          const defaultVal = value._def?.defaultValue?.() !== undefined
+            ? ` = ${JSON.stringify(value._def.defaultValue())}`
+            : '';
+
+          propDocs.push(`  - ${key}: ${typeStr}${optional}${defaultVal}`);
+        }
+
+        if (propDocs.length > 0) {
+          docs.push(`Props:`);
+          docs.push(propDocs.join('\n'));
+        }
+
+        // Add JSON Schema representation for precise type information
+        try {
+          const jsonSchema = zodToJsonSchema(schema, {
+            name: comp.name,
+            target: "openApi3",
+            errorMessages: true,
+          });
+
+          docs.push(`\nJSON Schema (use this for precise type validation):`);
+          docs.push('```json');
+          docs.push(JSON.stringify(jsonSchema, null, 2));
+          docs.push('```');
+        } catch (error) {
+          // If JSON Schema conversion fails, continue without it
+          console.warn(`Failed to generate JSON Schema for ${comp.name}:`, error);
+        }
+      }
+
       docs.push("");
     }
   }

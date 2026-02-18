@@ -12,7 +12,7 @@ AI_PROVIDER=google
 AI_MODEL=gemini-2.0-flash
 
 # Provider API keys (at least one required)
-GOOGLE_GENERATIVE_AI_API_KEY=your_google_api_key_here
+GOOGLE_GENERATIVE_AI_API_KEY=
 OPENAI_API_KEY=
 ANTHROPIC_API_KEY=
 
@@ -48,15 +48,3 @@ CONTEXT7_API_KEY=
 # App
 # ==============================================================================
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-
-# ==============================================================================
-# Diagnostic Logging (Phase 1)
-# ==============================================================================
-
-# Enable generation pipeline logging (server-side)
-# Logs LLM input/output, schema parsing, and validation to logs/generation/
-ENABLE_GENERATION_LOGGING=false
-
-# Enable component prop logging (client-side, browser console)
-# Logs actual props received by components at render time
-NEXT_PUBLIC_LOG_COMPONENT_RENDERS=false

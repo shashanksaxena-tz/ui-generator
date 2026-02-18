@@ -24,17 +24,36 @@ import { z } from "zod";
 // ============================================================================
 
 export const FlexSchema = z.object({
-  direction: z.enum(["row", "col"]).default("row"),
+  direction: z.enum(["row", "col", "column", "row-reverse", "col-reverse"]).transform(v => {
+    // Accept AI's intuitive values and normalize
+    if (v === "column") return "col";
+    if (v === "row-reverse") return "row";
+    if (v === "col-reverse") return "col";
+    return v;
+  }).default("row"),
   gap: z.number().min(0).max(16).default(4),
-  align: z.enum(["start", "center", "end", "stretch", "baseline"]).default("stretch"),
-  justify: z.enum(["start", "center", "end", "between", "around", "evenly"]).default("start"),
+  align: z.enum(["start", "center", "end", "stretch", "baseline", "flex-start", "flex-end"]).transform(v => {
+    // Accept CSS flexbox values
+    if (v === "flex-start") return "start";
+    if (v === "flex-end") return "end";
+    return v;
+  }).default("stretch"),
+  justify: z.enum(["start", "center", "end", "between", "around", "evenly", "space-between", "space-around", "space-evenly", "flex-start", "flex-end"]).transform(v => {
+    // Accept CSS flexbox values
+    if (v === "space-between") return "between";
+    if (v === "space-around") return "around";
+    if (v === "space-evenly") return "evenly";
+    if (v === "flex-start") return "start";
+    if (v === "flex-end") return "end";
+    return v;
+  }).default("start"),
   wrap: z.boolean().default(false),
   className: z.string().optional(),
 });
 
 export const GridSchema = z.object({
   cols: z.number().min(1).max(12).default(3),
-  gap: z.number().min(0).max(16).default(4),
+  gap: z.union([z.number().min(0).max(16), z.string()]).default(4), // Accept both number and px strings
   className: z.string().optional(),
 });
 
@@ -76,7 +95,10 @@ export const WrapSchema = z.object({
 // ============================================================================
 
 export const HeadingSchema = z.object({
-  level: z.enum(["h1", "h2", "h3", "h4", "h5", "h6"]).default("h2"),
+  level: z.union([
+    z.enum(["h1", "h2", "h3", "h4", "h5", "h6"]),
+    z.number().min(1).max(6) // Accept numbers 1-6 for convenience
+  ]).default("h2"),
   text: z.string(),
   className: z.string().optional(),
 });
@@ -105,10 +127,10 @@ export const SeparatorSchema = z.object({
 });
 
 export const ImageSchema = z.object({
-  src: z.string(),
-  alt: z.string(),
-  width: z.number().optional(),
-  height: z.number().optional(),
+  src: z.string().describe("Image URL. Use https://picsum.photos/{width}/{height} for placeholder images (e.g., 'https://picsum.photos/400/300')"),
+  alt: z.string().describe("Alt text for accessibility"),
+  width: z.number().optional().describe("Image width in pixels"),
+  height: z.number().optional().describe("Image height in pixels"),
   className: z.string().optional(),
 });
 
@@ -183,7 +205,12 @@ export const KPICardSchema = z.object({
   title: z.string(),
   value: z.string(),
   change: z.string().optional(),
-  changeType: z.enum(["positive", "negative", "neutral"]).optional(),
+  changeType: z.enum(["positive", "negative", "neutral", "increase", "decrease", "up", "down"]).transform(v => {
+    // Accept AI's intuitive values
+    if (v === "increase" || v === "up") return "positive";
+    if (v === "decrease" || v === "down") return "negative";
+    return v;
+  }).optional(),
   icon: z.string().optional(),
   description: z.string().optional(),
 });
@@ -210,7 +237,7 @@ export const ProfileCardSchema = z.object({
 export const MediaCardSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
-  image: z.string().optional(),
+  image: z.string().optional().describe("Image URL. Use https://picsum.photos/{width}/{height} for placeholder images (e.g., 'https://picsum.photos/800/400')"),
   category: z.string().optional(),
   date: z.string().optional(),
   author: z.string().optional(),
@@ -752,7 +779,11 @@ export const FormSchema = z.object({
   fields: z.array(z.object({
     name: z.string(),
     label: z.string(),
-    type: z.enum(["text", "email", "password", "number", "textarea", "select", "checkbox", "radio", "date", "file", "switch", "slider"]),
+    type: z.enum(["text", "email", "password", "number", "textarea", "select", "checkbox", "radio", "date", "file", "switch", "slider", "url", "tel", "search"]).transform(v => {
+      // Accept HTML5 input types, map to our types
+      if (v === "url" || v === "tel" || v === "search") return "text";
+      return v;
+    }),
     placeholder: z.string().optional(),
     required: z.boolean().default(false),
     options: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
@@ -798,7 +829,12 @@ export const StatsGridSchema = z.object({
     description: z.string().optional(),
     icon: z.string().optional(),
     change: z.string().optional(),
-    changeType: z.enum(["positive", "negative", "neutral"]).optional(),
+    changeType: z.enum(["positive", "negative", "neutral", "increase", "decrease", "up", "down"]).transform(v => {
+      // Accept AI's intuitive values
+      if (v === "increase" || v === "up") return "positive";
+      if (v === "decrease" || v === "down") return "negative";
+      return v;
+    }).optional(),
   })),
   columns: z.number().min(2).max(6).default(4),
 });
