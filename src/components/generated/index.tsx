@@ -102,6 +102,28 @@ import {
 } from "recharts";
 import { CardContainer, CardBody, CardItem } from "@/components/aceternity/3d-card";
 import { AuroraBackground } from "@/components/aceternity/aurora-background";
+import { WavyBackground } from "@/components/aceternity/wavy-background";
+// Magic UI imports
+import { AnimatedGradient } from "@/components/magicui/animated-gradient";
+import { BlurFade } from "@/components/magicui/blur-fade";
+import { BorderBeam } from "@/components/magicui/border-beam";
+import { BoxReveal } from "@/components/magicui/box-reveal";
+import { GradientHeading } from "@/components/magicui/gradient-heading";
+import { NumberTicker } from "@/components/magicui/number-ticker";
+import { Ripple } from "@/components/magicui/ripple";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { WordPullUp } from "@/components/magicui/word-pull-up";
+import { Marquee } from "@/components/magicui/marquee";
+import { OrbitingCircles } from "@/components/magicui/orbiting-circles";
+import { RetroGrid } from "@/components/magicui/retro-grid";
+import { DotPattern } from "@/components/magicui/dot-pattern";
+import { GridPattern } from "@/components/magicui/grid-pattern";
+import { MagicCard } from "@/components/magicui/magic-card";
+import { TextShimmer } from "@/components/magicui/text-shimmer";
+import { SparklesText } from "@/components/magicui/sparkles-text";
+import { PulsatingButton } from "@/components/magicui/pulsating-button";
+import { AnimatedBeam as MagicAnimatedBeam } from "@/components/magicui/animated-beam";
+import { FlipText } from "@/components/magicui/flip-text";
 import { GlassmorphismCard } from "@/components/reactbits/glassmorphism-card";
 import { NeonButton } from "@/components/reactbits/neon-button";
 import { GradientText } from "@/components/reactbits/gradient-text";
@@ -2753,6 +2775,23 @@ function AuroraBackgroundComponent({ props, children }: ComponentRendererProps) 
   );
 }
 
+function WavyBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <WavyBackground
+      className={props.className as string}
+      containerClassName={props.containerClassName as string}
+      colors={props.colors as string[]}
+      waveWidth={props.waveWidth as number}
+      backgroundFill={props.backgroundFill as string}
+      blur={props.blur as number}
+      speed={props.speed as "slow" | "fast"}
+      waveOpacity={props.waveOpacity as number}
+    >
+      {children}
+    </WavyBackground>
+  );
+}
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -3478,11 +3517,12 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
-  // Aceternity UI (4)
+  // Aceternity UI (5)
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
   AuroraBackground: AuroraBackgroundComponent,
+  WavyBackground: WavyBackgroundComponent,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardComponent,
   NeonButton: NeonButtonComponent,

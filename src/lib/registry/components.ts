@@ -574,6 +574,12 @@ const registry: Record<ComponentName, RegistryEntry> = {
     tags: ["background", "animation", "aurora", "gradient", "aceternity"],
     allowedChildren: ["*"],
   },
+  WavyBackground: {
+    description: "Animated wavy background with flowing sine wave patterns. Canvas-based animation with customizable colors, speed, and opacity.",
+    category: "display",
+    tags: ["background", "animation", "waves", "canvas", "aceternity"],
+    allowedChildren: ["*"],
+  },
 
   // React Bits Components
   GlassmorphismCard: {
@@ -804,6 +810,114 @@ const registry: Record<ComponentName, RegistryEntry> = {
     description: "Masonry-style image grid with multiple layout variants (standard, quilted, woven, masonry).",
     category: "display",
     tags: ["images", "gallery", "grid", "masonry", "photos", "mui", "material"],
+  },
+
+  // Magic UI Components
+  AnimatedGradient: {
+    description: "Animated rotating gradient background. Use for dynamic, colorful backgrounds with customizable colors and animation speed.",
+    category: "display",
+    tags: ["animation", "gradient", "background", "magic-ui", "effect"],
+    allowedChildren: ["*"],
+  },
+  BlurFade: {
+    description: "Fade-in animation with blur effect. Elements start blurred and fade into focus. Perfect for smooth content reveals.",
+    category: "display",
+    tags: ["animation", "fade", "blur", "magic-ui", "effect"],
+    allowedChildren: ["*"],
+  },
+  BorderBeam: {
+    description: "Animated gradient border beam effect. Creates a moving gradient along component borders for attention-grabbing UI.",
+    category: "display",
+    tags: ["animation", "border", "beam", "magic-ui", "effect"],
+  },
+  BoxReveal: {
+    description: "Box reveal animation where content is unveiled by a sliding colored box. Great for sequential content display.",
+    category: "display",
+    tags: ["animation", "reveal", "box", "magic-ui", "effect"],
+    allowedChildren: ["*"],
+  },
+  GradientHeading: {
+    description: "Heading with gradient text color. Use for eye-catching titles with smooth color transitions.",
+    category: "display",
+    tags: ["heading", "gradient", "text", "magic-ui", "typography"],
+  },
+  NumberTicker: {
+    description: "Animated number counter that smoothly ticks from 0 to target value. Perfect for stats and metrics displays.",
+    category: "data",
+    tags: ["number", "counter", "animation", "magic-ui", "stat"],
+  },
+  Ripple: {
+    description: "Ripple effect with expanding concentric circles. Creates a pulsing animation emanating from center.",
+    category: "display",
+    tags: ["animation", "ripple", "circles", "magic-ui", "effect"],
+  },
+  ShimmerButton: {
+    description: "Button with shimmer/shine animation effect. Light sweeps across the button creating an attractive shimmer.",
+    category: "input",
+    tags: ["button", "shimmer", "animation", "magic-ui", "interactive"],
+  },
+  WordPullUp: {
+    description: "Text animation where words pull up into view one by one. Creates a sequential reveal effect for text.",
+    category: "display",
+    tags: ["animation", "text", "words", "magic-ui", "typography"],
+  },
+  Marquee: {
+    description: "Infinite scrolling marquee for continuous horizontal or vertical content loop. Perfect for logos, testimonials, or news tickers.",
+    category: "display",
+    tags: ["marquee", "scroll", "infinite", "magic-ui", "animation"],
+    allowedChildren: ["*"],
+  },
+  OrbitingCircles: {
+    description: "Animated orbiting circles around a center point. Creates a planetary orbit effect for decorative or illustrative purposes.",
+    category: "display",
+    tags: ["animation", "orbit", "circles", "magic-ui", "effect"],
+    allowedChildren: ["*"],
+  },
+  RetroGrid: {
+    description: "Retro-style 3D grid background with perspective. Perfect for 80s/synthwave aesthetic or futuristic designs.",
+    category: "display",
+    tags: ["grid", "retro", "3d", "background", "magic-ui"],
+  },
+  DotPattern: {
+    description: "SVG dot pattern background. Creates a subtle dotted texture for backgrounds.",
+    category: "display",
+    tags: ["pattern", "dots", "background", "magic-ui", "texture"],
+  },
+  GridPattern: {
+    description: "SVG grid pattern background with optional highlighted squares. Creates a technical/blueprint aesthetic.",
+    category: "display",
+    tags: ["pattern", "grid", "background", "magic-ui", "texture"],
+  },
+  MagicCard: {
+    description: "Interactive 3D card with mouse-tracking gradient effect. Card tilts on hover with a gradient spotlight following the cursor.",
+    category: "display",
+    tags: ["card", "3d", "interactive", "gradient", "magic-ui", "hover"],
+    allowedChildren: ["*"],
+  },
+  TextShimmer: {
+    description: "Text with animated shimmer effect. Creates a shining/glowing animation across text.",
+    category: "display",
+    tags: ["text", "shimmer", "animation", "magic-ui", "typography"],
+  },
+  SparklesText: {
+    description: "Text with animated sparkle particles. Adds magical sparkles that appear and disappear around text.",
+    category: "display",
+    tags: ["text", "sparkles", "animation", "magic-ui", "typography", "effect"],
+  },
+  PulsatingButton: {
+    description: "Button with pulsating ring animation. Creates an attention-grabbing pulse effect emanating from the button.",
+    category: "input",
+    tags: ["button", "pulsating", "animation", "magic-ui", "interactive"],
+  },
+  MagicAnimatedBeam: {
+    description: "Animated beam connecting two elements. Creates a flowing gradient line between components with optional curvature.",
+    category: "display",
+    tags: ["beam", "connection", "animation", "magic-ui", "effect"],
+  },
+  FlipText: {
+    description: "Text with 3D flip animation. Letters flip into view with a perspective transform creating a dynamic entrance.",
+    category: "display",
+    tags: ["text", "flip", "3d", "animation", "magic-ui", "typography"],
   },
 };
 

@@ -1054,6 +1054,17 @@ export const AuroraBackgroundSchema = z.object({
   showRadialGradient: z.boolean().default(true),
 });
 
+export const WavyBackgroundSchema = z.object({
+  className: z.string().optional(),
+  containerClassName: z.string().optional(),
+  colors: z.array(z.string()).optional(),
+  waveWidth: z.number().optional(),
+  backgroundFill: z.string().optional(),
+  blur: z.number().default(10),
+  speed: z.enum(["slow", "fast"]).default("fast"),
+  waveOpacity: z.number().default(0.5),
+});
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -1701,11 +1712,12 @@ export const componentSchemas = {
   Terminal: TerminalSchema,
   CodeEditor: CodeEditorSchema,
   Markdown: MarkdownSchema,
-  // Aceternity UI (4)
+  // Aceternity UI (5)
   ThreeDCard: ThreeDCardSchema,
   ThreeDCardBody: ThreeDCardBodySchema,
   ThreeDCardItem: ThreeDCardItemSchema,
   AuroraBackground: AuroraBackgroundSchema,
+  WavyBackground: WavyBackgroundSchema,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardSchema,
   NeonButton: NeonButtonSchema,
