@@ -144,7 +144,11 @@ export async function generateUI(
     };
   }
 
-  const systemPrompt = buildSystemPrompt(request.constraints, request.theme as ThemeConfig);
+  const systemPrompt = buildSystemPrompt(
+    request.constraints,
+    request.theme as ThemeConfig,
+    request.styleHint
+  );
 
   // Build user message
   let userMessage = request.prompt;

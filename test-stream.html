@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stream Test</title>
+</head>
+<body>
+    <h1>Stream Test</h1>
+    <button onclick="testStream()">Test Stream</button>
+    <div id="output" style="white-space: pre-wrap; font-family: monospace; margin-top: 20px;"></div>
+
+    <script>
+        async function testStream() {
+            const output = document.getElementById('output');
+            output.innerHTML = 'Starting stream...\n\n';
+
+            const response = await fetch('http://localhost:3002/api/generate/stream', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    prompt: 'Create a simple dashboard with 3 KPI cards',
+                    theme: {},
+                    constraints: {}
+                })
+            });
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let chunkCount = 0;
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                chunkCount++;
+                const chunk = decoder.decode(value, { stream: true });
+
+                output.innerHTML += `\n--- CHUNK ${chunkCount} (${chunk.length} bytes) ---\n`;
+                output.innerHTML += chunk.substring(0, 200) + (chunk.length > 200 ? '...' : '');
+                output.innerHTML += '\n';
+
+                // Auto-scroll
+                output.scrollTop = output.scrollHeight;
+            }
+
+            output.innerHTML += `\n\n=== STREAM COMPLETE (${chunkCount} chunks) ===`;
+        }
+    </script>
+</body>
+</html>

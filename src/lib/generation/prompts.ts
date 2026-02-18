@@ -7,7 +7,8 @@ import type { GenerationConstraints, ThemeConfig } from "@/types";
  */
 export function buildSystemPrompt(
   constraints?: GenerationConstraints,
-  theme?: ThemeConfig
+  theme?: ThemeConfig,
+  styleHint?: string
 ): string {
   const componentDocs = generateLLMComponentDocs();
   const allowedComponents = constraints?.allowedComponents ?? getAllComponentNames();
@@ -147,6 +148,7 @@ ${componentDocs}
 }
 \`\`\`
 
+${styleHint ? `## User Design Preferences\n${styleHint}\n\nConsider these preferences when selecting components, choosing layouts, setting spacing/sizing, and composing the overall design. Match the requested style and aesthetic while maintaining usability and following component schemas.\n` : ""}
 ${constraints?.layout ? `## Layout Preference: ${constraints.layout}` : ""}
 ${constraints?.maxDepth ? `## Max Nesting Depth: ${constraints.maxDepth}` : ""}
 ${constraints?.preferredLibrary ? `## Preferred Library: ${constraints.preferredLibrary}` : ""}

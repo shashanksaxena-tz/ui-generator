@@ -42,11 +42,11 @@ export default function Home() {
   });
 
   const handleSubmit = useCallback(
-    (prompt: string) => {
+    (prompt: string, styleHint?: string) => {
       if (schema) {
-        refine(prompt);
+        refine(prompt, styleHint);
       } else {
-        generate(prompt);
+        generate(prompt, styleHint);
       }
     },
     [schema, generate, refine]

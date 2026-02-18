@@ -120,6 +120,29 @@ import { SmoothScroll } from "@/components/reactbits/smooth-scroll";
 import { RevealText } from "@/components/reactbits/reveal-text";
 import { CountUp } from "@/components/reactbits/count-up";
 import { TypeWriter } from "@/components/reactbits/typewriter";
+import { Stat, StatLabel, StatNumber, StatHelpText, StatArrow } from "@/components/chakraui/stat";
+import { CircularProgress, CircularProgressLabel } from "@/components/chakraui/circular-progress";
+import { SimpleGrid } from "@/components/chakraui/simple-grid";
+import { Wrap, WrapItem } from "@/components/chakraui/wrap";
+import { Tag, TagLabel, TagLeftIcon, TagRightIcon, TagCloseButton } from "@/components/chakraui/tag";
+import { Divider } from "@/components/chakraui/divider";
+import { Kbd } from "@/components/chakraui/kbd";
+import { VisuallyHidden } from "@/components/chakraui/visually-hidden";
+import { Portal } from "@/components/chakraui/portal";
+import { CloseButton } from "@/components/chakraui/close-button";
+import { IconButton } from "@/components/chakraui/icon-button";
+import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@/components/chakraui/number-input";
+import { DataGrid } from "@/components/mui/data-grid";
+import { TreeView, TreeItem } from "@/components/mui/tree-view";
+import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from "@/components/mui/timeline";
+import { Stepper as MuiStepperComponent, Step, StepLabel, StepContent, StepButton, StepIcon } from "@/components/mui/stepper";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@/components/mui/speed-dial";
+import { Rating as MuiRatingComponent } from "@/components/mui/rating";
+import { Autocomplete as MuiAutocompleteComponent } from "@/components/mui/autocomplete";
+import { Pagination as MuiPaginationComponent, PaginationItem } from "@/components/mui/pagination";
+import { Breadcrumbs as MuiBreadcrumbsComponent } from "@/components/mui/breadcrumbs";
+import { ImageList, ImageListItem, ImageListItemBar } from "@/components/mui/image-list";
+import { TextField } from "@mui/material";
 
 // ============================================================================
 // Icon resolver
@@ -2929,6 +2952,410 @@ function TypeWriterComponent({ props }: ComponentRendererProps) {
 }
 
 // ============================================================================
+// Chakra UI Components
+// ============================================================================
+
+function ChakraStatComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <Stat className={props.className as string}>
+      {children}
+    </Stat>
+  );
+}
+
+function ChakraStatLabelComponent({ props }: ComponentRendererProps) {
+  return <StatLabel className={props.className as string}>{props.text as string}</StatLabel>;
+}
+
+function ChakraStatNumberComponent({ props }: ComponentRendererProps) {
+  return <StatNumber className={props.className as string}>{props.value}</StatNumber>;
+}
+
+function ChakraStatHelpTextComponent({ props }: ComponentRendererProps) {
+  const trend = props.trend as string | undefined;
+  return (
+    <StatHelpText className={props.className as string}>
+      {trend && trend !== "neutral" && (
+        <StatArrow type={trend === "increase" ? "increase" : "decrease"} />
+      )}
+      {props.text as string}
+    </StatHelpText>
+  );
+}
+
+function ChakraCircularProgressComponent({ props }: ComponentRendererProps) {
+  return (
+    <CircularProgress
+      value={props.value as number}
+      size={props.size as string}
+      thickness={props.thickness as number}
+      color={props.color as string}
+      trackColor={props.trackColor as string}
+      className={props.className as string}
+    >
+      {props.showValue && <CircularProgressLabel>{props.value}%</CircularProgressLabel>}
+    </CircularProgress>
+  );
+}
+
+function ChakraSimpleGridComponent({ props, children }: ComponentRendererProps) {
+  return (
+          <SimpleGrid
+        columns={props.columns as any}
+        spacing={props.spacing as any}
+        className={props.className as string}
+      >
+        {children}
+      </SimpleGrid>
+
+  );
+}
+
+function ChakraWrapComponent({ props, children }: ComponentRendererProps) {
+  return (
+          <Wrap
+        spacing={props.spacing as any}
+        align={props.align as any}
+        justify={props.justify as any}
+        className={props.className as string}
+      >
+        {React.Children.map(children, (child) => (
+          <WrapItem>{child}</WrapItem>
+        ))}
+      </Wrap>
+
+  );
+}
+
+function ChakraTagComponent({ props }: ComponentRendererProps) {
+  const Icon = props.leftIcon ? resolveIcon(props.leftIcon as string) : null;
+  const RightIcon = props.rightIcon ? resolveIcon(props.rightIcon as string) : null;
+
+  return (
+          <Tag
+        size={props.size as any}
+        variant={props.variant as any}
+        colorScheme={props.colorScheme as string}
+        className={props.className as string}
+      >
+        {Icon && <TagLeftIcon as={Icon} />}
+        <TagLabel>{props.text as string}</TagLabel>
+        {RightIcon && <TagRightIcon as={RightIcon} />}
+        {props.closeable && <TagCloseButton />}
+      </Tag>
+
+  );
+}
+
+function ChakraDividerComponent({ props }: ComponentRendererProps) {
+  return (
+          <Divider
+        orientation={props.orientation as any}
+        variant={props.variant as any}
+        className={props.className as string}
+      />
+
+  );
+}
+
+function ChakraKbdComponent({ props }: ComponentRendererProps) {
+  const keys = props.keys as string[];
+  return (
+          {keys.map((key, i) => (
+        <React.Fragment key={i}>
+          <Kbd className={props.className as string}>{key}</Kbd>
+          {i < keys.length - 1 && <span className="mx-1">+</span>}
+        </React.Fragment>
+      ))}
+
+  );
+}
+
+function ChakraVisuallyHiddenComponent({ props }: ComponentRendererProps) {
+  return (
+          <VisuallyHidden>{props.text as string}</VisuallyHidden>
+
+  );
+}
+
+function ChakraPortalComponent({ props, children }: ComponentRendererProps) {
+  return (
+          <Portal className={props.className as string}>{children}</Portal>
+
+  );
+}
+
+function ChakraCloseButtonComponent({ props }: ComponentRendererProps) {
+  return (
+          <CloseButton
+        size={props.size as any}
+        className={props.className as string}
+      />
+
+  );
+}
+
+function ChakraIconButtonComponent({ props }: ComponentRendererProps) {
+  const Icon = resolveIcon(props.icon as string);
+
+  return (
+          <IconButton
+        aria-label={props.ariaLabel as string}
+        icon={Icon ? <Icon /> : undefined}
+        size={props.size as any}
+        variant={props.variant as any}
+        colorScheme={props.colorScheme as string}
+        isRound={props.isRound as boolean}
+        className={props.className as string}
+      />
+
+  );
+}
+
+function ChakraNumberInputComponent({ props }: ComponentRendererProps) {
+  return (
+          <NumberInput
+        defaultValue={props.defaultValue as number}
+        min={props.min as number}
+        max={props.max as number}
+        step={props.step as number}
+        precision={props.precision as number}
+        size={props.size as any}
+        variant={props.variant as any}
+        allowMouseWheel={props.allowMouseWheel as boolean}
+        className={props.className as string}
+      >
+        <NumberInputField />
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+      </NumberInput>
+
+  );
+}
+
+// ============================================================================
+// Material UI Components
+// ============================================================================
+
+function MuiDataGridComponent({ props }: ComponentRendererProps) {
+  return (
+    <div style={{ height: 400, width: '100%' }} className={props.className as string}>
+      <DataGrid
+        rows={props.rows as any[]}
+        columns={props.columns as any[]}
+        pageSize={props.pageSize as number}
+        checkboxSelection={props.checkboxSelection as boolean}
+        disableSelectionOnClick={props.disableSelectionOnClick as boolean}
+        autoHeight={props.autoHeight as boolean}
+      />
+    </div>
+  );
+}
+
+function MuiTreeViewComponent({ props }: ComponentRendererProps) {
+  const items = props.items as any[];
+
+  const renderTreeItems = (nodes: any[]): React.ReactNode => {
+    return nodes.map((node) => (
+      <TreeItem key={node.nodeId} nodeId={node.nodeId} label={node.label}>
+        {node.children && renderTreeItems(node.children)}
+      </TreeItem>
+    ));
+  };
+
+  return (
+    <TreeView
+      defaultExpanded={props.defaultExpanded as string[]}
+      defaultSelected={props.defaultSelected as string[]}
+      className={props.className as string}
+    >
+      {renderTreeItems(items)}
+    </TreeView>
+  );
+}
+
+function MuiTimelineComponent({ props }: ComponentRendererProps) {
+  const items = props.items as any[];
+  const position = props.position as "left" | "right" | "alternate";
+
+  return (
+    <Timeline position={position} className={props.className as string}>
+      {items.map((item, i) => (
+        <TimelineItem key={i}>
+          {item.time && (
+            <TimelineOppositeContent color="text.secondary">
+              {item.time}
+            </TimelineOppositeContent>
+          )}
+          <TimelineSeparator>
+            <TimelineDot color={item.color} variant={item.variant} />
+            {i < items.length - 1 && <TimelineConnector />}
+          </TimelineSeparator>
+          <TimelineContent>
+            <div className="font-medium">{item.title}</div>
+            {item.description && <div className="text-sm text-gray-600">{item.description}</div>}
+          </TimelineContent>
+        </TimelineItem>
+      ))}
+    </Timeline>
+  );
+}
+
+function MuiStepperComponent({ props }: ComponentRendererProps) {
+  const steps = props.steps as any[];
+
+  return (
+    <MuiStepperComponent
+      activeStep={props.activeStep as number}
+      orientation={props.orientation as any}
+      alternativeLabel={props.alternativeLabel as boolean}
+      className={props.className as string}
+    >
+      {steps.map((step, index) => (
+        <Step key={index}>
+          <StepLabel optional={step.optional && <span className="text-xs">Optional</span>}>
+            {step.label}
+          </StepLabel>
+          {step.description && props.orientation === "vertical" && (
+            <StepContent>{step.description}</StepContent>
+          )}
+        </Step>
+      ))}
+    </MuiStepperComponent>
+  );
+}
+
+function MuiSpeedDialComponent({ props }: ComponentRendererProps) {
+  const actions = props.actions as any[];
+  const Icon = props.icon ? resolveIcon(props.icon as string) : null;
+
+  return (
+    <SpeedDial
+      ariaLabel={props.ariaLabel as string}
+      icon={Icon ? <SpeedDialIcon icon={<Icon />} /> : <SpeedDialIcon />}
+      direction={props.direction as any}
+      hidden={props.hidden as boolean}
+      className={props.className as string}
+    >
+      {actions.map((action, i) => {
+        const ActionIcon = resolveIcon(action.icon);
+        return (
+          <SpeedDialAction
+            key={i}
+            icon={ActionIcon ? <ActionIcon /> : undefined}
+            tooltipTitle={action.name}
+          />
+        );
+      })}
+    </SpeedDial>
+  );
+}
+
+function MuiRatingComponent({ props }: ComponentRendererProps) {
+  return (
+    <MuiRatingComponent
+      value={props.value as number}
+      max={props.max as number}
+      precision={props.precision as number}
+      size={props.size as any}
+      readOnly={props.readOnly as boolean}
+      disabled={props.disabled as boolean}
+      className={props.className as string}
+    />
+  );
+}
+
+function MuiAutocompleteComponent({ props }: ComponentRendererProps) {
+  return (
+    <MuiAutocompleteComponent
+      options={props.options as any[]}
+      multiple={props.multiple as boolean}
+      freeSolo={props.freeSolo as boolean}
+      disableClearable={props.disableClearable as boolean}
+      size={props.size as any}
+      className={props.className as string}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={props.label as string}
+          placeholder={props.placeholder as string}
+        />
+      )}
+    />
+  );
+}
+
+function MuiPaginationComponent({ props }: ComponentRendererProps) {
+  return (
+    <MuiPaginationComponent
+      count={props.count as number}
+      page={props.page as number}
+      variant={props.variant as any}
+      shape={props.shape as any}
+      color={props.color as any}
+      size={props.size as any}
+      showFirstButton={props.showFirstButton as boolean}
+      showLastButton={props.showLastButton as boolean}
+      className={props.className as string}
+    />
+  );
+}
+
+function MuiBreadcrumbsComponent({ props }: ComponentRendererProps) {
+  const items = props.items as any[];
+
+  return (
+    <MuiBreadcrumbsComponent
+      separator={props.separator as string}
+      maxItems={props.maxItems as number}
+      className={props.className as string}
+    >
+      {items.map((item, i) => {
+        const Icon = item.icon ? resolveIcon(item.icon) : null;
+        return (
+          <div key={i} className="flex items-center gap-1">
+            {Icon && <Icon size={16} />}
+            {item.href ? (
+              <a href={item.href} className="hover:underline">
+                {item.label}
+              </a>
+            ) : (
+              <span>{item.label}</span>
+            )}
+          </div>
+        );
+      })}
+    </MuiBreadcrumbsComponent>
+  );
+}
+
+function MuiImageListComponent({ props }: ComponentRendererProps) {
+  const images = props.images as any[];
+
+  return (
+    <ImageList
+      cols={props.cols as number}
+      rowHeight={props.rowHeight as any}
+      gap={props.gap as number}
+      variant={props.variant as any}
+      className={props.className as string}
+    >
+      {images.map((item, i) => (
+        <ImageListItem key={i} rows={item.rows} cols={item.cols}>
+          <img src={item.img} alt={item.title} loading="lazy" />
+          <ImageListItemBar
+            title={item.title}
+            subtitle={item.author}
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
+  );
+}
+
+// ============================================================================
 // Component Map — maps type names to React components
 // ============================================================================
 
@@ -3075,6 +3502,33 @@ const componentMap: Record<string, ComponentRenderer> = {
   RevealText: RevealTextComponent,
   CountUp: CountUpComponent,
   TypeWriter: TypeWriterComponent,
+  // Chakra UI (15)
+  ChakraStat: ChakraStatComponent,
+  ChakraStatLabel: ChakraStatLabelComponent,
+  ChakraStatNumber: ChakraStatNumberComponent,
+  ChakraStatHelpText: ChakraStatHelpTextComponent,
+  ChakraCircularProgress: ChakraCircularProgressComponent,
+  ChakraSimpleGrid: ChakraSimpleGridComponent,
+  ChakraWrap: ChakraWrapComponent,
+  ChakraTag: ChakraTagComponent,
+  ChakraDivider: ChakraDividerComponent,
+  ChakraKbd: ChakraKbdComponent,
+  ChakraVisuallyHidden: ChakraVisuallyHiddenComponent,
+  ChakraPortal: ChakraPortalComponent,
+  ChakraCloseButton: ChakraCloseButtonComponent,
+  ChakraIconButton: ChakraIconButtonComponent,
+  ChakraNumberInput: ChakraNumberInputComponent,
+  // Material UI (10)
+  MuiDataGrid: MuiDataGridComponent,
+  MuiTreeView: MuiTreeViewComponent,
+  MuiTimeline: MuiTimelineComponent,
+  MuiStepper: MuiStepperComponent,
+  MuiSpeedDial: MuiSpeedDialComponent,
+  MuiRating: MuiRatingComponent,
+  MuiAutocomplete: MuiAutocompleteComponent,
+  MuiPagination: MuiPaginationComponent,
+  MuiBreadcrumbs: MuiBreadcrumbsComponent,
+  MuiImageList: MuiImageListComponent,
 };
 
 // ============================================================================

@@ -8,7 +8,11 @@ import type {
   ThemeConfig,
   ConversationMessage,
 } from "@/types";
-import { generateId } from "@/lib/utils";
+
+// Local helper to generate unique IDs
+function generateId(): string {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+}
 
 interface UseGenerationReturn {
   schema: ReactInterfaceSchema | null;
@@ -16,8 +20,8 @@ interface UseGenerationReturn {
   error: string | null;
   metadata: GenerationResult["metadata"] | null;
   messages: ConversationMessage[];
-  generate: (prompt: string) => Promise<void>;
-  refine: (refinement: string) => Promise<void>;
+  generate: (prompt: string, styleHint?: string) => Promise<void>;
+  refine: (refinement: string, styleHint?: string) => Promise<void>;
   reset: () => void;
 }
 
@@ -37,7 +41,7 @@ export function useGeneration(options: UseGenerationOptions = {}): UseGeneration
   const schemaRef = useRef<ReactInterfaceSchema | null>(null);
 
   const generate = useCallback(
-    async (prompt: string) => {
+    async (prompt: string, styleHint?: string) => {
       setIsGenerating(true);
       setError(null);
 
@@ -45,7 +49,7 @@ export function useGeneration(options: UseGenerationOptions = {}): UseGeneration
       const userMessage: ConversationMessage = {
         id: generateId(),
         role: "user",
-        content: prompt,
+        content: styleHint ? `${prompt}\n\nStyle: ${styleHint}` : prompt,
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, userMessage]);
@@ -58,6 +62,7 @@ export function useGeneration(options: UseGenerationOptions = {}): UseGeneration
             prompt,
             theme: options.theme,
             constraints: options.constraints,
+            styleHint,
           }),
         });
 
@@ -104,7 +109,7 @@ export function useGeneration(options: UseGenerationOptions = {}): UseGeneration
   );
 
   const refine = useCallback(
-    async (refinement: string) => {
+    async (refinement: string, styleHint?: string) => {
       if (!schemaRef.current) {
         setError("No existing schema to refine");
         return;
@@ -116,7 +121,7 @@ export function useGeneration(options: UseGenerationOptions = {}): UseGeneration
       const userMessage: ConversationMessage = {
         id: generateId(),
         role: "user",
-        content: refinement,
+        content: styleHint ? `${refinement}\n\nStyle: ${styleHint}` : refinement,
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, userMessage]);
@@ -131,6 +136,7 @@ export function useGeneration(options: UseGenerationOptions = {}): UseGeneration
             theme: options.theme,
             constraints: options.constraints,
             previousSchema: schemaRef.current,
+            styleHint,
           }),
         });
 

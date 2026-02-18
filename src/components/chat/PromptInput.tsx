@@ -3,10 +3,10 @@
 import React, { useState, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Send, Loader2, Sparkles } from "lucide-react";
+import { Send, Loader2, Sparkles, Palette } from "lucide-react";
 
 interface PromptInputProps {
-  onSubmit: (prompt: string) => void;
+  onSubmit: (prompt: string, styleHint?: string) => void;
   isGenerating: boolean;
   hasExistingSchema: boolean;
   className?: string;
@@ -28,17 +28,20 @@ export function PromptInput({
   className,
 }: PromptInputProps) {
   const [value, setValue] = useState("");
+  const [styleHint, setStyleHint] = useState("");
+  const [showStyleHint, setShowStyleHint] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = useCallback(() => {
     const trimmed = value.trim();
     if (!trimmed || isGenerating) return;
-    onSubmit(trimmed);
+    onSubmit(trimmed, styleHint.trim() || undefined);
     setValue("");
+    setStyleHint("");
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
-  }, [value, isGenerating, onSubmit]);
+  }, [value, styleHint, isGenerating, onSubmit]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -76,6 +79,30 @@ export function PromptInput({
         </div>
       )}
 
+      {/* Style Hint Input (collapsible) */}
+      {showStyleHint && (
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-muted)]/30">
+          <Palette className="h-3.5 w-3.5 text-[var(--color-muted-foreground)] flex-shrink-0" />
+          <input
+            type="text"
+            value={styleHint}
+            onChange={(e) => setStyleHint(e.target.value)}
+            placeholder="Style hint (e.g., 'modern dark theme', 'minimalist with large spacing')"
+            className="flex-1 bg-transparent text-xs outline-none placeholder:text-[var(--color-muted-foreground)]"
+            disabled={isGenerating}
+          />
+          <button
+            onClick={() => {
+              setShowStyleHint(false);
+              setStyleHint("");
+            }}
+            className="text-xs text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       <div className="relative flex items-end gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-2 focus-within:border-[var(--color-primary-500)] transition-colors">
         <Sparkles className="h-4 w-4 text-[var(--color-muted-foreground)] ml-2 mb-2.5 flex-shrink-0" />
         <textarea
@@ -93,6 +120,18 @@ export function PromptInput({
           rows={1}
           disabled={isGenerating}
         />
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setShowStyleHint(!showStyleHint)}
+          className={cn(
+            "h-8 w-8 shrink-0 rounded-lg",
+            showStyleHint && "bg-[var(--color-muted)]"
+          )}
+          title="Add style hint"
+        >
+          <Palette className="h-4 w-4" />
+        </Button>
         <Button
           size="icon"
           onClick={handleSubmit}

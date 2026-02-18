@@ -148,6 +148,7 @@ export interface GenerationRequest {
   context?: GenerationContext;
   theme?: Partial<ThemeConfig>;
   constraints?: GenerationConstraints;
+  styleHint?: string; // User guidance for styling (e.g., "modern dark theme", "minimalist layout")
 }
 
 export interface GenerationContext {

@@ -29,9 +29,9 @@ function getStreamingProvider() {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { prompt, theme, constraints, previousSchema } = body;
+  const { prompt, theme, constraints, previousSchema, styleHint } = body;
 
-  const systemPrompt = buildSystemPrompt(constraints, theme as ThemeConfig);
+  const systemPrompt = buildSystemPrompt(constraints, theme as ThemeConfig, styleHint);
 
   let userMessage = prompt;
   if (previousSchema) {

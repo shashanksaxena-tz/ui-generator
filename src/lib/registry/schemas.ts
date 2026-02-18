@@ -1416,6 +1416,178 @@ export const MuiImageListSchema = z.object({
 });
 
 // ============================================================================
+// ============================================================================
+// Magic UI Components (20)
+// ============================================================================
+
+export const AnimatedGradientSchema = z.object({
+  colors: z.array(z.string()).default(["#4158D0", "#C850C0", "#FFCC70"]),
+  speed: z.number().default(3),
+  className: z.string().optional(),
+});
+
+export const BlurFadeSchema = z.object({
+  delay: z.number().default(0),
+  duration: z.number().default(0.6),
+  blur: z.string().default("6px"),
+  yOffset: z.number().default(20),
+  className: z.string().optional(),
+});
+
+export const BorderBeamSchema = z.object({
+  size: z.number().default(200),
+  duration: z.number().default(15),
+  delay: z.number().default(0),
+  colorFrom: z.string().default("#4e8cff"),
+  colorTo: z.string().default("#8b5cf6"),
+  className: z.string().optional(),
+});
+
+export const BoxRevealSchema = z.object({
+  width: z.union([z.string(), z.number()]).default("100%"),
+  duration: z.number().default(0.5),
+  delay: z.number().default(0),
+  boxColor: z.string().default("#4e8cff"),
+  className: z.string().optional(),
+});
+
+export const GradientHeadingSchema = z.object({
+  text: z.string(),
+  as: z.enum(["h1", "h2", "h3", "h4", "h5", "h6"]).default("h2"),
+  from: z.string().default("#4e8cff"),
+  to: z.string().default("#8b5cf6"),
+  className: z.string().optional(),
+});
+
+export const NumberTickerSchema = z.object({
+  value: z.number(),
+  duration: z.number().default(2000),
+  decimalPlaces: z.number().default(0),
+  prefix: z.string().default(""),
+  suffix: z.string().default(""),
+  className: z.string().optional(),
+});
+
+export const RippleSchema = z.object({
+  mainCircleSize: z.number().default(210),
+  mainCircleOpacity: z.number().default(0.24),
+  numCircles: z.number().default(8),
+  className: z.string().optional(),
+});
+
+export const ShimmerButtonSchema = z.object({
+  text: z.string(),
+  shimmerColor: z.string().default("#ffffff"),
+  shimmerSize: z.string().default("0.05em"),
+  borderRadius: z.string().default("100px"),
+  shimmerDuration: z.string().default("3s"),
+  background: z.string().default("rgba(0, 0, 0, 1)"),
+  className: z.string().optional(),
+});
+
+export const WordPullUpSchema = z.object({
+  words: z.string(),
+  delayMultiple: z.number().default(0.08),
+  className: z.string().optional(),
+  wrapperClassName: z.string().optional(),
+});
+
+export const MarqueeSchema = z.object({
+  reverse: z.boolean().default(false),
+  pauseOnHover: z.boolean().default(false),
+  vertical: z.boolean().default(false),
+  repeat: z.number().default(4),
+  speed: z.number().default(40),
+  className: z.string().optional(),
+});
+
+export const OrbitingCirclesSchema = z.object({
+  reverse: z.boolean().default(false),
+  duration: z.number().default(20),
+  delay: z.number().default(0),
+  radius: z.number().default(50),
+  path: z.boolean().default(true),
+  className: z.string().optional(),
+});
+
+export const RetroGridSchema = z.object({
+  angle: z.number().default(65),
+  className: z.string().optional(),
+});
+
+export const DotPatternSchema = z.object({
+  width: z.number().default(16),
+  height: z.number().default(16),
+  x: z.number().default(0),
+  y: z.number().default(0),
+  cx: z.number().default(1),
+  cy: z.number().default(1),
+  cr: z.number().default(1),
+  className: z.string().optional(),
+});
+
+export const GridPatternSchema = z.object({
+  width: z.number().default(40),
+  height: z.number().default(40),
+  x: z.number().default(-1),
+  y: z.number().default(-1),
+  strokeDasharray: z.union([z.string(), z.number()]).default("0"),
+  squares: z.array(z.tuple([z.number(), z.number()])).optional(),
+  className: z.string().optional(),
+});
+
+export const MagicCardSchema = z.object({
+  gradientSize: z.number().default(200),
+  gradientColor: z.string().default("#4e8cff"),
+  gradientOpacity: z.number().default(0.8),
+  className: z.string().optional(),
+});
+
+export const TextShimmerSchema = z.object({
+  text: z.string(),
+  shimmerWidth: z.number().default(100),
+  duration: z.number().default(2),
+  className: z.string().optional(),
+});
+
+export const SparklesTextSchema = z.object({
+  text: z.string(),
+  sparklesCount: z.number().default(10),
+  colors: z.object({
+    first: z.string().default("#4e8cff"),
+    second: z.string().default("#8b5cf6"),
+  }).default({ first: "#4e8cff", second: "#8b5cf6" }),
+  className: z.string().optional(),
+});
+
+export const PulsatingButtonSchema = z.object({
+  text: z.string(),
+  pulseColor: z.string().default("#4e8cff"),
+  duration: z.string().default("1.5s"),
+  className: z.string().optional(),
+});
+
+export const MagicAnimatedBeamSchema = z.object({
+  curvature: z.number().default(0),
+  reverse: z.boolean().default(false),
+  duration: z.number().default(3),
+  delay: z.number().default(0),
+  pathColor: z.string().default("gray"),
+  pathWidth: z.number().default(2),
+  pathOpacity: z.number().default(0.2),
+  gradientStartColor: z.string().default("#4e8cff"),
+  gradientStopColor: z.string().default("#8b5cf6"),
+  className: z.string().optional(),
+});
+
+export const FlipTextSchema = z.object({
+  word: z.string(),
+  duration: z.number().default(0.5),
+  delayMultiple: z.number().default(0.08),
+  className: z.string().optional(),
+});
+
+
 // Schema Map — 122 components
 // ============================================================================
 

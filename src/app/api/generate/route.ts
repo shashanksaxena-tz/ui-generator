@@ -6,7 +6,7 @@ import type { GenerationRequest, ReactInterfaceSchema } from "@/types";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { prompt, theme, constraints, previousSchema } = body;
+    const { prompt, theme, constraints, previousSchema, styleHint } = body;
 
     if (!prompt || typeof prompt !== "string") {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
       prompt,
       theme,
       constraints,
+      styleHint,
       context: previousSchema
         ? { previousSchema: previousSchema as ReactInterfaceSchema }
         : undefined,
