@@ -46,7 +46,7 @@ function getSelectionModel() {
  * Pass 1: Find components whose aliases match words/phrases in the user prompt.
  * Synchronous — no LLM call needed.
  */
-function findComponentsByAliasMatch(userPrompt: string): string[] {
+export function findComponentsByAliasMatch(userPrompt: string): string[] {
   const prompt = userPrompt.toLowerCase();
   const registry = getFullRegistry();
   const matches = new Set<string>();

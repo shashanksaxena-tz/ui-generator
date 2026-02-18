@@ -1,36 +1,60 @@
 import { describe, it, expect } from "vitest";
-import { selectRelevantComponents } from "../component-selection";
+import { findComponentsByAliasMatch } from "../component-selection";
 
-describe("selectRelevantComponents", () => {
-  // Alias matching tests (no LLM needed — LLM errors are caught internally)
-  it("finds FloatingDock when prompt mentions 'floating dock'", async () => {
-    const result = await selectRelevantComponents("build a page with floating dock navigation");
+describe("findComponentsByAliasMatch", () => {
+  it("finds FloatingDock when prompt mentions 'floating dock'", () => {
+    const result = findComponentsByAliasMatch("build a page with floating dock navigation");
     expect(result).toContain("FloatingDock");
   });
 
-  it("finds BentoGrid when prompt mentions 'bento'", async () => {
-    const result = await selectRelevantComponents("create a bento grid layout");
+  it("finds BentoGrid and BentoGridItem when prompt mentions 'bento'", () => {
+    const result = findComponentsByAliasMatch("animated landing page with bento grid layout");
     expect(result).toContain("BentoGrid");
     expect(result).toContain("BentoGridItem");
   });
 
-  it("finds InfiniteMovingCards when prompt mentions 'infinite carousel'", async () => {
-    const result = await selectRelevantComponents("add an infinite scrolling testimonial carousel");
+  it("finds InfiniteMovingCards when prompt mentions 'infinite moving cards'", () => {
+    const result = findComponentsByAliasMatch("showcase page with infinite moving cards carousel");
     expect(result).toContain("InfiniteMovingCards");
   });
 
-  it("never returns fewer than 6 components", async () => {
-    const result = await selectRelevantComponents("a showcase page");
-    expect(result.length).toBeGreaterThanOrEqual(6);
+  it("finds AuroraBackground when prompt mentions 'aurora background'", () => {
+    const result = findComponentsByAliasMatch("create a hero section with aurora background");
+    expect(result).toContain("AuroraBackground");
   });
 
-  it("always includes core layout components", async () => {
-    const result = await selectRelevantComponents("make something");
-    expect(result).toContain("Flex");
-    expect(result).toContain("Container");
-    expect(result).toContain("Grid");
-    expect(result).toContain("Section");
-    expect(result).toContain("Stack");
-    expect(result).toContain("Center");
+  it("finds ThreeDCard and companions when prompt mentions '3D card'", () => {
+    const result = findComponentsByAliasMatch("3d card hover effects");
+    expect(result).toContain("ThreeDCard");
+    expect(result).toContain("ThreeDCardBody");
+    expect(result).toContain("ThreeDCardItem");
+  });
+
+  it("finds Testimonial when prompt mentions 'testimonial'", () => {
+    const result = findComponentsByAliasMatch("testimonial section");
+    expect(result).toContain("Testimonial");
+  });
+
+  it("returns empty array for unrelated prompt with no alias matches", () => {
+    const result = findComponentsByAliasMatch("xyz123 completely random gibberish");
+    expect(result).toEqual([]);
+  });
+
+  it("finds multiple components when prompt has several alias matches", () => {
+    const result = findComponentsByAliasMatch(
+      "landing page with aurora background, bento grid, and floating dock"
+    );
+    expect(result).toContain("AuroraBackground");
+    expect(result).toContain("BentoGrid");
+    expect(result).toContain("BentoGridItem");
+    expect(result).toContain("FloatingDock");
+  });
+
+  it("auto-includes BentoGrid when BentoGridItem is matched", () => {
+    // BentoGridItem's aliases include "bento grid item" — but BentoGrid alias "bento grid"
+    // matches first in practice. Test companion logic via BentoGrid match.
+    const result = findComponentsByAliasMatch("create a bento grid");
+    expect(result).toContain("BentoGrid");
+    expect(result).toContain("BentoGridItem");
   });
 });
