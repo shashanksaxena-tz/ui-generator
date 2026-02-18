@@ -1,4 +1,4 @@
-import type { ComponentDefinition, ComponentCategory } from "@/types";
+import type { ComponentDefinition, ComponentCategory, ComponentMeta } from "@/types";
 import { componentSchemas, type ComponentName } from "./schemas";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
@@ -10,14 +10,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
  * 3. Documentation — auto-generated docs for LLM (Syntux-style llmContext)
  */
 
-interface RegistryEntry {
-  description: string;
-  category: ComponentCategory;
-  tags: string[];
-  allowedChildren?: string[];
-}
-
-const registry: Record<ComponentName, RegistryEntry> = {
+const registry: Record<ComponentName, ComponentMeta> = {
   // Layout
   Flex: {
     description: "Flexbox layout container. Arranges children in a row or column with configurable gap, alignment, and justification.",
@@ -996,7 +989,7 @@ export function getComponentDefinitions(): ComponentDefinition[] {
   return (Object.keys(registry) as ComponentName[]).map((name) => ({
     name,
     description: registry[name].description,
-    category: registry[name].category,
+    category: (registry[name].categories?.[0] ?? "composite") as ComponentCategory,
     propsSchema: componentSchemas[name],
     allowedChildren: registry[name].allowedChildren,
     tags: registry[name].tags,
@@ -1019,7 +1012,7 @@ export function getComponentDefinition(name: string): ComponentDefinition | unde
     return {
       name: key,
       description: registry[key].description,
-      category: registry[key].category,
+      category: (registry[key].categories?.[0] ?? "composite") as ComponentCategory,
       propsSchema: componentSchemas[key],
       allowedChildren: registry[key].allowedChildren,
       tags: registry[key].tags,
