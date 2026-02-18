@@ -1559,6 +1559,14 @@ export function generateLLMComponentDocs(allowedComponents?: string[]): string {
     for (const comp of components) {
       docs.push(`### ${comp.name}`);
       docs.push(`${comp.description}`);
+      // Include whenToUse and library from the full registry metadata
+      const meta = registry[comp.name as ComponentName];
+      if (meta?.whenToUse) {
+        docs.push(`When to use: ${meta.whenToUse}`);
+      }
+      if (meta?.library) {
+        docs.push(`Library: ${meta.library}`);
+      }
       docs.push(`Tags: ${comp.tags.join(", ")}`);
       if (comp.allowedChildren) {
         docs.push(`Children: ${comp.allowedChildren.join(", ")}`);
