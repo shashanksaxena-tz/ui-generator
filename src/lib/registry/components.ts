@@ -672,6 +672,139 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "display",
     tags: ["text", "typewriter", "animation", "cursor", "reactbits"],
   },
+
+  // Chakra UI
+  ChakraStat: {
+    description: "Statistics display container. Use with ChakraStatLabel, ChakraStatNumber, and ChakraStatHelpText for complete stat displays.",
+    category: "display",
+    tags: ["stat", "statistics", "data", "chakra"],
+    allowedChildren: ["ChakraStatLabel", "ChakraStatNumber", "ChakraStatHelpText"],
+  },
+  ChakraStatLabel: {
+    description: "Label for a statistic. Use inside ChakraStat.",
+    category: "display",
+    tags: ["stat", "label", "chakra"],
+  },
+  ChakraStatNumber: {
+    description: "Numeric value display for statistics. Use inside ChakraStat.",
+    category: "display",
+    tags: ["stat", "number", "value", "chakra"],
+  },
+  ChakraStatHelpText: {
+    description: "Helper text and trend indicator for statistics. Use inside ChakraStat.",
+    category: "display",
+    tags: ["stat", "help", "trend", "chakra"],
+  },
+  ChakraCircularProgress: {
+    description: "Circular progress indicator with customizable size, color, and thickness. Can display value label.",
+    category: "feedback",
+    tags: ["progress", "circular", "loading", "indicator", "chakra"],
+  },
+  ChakraSimpleGrid: {
+    description: "Simple responsive grid layout with configurable columns and spacing. Easier than CSS Grid for simple layouts.",
+    category: "layout",
+    tags: ["grid", "layout", "responsive", "chakra"],
+    allowedChildren: ["*"],
+  },
+  ChakraWrap: {
+    description: "Wrapping flex container that flows children to next line when space runs out. Similar to flexbox with flex-wrap.",
+    category: "layout",
+    tags: ["wrap", "layout", "flex", "responsive", "chakra"],
+    allowedChildren: ["*"],
+  },
+  ChakraTag: {
+    description: "Tag/label component for categories, status, or attributes. Supports icons and close button.",
+    category: "display",
+    tags: ["tag", "label", "badge", "category", "chakra"],
+  },
+  ChakraDivider: {
+    description: "Visual divider line (horizontal or vertical) to separate content.",
+    category: "display",
+    tags: ["divider", "separator", "line", "chakra"],
+  },
+  ChakraKbd: {
+    description: "Keyboard key display for showing keyboard shortcuts (e.g., Cmd+K).",
+    category: "display",
+    tags: ["keyboard", "kbd", "shortcut", "key", "chakra"],
+  },
+  ChakraVisuallyHidden: {
+    description: "Hides content visually but keeps it accessible to screen readers. For accessibility.",
+    category: "display",
+    tags: ["accessibility", "hidden", "sr-only", "chakra"],
+  },
+  ChakraPortal: {
+    description: "Renders children into a DOM node outside the parent hierarchy. Useful for modals and overlays.",
+    category: "layout",
+    tags: ["portal", "overlay", "modal", "chakra"],
+    allowedChildren: ["*"],
+  },
+  ChakraCloseButton: {
+    description: "Close button with consistent styling. Commonly used in modals, toasts, and dismissible components.",
+    category: "input",
+    tags: ["close", "button", "dismiss", "chakra"],
+  },
+  ChakraIconButton: {
+    description: "Button that displays only an icon. Use for compact actions.",
+    category: "input",
+    tags: ["button", "icon", "action", "chakra"],
+  },
+  ChakraNumberInput: {
+    description: "Number input with increment/decrement steppers. Supports min, max, step, and precision.",
+    category: "input",
+    tags: ["input", "number", "stepper", "form", "chakra"],
+  },
+
+  // Material UI
+  MuiDataGrid: {
+    description: "Advanced data grid with sorting, filtering, pagination, and cell editing. Ideal for large datasets.",
+    category: "data",
+    tags: ["table", "grid", "data", "sorting", "filtering", "pagination", "mui", "material"],
+  },
+  MuiTreeView: {
+    description: "Hierarchical tree structure for displaying nested data. Supports expand/collapse.",
+    category: "data",
+    tags: ["tree", "hierarchy", "nested", "expandable", "mui", "material"],
+  },
+  MuiTimeline: {
+    description: "Timeline component for displaying chronological events. Supports left, right, and alternating positions.",
+    category: "display",
+    tags: ["timeline", "events", "chronological", "history", "mui", "material"],
+  },
+  MuiStepper: {
+    description: "Step progress indicator for multi-step processes. Supports horizontal and vertical orientations.",
+    category: "navigation",
+    tags: ["stepper", "steps", "progress", "wizard", "form", "mui", "material"],
+  },
+  MuiSpeedDial: {
+    description: "Floating action button that expands to show multiple actions. Material Design speed dial pattern.",
+    category: "navigation",
+    tags: ["speed-dial", "fab", "floating", "actions", "menu", "mui", "material"],
+  },
+  MuiRating: {
+    description: "Star rating component for collecting user ratings. Supports half-star precision and custom icons.",
+    category: "input",
+    tags: ["rating", "stars", "review", "feedback", "mui", "material"],
+  },
+  MuiAutocomplete: {
+    description: "Autocomplete input with suggestions dropdown. Supports single/multiple selection and free text input.",
+    category: "input",
+    tags: ["autocomplete", "search", "input", "suggestions", "select", "mui", "material"],
+  },
+  MuiPagination: {
+    description: "Pagination controls for navigating through pages. Material Design style with various shapes and sizes.",
+    category: "navigation",
+    tags: ["pagination", "pages", "navigation", "mui", "material"],
+  },
+  MuiBreadcrumbs: {
+    description: "Breadcrumb navigation showing the current page's location in the hierarchy.",
+    category: "navigation",
+    tags: ["breadcrumbs", "navigation", "hierarchy", "path", "mui", "material"],
+  },
+  MuiImageList: {
+    description: "Masonry-style image grid with multiple layout variants (standard, quilted, woven, masonry).",
+    category: "display",
+    tags: ["images", "gallery", "grid", "masonry", "photos", "mui", "material"],
+  },
 };
 
 /**

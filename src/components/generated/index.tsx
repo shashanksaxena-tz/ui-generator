@@ -101,6 +101,7 @@ import {
   ZAxis,
 } from "recharts";
 import { CardContainer, CardBody, CardItem } from "@/components/aceternity/3d-card";
+import { AuroraBackground } from "@/components/aceternity/aurora-background";
 import { GlassmorphismCard } from "@/components/reactbits/glassmorphism-card";
 import { NeonButton } from "@/components/reactbits/neon-button";
 import { GradientText } from "@/components/reactbits/gradient-text";
@@ -2718,6 +2719,17 @@ function ThreeDCardItemComponent({ props, children }: ComponentRendererProps) {
   );
 }
 
+function AuroraBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <AuroraBackground
+      className={props.className as string}
+      showRadialGradient={props.showRadialGradient as boolean}
+    >
+      {children}
+    </AuroraBackground>
+  );
+}
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -3039,10 +3051,11 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
-  // Aceternity UI (3)
+  // Aceternity UI (4)
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
+  AuroraBackground: AuroraBackgroundComponent,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardComponent,
   NeonButton: NeonButtonComponent,

@@ -159,6 +159,15 @@ body {
   }
 }
 
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
 .animate-in {
   animation: fade-in 0.3s ease-out;
 }
