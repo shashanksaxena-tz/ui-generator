@@ -1752,6 +1752,27 @@ export const componentSchemas = {
   MuiPagination: MuiPaginationSchema,
   MuiBreadcrumbs: MuiBreadcrumbsSchema,
   MuiImageList: MuiImageListSchema,
+  // Magic UI (20)
+  AnimatedGradient: AnimatedGradientSchema,
+  BlurFade: BlurFadeSchema,
+  BorderBeam: BorderBeamSchema,
+  BoxReveal: BoxRevealSchema,
+  GradientHeading: GradientHeadingSchema,
+  NumberTicker: NumberTickerSchema,
+  Ripple: RippleSchema,
+  ShimmerButton: ShimmerButtonSchema,
+  WordPullUp: WordPullUpSchema,
+  Marquee: MarqueeSchema,
+  OrbitingCircles: OrbitingCirclesSchema,
+  RetroGrid: RetroGridSchema,
+  DotPattern: DotPatternSchema,
+  GridPattern: GridPatternSchema,
+  MagicCard: MagicCardSchema,
+  TextShimmer: TextShimmerSchema,
+  SparklesText: SparklesTextSchema,
+  PulsatingButton: PulsatingButtonSchema,
+  MagicAnimatedBeam: MagicAnimatedBeamSchema,
+  FlipText: FlipTextSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;
