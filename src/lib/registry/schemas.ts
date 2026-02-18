@@ -1049,6 +1049,11 @@ export const ThreeDCardItemSchema = z.object({
   rotateZ: z.union([z.number(), z.string()]).optional(),
 });
 
+export const AuroraBackgroundSchema = z.object({
+  className: z.string().optional(),
+  showRadialGradient: z.boolean().default(true),
+});
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -1164,7 +1169,254 @@ export const TypeWriterSchema = z.object({
 });
 
 // ============================================================================
-// Schema Map — 100 components
+// Chakra UI Components (12)
+// ============================================================================
+
+export const ChakraStatSchema = z.object({
+  className: z.string().optional(),
+});
+
+export const ChakraStatLabelSchema = z.object({
+  text: z.string(),
+  className: z.string().optional(),
+});
+
+export const ChakraStatNumberSchema = z.object({
+  value: z.union([z.string(), z.number()]),
+  className: z.string().optional(),
+});
+
+export const ChakraStatHelpTextSchema = z.object({
+  text: z.string(),
+  trend: z.enum(["increase", "decrease", "neutral"]).optional(),
+  className: z.string().optional(),
+});
+
+export const ChakraCircularProgressSchema = z.object({
+  value: z.number().min(0).max(100),
+  size: z.string().optional().default("120px"),
+  thickness: z.number().optional().default(10),
+  color: z.string().optional().default("blue.400"),
+  trackColor: z.string().optional().default("gray.200"),
+  showValue: z.boolean().default(false),
+  className: z.string().optional(),
+});
+
+export const ChakraSimpleGridSchema = z.object({
+  columns: z.union([z.number(), z.object({
+    base: z.number().optional(),
+    sm: z.number().optional(),
+    md: z.number().optional(),
+    lg: z.number().optional(),
+    xl: z.number().optional(),
+  })]).default(3),
+  spacing: z.union([z.number(), z.string()]).default(4),
+  className: z.string().optional(),
+});
+
+export const ChakraWrapSchema = z.object({
+  spacing: z.union([z.number(), z.string()]).default(2),
+  align: z.enum(["flex-start", "flex-end", "center", "baseline", "stretch"]).optional(),
+  justify: z.enum(["flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly"]).optional(),
+  className: z.string().optional(),
+});
+
+export const ChakraTagSchema = z.object({
+  text: z.string(),
+  size: z.enum(["sm", "md", "lg"]).default("md"),
+  variant: z.enum(["solid", "subtle", "outline"]).default("subtle"),
+  colorScheme: z.string().optional().default("gray"),
+  leftIcon: z.string().optional(),
+  rightIcon: z.string().optional(),
+  closeable: z.boolean().default(false),
+  className: z.string().optional(),
+});
+
+export const ChakraDividerSchema = z.object({
+  orientation: z.enum(["horizontal", "vertical"]).default("horizontal"),
+  variant: z.enum(["solid", "dashed"]).optional(),
+  className: z.string().optional(),
+});
+
+export const ChakraKbdSchema = z.object({
+  keys: z.array(z.string()),
+  className: z.string().optional(),
+});
+
+export const ChakraVisuallyHiddenSchema = z.object({
+  text: z.string(),
+});
+
+export const ChakraPortalSchema = z.object({
+  className: z.string().optional(),
+});
+
+export const ChakraCloseButtonSchema = z.object({
+  size: z.enum(["sm", "md", "lg"]).default("md"),
+  onClick: z.string().optional(),
+  className: z.string().optional(),
+});
+
+export const ChakraIconButtonSchema = z.object({
+  icon: z.string(),
+  ariaLabel: z.string(),
+  size: z.enum(["xs", "sm", "md", "lg"]).default("md"),
+  variant: z.enum(["solid", "outline", "ghost", "link"]).default("solid"),
+  colorScheme: z.string().optional().default("gray"),
+  isRound: z.boolean().default(false),
+  onClick: z.string().optional(),
+  className: z.string().optional(),
+});
+
+export const ChakraNumberInputSchema = z.object({
+  defaultValue: z.number().optional(),
+  min: z.number().optional(),
+  max: z.number().optional(),
+  step: z.number().optional().default(1),
+  precision: z.number().optional(),
+  size: z.enum(["xs", "sm", "md", "lg"]).default("md"),
+  variant: z.enum(["outline", "filled", "flushed", "unstyled"]).default("outline"),
+  allowMouseWheel: z.boolean().default(false),
+  className: z.string().optional(),
+});
+
+// ============================================================================
+// Material UI Components (10)
+// ============================================================================
+
+export const MuiDataGridSchema = z.object({
+  rows: z.array(z.record(z.any())),
+  columns: z.array(z.object({
+    field: z.string(),
+    headerName: z.string(),
+    width: z.number().optional(),
+    flex: z.number().optional(),
+    type: z.enum(["string", "number", "date", "dateTime", "boolean"]).optional(),
+    editable: z.boolean().optional().default(false),
+  })),
+  pageSize: z.number().optional().default(10),
+  checkboxSelection: z.boolean().default(false),
+  disableSelectionOnClick: z.boolean().default(true),
+  autoHeight: z.boolean().default(true),
+  className: z.string().optional(),
+});
+
+export const MuiTreeViewSchema = z.object({
+  items: z.array(z.object({
+    nodeId: z.string(),
+    label: z.string(),
+    children: z.array(z.any()).optional(),
+  })),
+  defaultExpanded: z.array(z.string()).optional(),
+  defaultSelected: z.array(z.string()).optional(),
+  className: z.string().optional(),
+});
+
+export const MuiTimelineSchema = z.object({
+  items: z.array(z.object({
+    time: z.string().optional(),
+    title: z.string(),
+    description: z.string().optional(),
+    color: z.enum(["primary", "secondary", "success", "error", "info", "warning", "grey"]).optional(),
+    variant: z.enum(["filled", "outlined"]).optional(),
+    icon: z.string().optional(),
+  })),
+  position: z.enum(["left", "right", "alternate"]).default("right"),
+  className: z.string().optional(),
+});
+
+export const MuiStepperSchema = z.object({
+  steps: z.array(z.object({
+    label: z.string(),
+    description: z.string().optional(),
+    optional: z.boolean().default(false),
+  })),
+  activeStep: z.number().default(0),
+  orientation: z.enum(["horizontal", "vertical"]).default("horizontal"),
+  alternativeLabel: z.boolean().default(false),
+  className: z.string().optional(),
+});
+
+export const MuiSpeedDialSchema = z.object({
+  actions: z.array(z.object({
+    icon: z.string(),
+    name: z.string(),
+    onClick: z.string().optional(),
+  })),
+  direction: z.enum(["up", "down", "left", "right"]).default("up"),
+  hidden: z.boolean().default(false),
+  icon: z.string().optional(),
+  ariaLabel: z.string().default("SpeedDial"),
+  className: z.string().optional(),
+});
+
+export const MuiRatingSchema = z.object({
+  value: z.number().min(0).max(5).optional(),
+  max: z.number().default(5),
+  precision: z.number().optional().default(1),
+  size: z.enum(["small", "medium", "large"]).default("medium"),
+  readOnly: z.boolean().default(false),
+  disabled: z.boolean().default(false),
+  icon: z.string().optional(),
+  emptyIcon: z.string().optional(),
+  className: z.string().optional(),
+});
+
+export const MuiAutocompleteSchema = z.object({
+  options: z.array(z.union([z.string(), z.object({
+    label: z.string(),
+    value: z.string(),
+  })])),
+  label: z.string().optional(),
+  placeholder: z.string().optional(),
+  multiple: z.boolean().default(false),
+  freeSolo: z.boolean().default(false),
+  disableClearable: z.boolean().default(false),
+  size: z.enum(["small", "medium"]).default("medium"),
+  className: z.string().optional(),
+});
+
+export const MuiPaginationSchema = z.object({
+  count: z.number(),
+  page: z.number().default(1),
+  variant: z.enum(["text", "outlined"]).default("text"),
+  shape: z.enum(["circular", "rounded"]).default("circular"),
+  color: z.enum(["primary", "secondary", "standard"]).default("standard"),
+  size: z.enum(["small", "medium", "large"]).default("medium"),
+  showFirstButton: z.boolean().default(false),
+  showLastButton: z.boolean().default(false),
+  className: z.string().optional(),
+});
+
+export const MuiBreadcrumbsSchema = z.object({
+  items: z.array(z.object({
+    label: z.string(),
+    href: z.string().optional(),
+    icon: z.string().optional(),
+  })),
+  separator: z.string().optional().default("/"),
+  maxItems: z.number().optional(),
+  className: z.string().optional(),
+});
+
+export const MuiImageListSchema = z.object({
+  images: z.array(z.object({
+    img: z.string(),
+    title: z.string(),
+    author: z.string().optional(),
+    rows: z.number().optional(),
+    cols: z.number().optional(),
+    featured: z.boolean().optional(),
+  })),
+  cols: z.number().default(3),
+  rowHeight: z.union([z.number(), z.literal("auto")]).default(164),
+  gap: z.number().default(8),
+  variant: z.enum(["standard", "quilted", "woven", "masonry"]).default("standard"),
+  className: z.string().optional(),
+});
+
+// ============================================================================
+// Schema Map — 122 components
 // ============================================================================
 
 export const componentSchemas = {
@@ -1277,10 +1529,11 @@ export const componentSchemas = {
   Terminal: TerminalSchema,
   CodeEditor: CodeEditorSchema,
   Markdown: MarkdownSchema,
-  // Aceternity UI (3)
+  // Aceternity UI (4)
   ThreeDCard: ThreeDCardSchema,
   ThreeDCardBody: ThreeDCardBodySchema,
   ThreeDCardItem: ThreeDCardItemSchema,
+  AuroraBackground: AuroraBackgroundSchema,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardSchema,
   NeonButton: NeonButtonSchema,
@@ -1300,6 +1553,33 @@ export const componentSchemas = {
   RevealText: RevealTextSchema,
   CountUp: CountUpSchema,
   TypeWriter: TypeWriterSchema,
+  // Chakra UI (12)
+  ChakraStat: ChakraStatSchema,
+  ChakraStatLabel: ChakraStatLabelSchema,
+  ChakraStatNumber: ChakraStatNumberSchema,
+  ChakraStatHelpText: ChakraStatHelpTextSchema,
+  ChakraCircularProgress: ChakraCircularProgressSchema,
+  ChakraSimpleGrid: ChakraSimpleGridSchema,
+  ChakraWrap: ChakraWrapSchema,
+  ChakraTag: ChakraTagSchema,
+  ChakraDivider: ChakraDividerSchema,
+  ChakraKbd: ChakraKbdSchema,
+  ChakraVisuallyHidden: ChakraVisuallyHiddenSchema,
+  ChakraPortal: ChakraPortalSchema,
+  ChakraCloseButton: ChakraCloseButtonSchema,
+  ChakraIconButton: ChakraIconButtonSchema,
+  ChakraNumberInput: ChakraNumberInputSchema,
+  // Material UI (10)
+  MuiDataGrid: MuiDataGridSchema,
+  MuiTreeView: MuiTreeViewSchema,
+  MuiTimeline: MuiTimelineSchema,
+  MuiStepper: MuiStepperSchema,
+  MuiSpeedDial: MuiSpeedDialSchema,
+  MuiRating: MuiRatingSchema,
+  MuiAutocomplete: MuiAutocompleteSchema,
+  MuiPagination: MuiPaginationSchema,
+  MuiBreadcrumbs: MuiBreadcrumbsSchema,
+  MuiImageList: MuiImageListSchema,
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;

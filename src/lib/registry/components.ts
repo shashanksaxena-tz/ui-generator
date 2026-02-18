@@ -568,6 +568,110 @@ const registry: Record<ComponentName, RegistryEntry> = {
     tags: ["3d", "animation", "card", "aceternity"],
     allowedChildren: ["*"],
   },
+  AuroraBackground: {
+    description: "Animated aurora background effect with gradient flowing animation. Creates a northern lights aesthetic for hero sections and backgrounds.",
+    category: "display",
+    tags: ["background", "animation", "aurora", "gradient", "aceternity"],
+    allowedChildren: ["*"],
+  },
+
+  // React Bits Components
+  GlassmorphismCard: {
+    description: "Card with glassmorphism effect (frosted glass look). Configurable blur intensity for depth and transparency effects.",
+    category: "display",
+    tags: ["card", "glassmorphism", "blur", "modern", "reactbits"],
+    allowedChildren: ["*"],
+  },
+  NeonButton: {
+    description: "Button with neon glow effect. Customizable glow color creates a vibrant, futuristic appearance.",
+    category: "input",
+    tags: ["button", "neon", "glow", "vibrant", "reactbits"],
+  },
+  GradientText: {
+    description: "Text with animated gradient. Optional animation makes gradient flow across text for eye-catching headings.",
+    category: "display",
+    tags: ["text", "gradient", "animation", "typography", "reactbits"],
+  },
+  AnimatedBorder: {
+    description: "Container with animated rotating gradient border. Creates dynamic, attention-grabbing frames around content.",
+    category: "display",
+    tags: ["border", "animation", "gradient", "container", "reactbits"],
+    allowedChildren: ["*"],
+  },
+  GlitchText: {
+    description: "Text with glitch animation effect. RGB color separation creates a digital distortion aesthetic.",
+    category: "display",
+    tags: ["text", "glitch", "animation", "effect", "reactbits"],
+  },
+  MorphingText: {
+    description: "Text that morphs between multiple values with smooth transitions. Perfect for rotating taglines or features.",
+    category: "display",
+    tags: ["text", "morph", "animation", "transition", "reactbits"],
+  },
+  TiltCard: {
+    description: "Card that tilts in 3D space based on mouse position. Creates an interactive parallax effect on hover.",
+    category: "display",
+    tags: ["card", "tilt", "3d", "interactive", "hover", "reactbits"],
+    allowedChildren: ["*"],
+  },
+  ParallaxCard: {
+    description: "Card with parallax effect where content moves based on mouse position. Creates depth and interactivity.",
+    category: "display",
+    tags: ["card", "parallax", "interactive", "hover", "reactbits"],
+    allowedChildren: ["*"],
+  },
+  HoverCardRB: {
+    description: "Interactive hover card with scale and glow effects. Highlights on hover for engaging user interaction.",
+    category: "display",
+    tags: ["card", "hover", "interactive", "scale", "glow", "reactbits"],
+    allowedChildren: ["*"],
+  },
+  ShinyButton: {
+    description: "Button with shiny shimmer animation. Light reflection sweeps across on hover for premium feel.",
+    category: "input",
+    tags: ["button", "shiny", "shimmer", "animation", "premium", "reactbits"],
+  },
+  FloatingLabel: {
+    description: "Input field with floating label animation. Label moves up when field is focused or has value.",
+    category: "input",
+    tags: ["input", "label", "floating", "animation", "form", "reactbits"],
+  },
+  AnimatedInput: {
+    description: "Input field with animated focus effects. Border and shadow animate smoothly on focus for better UX.",
+    category: "input",
+    tags: ["input", "animation", "focus", "form", "reactbits"],
+  },
+  RippleButton: {
+    description: "Button with material-design ripple effect on click. Visual feedback spreads from click point.",
+    category: "input",
+    tags: ["button", "ripple", "click", "material", "feedback", "reactbits"],
+  },
+  MagneticButton: {
+    description: "Button that moves toward the cursor like a magnet. Creates playful, engaging hover interaction.",
+    category: "input",
+    tags: ["button", "magnetic", "hover", "interactive", "playful", "reactbits"],
+  },
+  SmoothScroll: {
+    description: "Container with smooth scroll animation. Creates fluid, inertia-based scrolling for polished feel.",
+    category: "layout",
+    tags: ["scroll", "smooth", "animation", "container", "reactbits"],
+    allowedChildren: ["*"],
+  },
+  RevealText: {
+    description: "Text that reveals character by character with animation. Creates typewriter-like appearance effect.",
+    category: "display",
+    tags: ["text", "reveal", "animation", "typewriter", "reactbits"],
+  },
+  CountUp: {
+    description: "Animated number counter that counts up to target value. Perfect for statistics and metrics display.",
+    category: "display",
+    tags: ["counter", "number", "animation", "statistics", "reactbits"],
+  },
+  TypeWriter: {
+    description: "Typewriter effect text animation with optional cursor. Types out text one character at a time.",
+    category: "display",
+    tags: ["text", "typewriter", "animation", "cursor", "reactbits"],
+  },
 };
 
 /**

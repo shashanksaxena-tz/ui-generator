@@ -101,6 +101,24 @@ import {
   ZAxis,
 } from "recharts";
 import { CardContainer, CardBody, CardItem } from "@/components/aceternity/3d-card";
+import { GlassmorphismCard } from "@/components/reactbits/glassmorphism-card";
+import { NeonButton } from "@/components/reactbits/neon-button";
+import { GradientText } from "@/components/reactbits/gradient-text";
+import { AnimatedBorder } from "@/components/reactbits/animated-border";
+import { GlitchText } from "@/components/reactbits/glitch-text";
+import { MorphingText } from "@/components/reactbits/morphing-text";
+import { TiltCard } from "@/components/reactbits/tilt-card";
+import { ParallaxCard } from "@/components/reactbits/parallax-card";
+import { HoverCard as HoverCardRB } from "@/components/reactbits/hover-card";
+import { ShinyButton } from "@/components/reactbits/shiny-button";
+import { FloatingLabel } from "@/components/reactbits/floating-label";
+import { AnimatedInput } from "@/components/reactbits/animated-input";
+import { RippleButton } from "@/components/reactbits/ripple-button";
+import { MagneticButton } from "@/components/reactbits/magnetic-button";
+import { SmoothScroll } from "@/components/reactbits/smooth-scroll";
+import { RevealText } from "@/components/reactbits/reveal-text";
+import { CountUp } from "@/components/reactbits/count-up";
+import { TypeWriter } from "@/components/reactbits/typewriter";
 
 // ============================================================================
 // Icon resolver
@@ -2701,6 +2719,204 @@ function ThreeDCardItemComponent({ props, children }: ComponentRendererProps) {
 }
 
 // ============================================================================
+// React Bits Components (18)
+// ============================================================================
+
+function GlassmorphismCardComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <GlassmorphismCard
+      className={props.className as string}
+      blur={props.blur as "sm" | "md" | "lg"}
+    >
+      {children}
+    </GlassmorphismCard>
+  );
+}
+
+function NeonButtonComponent({ props }: ComponentRendererProps) {
+  return (
+    <NeonButton
+      text={props.text as string}
+      color={props.color as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function GradientTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <GradientText
+      text={props.text as string}
+      gradient={props.gradient as string}
+      className={props.className as string}
+      animate={props.animate as boolean}
+    />
+  );
+}
+
+function AnimatedBorderComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <AnimatedBorder
+      className={props.className as string}
+      borderWidth={props.borderWidth as number}
+      duration={props.duration as number}
+    >
+      {children}
+    </AnimatedBorder>
+  );
+}
+
+function GlitchTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <GlitchText
+      text={props.text as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function MorphingTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <MorphingText
+      texts={props.texts as string[]}
+      duration={props.duration as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function TiltCardComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <TiltCard
+      className={props.className as string}
+      tiltMaxAngle={props.tiltMaxAngle as number}
+    >
+      {children}
+    </TiltCard>
+  );
+}
+
+function ParallaxCardComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <ParallaxCard
+      className={props.className as string}
+      intensity={props.intensity as number}
+    >
+      {children}
+    </ParallaxCard>
+  );
+}
+
+function HoverCardRBComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <HoverCardRB
+      className={props.className as string}
+      scaleOnHover={props.scaleOnHover as boolean}
+      glowOnHover={props.glowOnHover as boolean}
+    >
+      {children}
+    </HoverCardRB>
+  );
+}
+
+function ShinyButtonComponent({ props }: ComponentRendererProps) {
+  return (
+    <ShinyButton
+      text={props.text as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function FloatingLabelComponent({ props }: ComponentRendererProps) {
+  return (
+    <FloatingLabel
+      label={props.label as string}
+      type={props.type as string}
+      placeholder={props.placeholder as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function AnimatedInputComponent({ props }: ComponentRendererProps) {
+  return (
+    <AnimatedInput
+      label={props.label as string}
+      placeholder={props.placeholder as string}
+      type={props.type as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function RippleButtonComponent({ props }: ComponentRendererProps) {
+  return (
+    <RippleButton
+      text={props.text as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function MagneticButtonComponent({ props }: ComponentRendererProps) {
+  return (
+    <MagneticButton
+      text={props.text as string}
+      strength={props.strength as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function SmoothScrollComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <SmoothScroll
+      className={props.className as string}
+      speed={props.speed as number}
+    >
+      {children}
+    </SmoothScroll>
+  );
+}
+
+function RevealTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <RevealText
+      text={props.text as string}
+      delay={props.delay as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function CountUpComponent({ props }: ComponentRendererProps) {
+  return (
+    <CountUp
+      end={props.end as number}
+      start={props.start as number}
+      duration={props.duration as number}
+      decimals={props.decimals as number}
+      suffix={props.suffix as string}
+      prefix={props.prefix as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function TypeWriterComponent({ props }: ComponentRendererProps) {
+  return (
+    <TypeWriter
+      text={props.text as string}
+      speed={props.speed as number}
+      delay={props.delay as number}
+      showCursor={props.showCursor as boolean}
+      className={props.className as string}
+    />
+  );
+}
+
+// ============================================================================
 // Component Map — maps type names to React components
 // ============================================================================
 
@@ -2827,6 +3043,25 @@ const componentMap: Record<string, ComponentRenderer> = {
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
+  // React Bits (18)
+  GlassmorphismCard: GlassmorphismCardComponent,
+  NeonButton: NeonButtonComponent,
+  GradientText: GradientTextComponent,
+  AnimatedBorder: AnimatedBorderComponent,
+  GlitchText: GlitchTextComponent,
+  MorphingText: MorphingTextComponent,
+  TiltCard: TiltCardComponent,
+  ParallaxCard: ParallaxCardComponent,
+  HoverCardRB: HoverCardRBComponent,
+  ShinyButton: ShinyButtonComponent,
+  FloatingLabel: FloatingLabelComponent,
+  AnimatedInput: AnimatedInputComponent,
+  RippleButton: RippleButtonComponent,
+  MagneticButton: MagneticButtonComponent,
+  SmoothScroll: SmoothScrollComponent,
+  RevealText: RevealTextComponent,
+  CountUp: CountUpComponent,
+  TypeWriter: TypeWriterComponent,
 };
 
 // ============================================================================
