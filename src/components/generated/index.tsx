@@ -111,6 +111,10 @@ import { SparklesCore } from "@/components/aceternity/sparkles-core";
 import { TypewriterEffect } from "@/components/aceternity/typewriter-effect";
 import { TextGenerateEffect } from "@/components/aceternity/text-generate-effect";
 import { MovingBorder } from "@/components/aceternity/moving-border";
+import { FloatingDock } from "@/components/aceternity/floating-dock";
+import { HoverEffect } from "@/components/aceternity/hover-effect";
+import { BentoGrid, BentoGridItem } from "@/components/aceternity/bento-grid";
+import { InfiniteMovingCards } from "@/components/aceternity/infinite-moving-cards";
 // Magic UI imports
 import { AnimatedGradient } from "@/components/magicui/animated-gradient";
 import { BlurFade } from "@/components/magicui/blur-fade";
@@ -2856,6 +2860,64 @@ function MovingBorderComponent({ props, children }: ComponentRendererProps) {
   );
 }
 
+function FloatingDockComponent({ props }: ComponentRendererProps) {
+  const items = (props.items as Array<{ title: string; icon: string; href: string }>).map(
+    (item) => ({
+      ...item,
+      icon: <Home className="w-6 h-6" />,
+    })
+  );
+  return (
+    <FloatingDock
+      items={items}
+      className={props.className as string}
+    />
+  );
+}
+
+function HoverEffectComponent({ props }: ComponentRendererProps) {
+  return (
+    <HoverEffect
+      items={props.items as Array<{ title: string; description: string; link?: string }>}
+      className={props.className as string}
+    />
+  );
+}
+
+function BentoGridComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <BentoGrid className={props.className as string}>
+      {children}
+    </BentoGrid>
+  );
+}
+
+function BentoGridItemComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <BentoGridItem
+      title={props.title as string}
+      description={props.description as string}
+      header={props.header as React.ReactNode}
+      icon={props.icon as React.ReactNode}
+      className={props.className as string}
+    >
+      {children}
+    </BentoGridItem>
+  );
+}
+
+function InfiniteMovingCardsComponent({ props }: ComponentRendererProps) {
+  return (
+    <InfiniteMovingCards
+      items={props.items as Array<{ quote: string; name: string; title: string }>}
+      direction={props.direction as "left" | "right"}
+      speed={props.speed as "fast" | "normal" | "slow"}
+      pauseOnHover={props.pauseOnHover as boolean}
+      className={props.className as string}
+    />
+  );
+}
+
 // ============================================================================
 // Magic UI Components (20)
 // ============================================================================
@@ -3866,7 +3928,7 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
-  // Aceternity UI (13)
+  // Aceternity UI (18)
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
@@ -3880,6 +3942,11 @@ const componentMap: Record<string, ComponentRenderer> = {
   TypewriterEffect: TypewriterEffectComponent,
   TextGenerateEffect: TextGenerateEffectComponent,
   MovingBorder: MovingBorderComponent,
+  FloatingDock: FloatingDockComponent,
+  HoverEffect: HoverEffectComponent,
+  BentoGrid: BentoGridComponent,
+  BentoGridItem: BentoGridItemComponent,
+  InfiniteMovingCards: InfiniteMovingCardsComponent,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardComponent,
   NeonButton: NeonButtonComponent,
