@@ -107,6 +107,7 @@ import { BackgroundBeams } from "@/components/aceternity/background-beams";
 import { Meteors } from "@/components/aceternity/meteors";
 import { Particles } from "@/components/aceternity/particles";
 import { GlowingStars } from "@/components/aceternity/glowing-stars";
+import { SparklesCore } from "@/components/aceternity/sparkles-core";
 // Magic UI imports
 import { AnimatedGradient } from "@/components/magicui/animated-gradient";
 import { BlurFade } from "@/components/magicui/blur-fade";
@@ -2809,6 +2810,16 @@ function GlowingStarsComponent({ props }: ComponentRendererProps) {
   );
 }
 
+function SparklesCoreComponent({ props }: ComponentRendererProps) {
+  return (
+    <SparklesCore
+      className={props.className as string}
+      count={props.count as number}
+      speed={props.speed as number}
+    />
+  );
+}
+
 // ============================================================================
 // Magic UI Components (20)
 // ============================================================================
@@ -3819,7 +3830,7 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
-  // Aceternity UI (9)
+  // Aceternity UI (10)
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
@@ -3829,6 +3840,7 @@ const componentMap: Record<string, ComponentRenderer> = {
   Meteors: MeteorsComponent,
   Particles: ParticlesComponent,
   GlowingStars: GlowingStarsComponent,
+  SparklesCore: SparklesCoreComponent,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardComponent,
   NeonButton: NeonButtonComponent,
