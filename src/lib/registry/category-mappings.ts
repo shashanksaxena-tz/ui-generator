@@ -258,6 +258,16 @@ export const categoryMappings = {
   empty: [
     "EmptyState", "Card", "Heading", "Text", "Button", "Image"
   ],
+
+  // New categories added for better component discoverability
+  showcase: [] as unknown as readonly string[],
+  carousel: [] as unknown as readonly string[],
+  testimonials: [] as unknown as readonly string[],
+  pricing: [] as unknown as readonly string[],
+  portfolio: [] as unknown as readonly string[],
+  hero: [] as unknown as readonly string[],
+  dock: [] as unknown as readonly string[],
+  "backgrounds-animated": [] as unknown as readonly string[],
 } as const;
 
 export type CategoryKey = keyof typeof categoryMappings;
