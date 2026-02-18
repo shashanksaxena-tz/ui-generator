@@ -56,6 +56,73 @@ export type ComponentCategory =
   | "composite";
 
 // ============================================================================
+// Rich Component Metadata Types
+// ============================================================================
+
+export type ComponentBehavior =
+  | "static"
+  | "animated"
+  | "interactive"
+  | "data-driven";
+
+export type ComponentType =
+  | "layout"
+  | "display"
+  | "navigation"
+  | "input"
+  | "chart"
+  | "effect"
+  | "overlay"
+  | "media"
+  | "feedback"
+  | "composite";
+
+export type PageLocation =
+  | "full-page"
+  | "above-fold"
+  | "header"
+  | "main-content"
+  | "sidebar"
+  | "footer"
+  | "overlay"
+  | "inline";
+
+export type ComponentLibrary =
+  | "core"
+  | "aceternity"
+  | "magic-ui"
+  | "react-bits"
+  | "chakra"
+  | "material"
+  | "shadcn";
+
+export type IntentCategory =
+  | "dashboard" | "landing page" | "form" | "ecommerce" | "blog"
+  | "animated" | "3d" | "glassmorphism" | "neon" | "gradient"
+  | "cards" | "buttons" | "charts" | "data" | "navigation"
+  | "backgrounds" | "text" | "parallax" | "hover" | "scroll"
+  | "media" | "profile" | "authentication" | "analytics" | "marketing"
+  | "notifications" | "modals" | "feedback" | "tables" | "calendar"
+  | "files" | "chat" | "search" | "widgets" | "social" | "admin"
+  | "mobile" | "desktop" | "loading" | "empty"
+  | "showcase" | "carousel" | "testimonials" | "pricing"
+  | "portfolio" | "hero" | "dock" | "backgrounds-animated";
+
+export interface ComponentMeta {
+  description: string;
+  allowedChildren?: string[];
+  categories: IntentCategory[];
+  behavior: ComponentBehavior;
+  type: ComponentType;
+  function: string;
+  location: PageLocation[];
+  library: ComponentLibrary;
+  aliases: string[];
+  whenToUse: string;
+  tags: string[];
+}
+
+// ============================================================================
 // Theme Types
 // ============================================================================
 
