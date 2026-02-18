@@ -621,6 +621,33 @@ const registry: Record<ComponentName, RegistryEntry> = {
     tags: ["border", "animation", "gradient", "effect", "aceternity"],
     allowedChildren: ["*"],
   },
+  FloatingDock: {
+    description: "Interactive macOS-style dock with floating icons. Icons scale and lift on hover with smooth animations.",
+    category: "navigation",
+    tags: ["dock", "navigation", "interactive", "hover", "aceternity"],
+  },
+  HoverEffect: {
+    description: "Grid of cards with smooth hover effects. Displays gradient background on hover for interactive card grids.",
+    category: "display",
+    tags: ["cards", "hover", "grid", "interactive", "aceternity"],
+  },
+  BentoGrid: {
+    description: "Flexible bento box grid layout. Container for creating modern dashboard-style card layouts.",
+    category: "layout",
+    tags: ["grid", "layout", "bento", "dashboard", "aceternity"],
+    allowedChildren: ["BentoGridItem"],
+  },
+  BentoGridItem: {
+    description: "Individual item for BentoGrid. Card with header, icon, title, and description with hover effects.",
+    category: "display",
+    tags: ["card", "grid-item", "bento", "dashboard", "aceternity"],
+    allowedChildren: ["*"],
+  },
+  InfiniteMovingCards: {
+    description: "Infinite scrolling testimonial cards. Auto-scrolling card carousel with configurable speed and direction.",
+    category: "display",
+    tags: ["carousel", "scroll", "testimonial", "infinite", "aceternity"],
+  },
 
   // React Bits Components
   GlassmorphismCard: {

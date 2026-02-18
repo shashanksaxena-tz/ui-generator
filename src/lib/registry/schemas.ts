@@ -1112,6 +1112,54 @@ export const MovingBorderSchema = z.object({
   className: z.string().optional(),
 });
 
+export const FloatingDockSchema = z.object({
+  items: z.array(
+    z.object({
+      title: z.string(),
+      icon: z.string(),
+      href: z.string(),
+    })
+  ),
+  className: z.string().optional(),
+});
+
+export const HoverEffectSchema = z.object({
+  items: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      link: z.string().optional(),
+    })
+  ),
+  className: z.string().optional(),
+});
+
+export const BentoGridSchema = z.object({
+  className: z.string().optional(),
+});
+
+export const BentoGridItemSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  header: z.string().optional(),
+  icon: z.string().optional(),
+  className: z.string().optional(),
+});
+
+export const InfiniteMovingCardsSchema = z.object({
+  items: z.array(
+    z.object({
+      quote: z.string(),
+      name: z.string(),
+      title: z.string(),
+    })
+  ),
+  direction: z.enum(["left", "right"]).default("left"),
+  speed: z.enum(["fast", "normal", "slow"]).default("fast"),
+  pauseOnHover: z.boolean().default(true),
+  className: z.string().optional(),
+});
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -1759,7 +1807,7 @@ export const componentSchemas = {
   Terminal: TerminalSchema,
   CodeEditor: CodeEditorSchema,
   Markdown: MarkdownSchema,
-  // Aceternity UI (14)
+  // Aceternity UI (19)
   ThreeDCard: ThreeDCardSchema,
   ThreeDCardBody: ThreeDCardBodySchema,
   ThreeDCardItem: ThreeDCardItemSchema,
@@ -1773,6 +1821,11 @@ export const componentSchemas = {
   TypewriterEffect: TypewriterEffectSchema,
   TextGenerateEffect: TextGenerateEffectSchema,
   MovingBorder: MovingBorderSchema,
+  FloatingDock: FloatingDockSchema,
+  HoverEffect: HoverEffectSchema,
+  BentoGrid: BentoGridSchema,
+  BentoGridItem: BentoGridItemSchema,
+  InfiniteMovingCards: InfiniteMovingCardsSchema,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardSchema,
   NeonButton: NeonButtonSchema,
