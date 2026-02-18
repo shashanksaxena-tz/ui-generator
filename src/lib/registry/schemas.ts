@@ -1082,6 +1082,36 @@ export const ParticlesSchema = z.object({
   refresh: z.boolean().default(false),
 });
 
+export const GlowingStarsSchema = z.object({
+  className: z.string().optional(),
+  count: z.number().default(50),
+});
+
+export const SparklesCoreSchema = z.object({
+  className: z.string().optional(),
+  count: z.number().default(100),
+  speed: z.number().default(1),
+});
+
+export const TypewriterEffectSchema = z.object({
+  words: z.array(z.string()),
+  speed: z.number().default(100),
+  loop: z.boolean().default(false),
+  className: z.string().optional(),
+});
+
+export const TextGenerateEffectSchema = z.object({
+  words: z.string(),
+  className: z.string().optional(),
+  duration: z.number().default(0.5),
+});
+
+export const MovingBorderSchema = z.object({
+  duration: z.number().default(2000),
+  borderRadius: z.string().default("1.75rem"),
+  className: z.string().optional(),
+});
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -1729,7 +1759,7 @@ export const componentSchemas = {
   Terminal: TerminalSchema,
   CodeEditor: CodeEditorSchema,
   Markdown: MarkdownSchema,
-  // Aceternity UI (8)
+  // Aceternity UI (14)
   ThreeDCard: ThreeDCardSchema,
   ThreeDCardBody: ThreeDCardBodySchema,
   ThreeDCardItem: ThreeDCardItemSchema,
@@ -1738,6 +1768,11 @@ export const componentSchemas = {
   BackgroundBeams: BackgroundBeamsSchema,
   Meteors: MeteorsSchema,
   Particles: ParticlesSchema,
+  GlowingStars: GlowingStarsSchema,
+  SparklesCore: SparklesCoreSchema,
+  TypewriterEffect: TypewriterEffectSchema,
+  TextGenerateEffect: TextGenerateEffectSchema,
+  MovingBorder: MovingBorderSchema,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardSchema,
   NeonButton: NeonButtonSchema,

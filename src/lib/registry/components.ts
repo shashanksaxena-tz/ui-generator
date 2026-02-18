@@ -595,6 +595,32 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "display",
     tags: ["background", "animation", "particles", "canvas", "effect", "aceternity"],
   },
+  GlowingStars: {
+    description: "Glowing star field with pulsing animation. Stars with random sizes, positions, and glow timing.",
+    category: "display",
+    tags: ["background", "stars", "glow", "animation", "aceternity"],
+  },
+  SparklesCore: {
+    description: "Sparkle particle effects with customizable count and speed. Creates twinkling sparkle animations.",
+    category: "display",
+    tags: ["background", "sparkles", "particles", "animation", "aceternity"],
+  },
+  TypewriterEffect: {
+    description: "Typewriter text animation that types out words character by character. Supports looping and speed control.",
+    category: "display",
+    tags: ["text", "animation", "typewriter", "effect", "aceternity"],
+  },
+  TextGenerateEffect: {
+    description: "Text generation animation with fade-in effect. Words appear with staggered timing for dynamic reveal.",
+    category: "display",
+    tags: ["text", "animation", "generate", "fade", "aceternity"],
+  },
+  MovingBorder: {
+    description: "Animated moving gradient border around content. Creates flowing border animation effect.",
+    category: "display",
+    tags: ["border", "animation", "gradient", "effect", "aceternity"],
+    allowedChildren: ["*"],
+  },
 
   // React Bits Components
   GlassmorphismCard: {
