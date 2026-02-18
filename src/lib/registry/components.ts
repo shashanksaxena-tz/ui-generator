@@ -580,6 +580,11 @@ const registry: Record<ComponentName, RegistryEntry> = {
     tags: ["background", "animation", "waves", "canvas", "aceternity"],
     allowedChildren: ["*"],
   },
+  BackgroundBeams: {
+    description: "Animated light beam effects falling from top to bottom. Creates dynamic vertical light streaks with gradient opacity.",
+    category: "display",
+    tags: ["background", "animation", "beams", "light", "canvas", "aceternity"],
+  },
 
   // React Bits Components
   GlassmorphismCard: {

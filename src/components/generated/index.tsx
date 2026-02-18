@@ -103,6 +103,7 @@ import {
 import { CardContainer, CardBody, CardItem } from "@/components/aceternity/3d-card";
 import { AuroraBackground } from "@/components/aceternity/aurora-background";
 import { WavyBackground } from "@/components/aceternity/wavy-background";
+import { BackgroundBeams } from "@/components/aceternity/background-beams";
 // Magic UI imports
 import { AnimatedGradient } from "@/components/magicui/animated-gradient";
 import { BlurFade } from "@/components/magicui/blur-fade";
@@ -2775,6 +2776,280 @@ function AuroraBackgroundComponent({ props, children }: ComponentRendererProps) 
   );
 }
 
+function BackgroundBeamsComponent({ props }: ComponentRendererProps) {
+  return (
+    <BackgroundBeams className={props.className as string} />
+  );
+}
+
+// ============================================================================
+// Magic UI Components (20)
+// ============================================================================
+
+function AnimatedGradientComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <AnimatedGradient
+      colors={props.colors as string[]}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </AnimatedGradient>
+  );
+}
+
+function BlurFadeComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <BlurFade
+      delay={props.delay as number}
+      duration={props.duration as number}
+      blur={props.blur as string}
+      yOffset={props.yOffset as number}
+      className={props.className as string}
+    >
+      {children}
+    </BlurFade>
+  );
+}
+
+function BorderBeamComponent({ props }: ComponentRendererProps) {
+  return (
+    <BorderBeam
+      size={props.size as number}
+      duration={props.duration as number}
+      delay={props.delay as number}
+      colorFrom={props.colorFrom as string}
+      colorTo={props.colorTo as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function BoxRevealComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <BoxReveal
+      width={props.width as string | number}
+      duration={props.duration as number}
+      delay={props.delay as number}
+      boxColor={props.boxColor as string}
+      className={props.className as string}
+    >
+      {children}
+    </BoxReveal>
+  );
+}
+
+function GradientHeadingComponent({ props }: ComponentRendererProps) {
+  return (
+    <GradientHeading
+      as={props.as as "h1" | "h2" | "h3" | "h4" | "h5" | "h6"}
+      from={props.from as string}
+      to={props.to as string}
+      className={props.className as string}
+    >
+      {props.text as string}
+    </GradientHeading>
+  );
+}
+
+function NumberTickerComponent({ props }: ComponentRendererProps) {
+  return (
+    <NumberTicker
+      value={props.value as number}
+      duration={props.duration as number}
+      decimalPlaces={props.decimalPlaces as number}
+      prefix={props.prefix as string}
+      suffix={props.suffix as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function RippleComponent({ props }: ComponentRendererProps) {
+  return (
+    <Ripple
+      mainCircleSize={props.mainCircleSize as number}
+      mainCircleOpacity={props.mainCircleOpacity as number}
+      numCircles={props.numCircles as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function ShimmerButtonComponent({ props }: ComponentRendererProps) {
+  return (
+    <ShimmerButton
+      shimmerColor={props.shimmerColor as string}
+      shimmerSize={props.shimmerSize as string}
+      borderRadius={props.borderRadius as string}
+      shimmerDuration={props.shimmerDuration as string}
+      background={props.background as string}
+      className={props.className as string}
+    >
+      {props.text as string}
+    </ShimmerButton>
+  );
+}
+
+function WordPullUpComponent({ props }: ComponentRendererProps) {
+  return (
+    <WordPullUp
+      words={props.words as string}
+      delayMultiple={props.delayMultiple as number}
+      className={props.className as string}
+      wrapperClassName={props.wrapperClassName as string}
+    />
+  );
+}
+
+function MarqueeComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <Marquee
+      reverse={props.reverse as boolean}
+      pauseOnHover={props.pauseOnHover as boolean}
+      vertical={props.vertical as boolean}
+      repeat={props.repeat as number}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </Marquee>
+  );
+}
+
+function OrbitingCirclesComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <OrbitingCircles
+      reverse={props.reverse as boolean}
+      duration={props.duration as number}
+      delay={props.delay as number}
+      radius={props.radius as number}
+      path={props.path as boolean}
+      className={props.className as string}
+    >
+      {children}
+    </OrbitingCircles>
+  );
+}
+
+function RetroGridComponent({ props }: ComponentRendererProps) {
+  return (
+    <RetroGrid
+      angle={props.angle as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function DotPatternComponent({ props }: ComponentRendererProps) {
+  return (
+    <DotPattern
+      width={props.width as number}
+      height={props.height as number}
+      x={props.x as number}
+      y={props.y as number}
+      cx={props.cx as number}
+      cy={props.cy as number}
+      cr={props.cr as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function GridPatternComponent({ props }: ComponentRendererProps) {
+  return (
+    <GridPattern
+      width={props.width as number}
+      height={props.height as number}
+      x={props.x as number}
+      y={props.y as number}
+      strokeDasharray={props.strokeDasharray as string | number}
+      squares={props.squares as Array<[number, number]>}
+      className={props.className as string}
+    />
+  );
+}
+
+function MagicCardComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <MagicCard
+      gradientSize={props.gradientSize as number}
+      gradientColor={props.gradientColor as string}
+      gradientOpacity={props.gradientOpacity as number}
+      className={props.className as string}
+    >
+      {children}
+    </MagicCard>
+  );
+}
+
+function TextShimmerComponent({ props }: ComponentRendererProps) {
+  return (
+    <TextShimmer
+      shimmerWidth={props.shimmerWidth as number}
+      duration={props.duration as number}
+      className={props.className as string}
+    >
+      {props.text as string}
+    </TextShimmer>
+  );
+}
+
+function SparklesTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <SparklesText
+      sparklesCount={props.sparklesCount as number}
+      colors={props.colors as { first: string; second: string }}
+      className={props.className as string}
+    >
+      {props.text as string}
+    </SparklesText>
+  );
+}
+
+function PulsatingButtonComponent({ props }: ComponentRendererProps) {
+  return (
+    <PulsatingButton
+      pulseColor={props.pulseColor as string}
+      duration={props.duration as string}
+      className={props.className as string}
+    >
+      {props.text as string}
+    </PulsatingButton>
+  );
+}
+
+function MagicAnimatedBeamComponent({ props }: ComponentRendererProps) {
+  const fromRef = React.useRef<HTMLElement>(null);
+  const toRef = React.useRef<HTMLElement>(null);
+  return (
+    <MagicAnimatedBeam
+      curvature={props.curvature as number}
+      reverse={props.reverse as boolean}
+      duration={props.duration as number}
+      delay={props.delay as number}
+      pathColor={props.pathColor as string}
+      pathWidth={props.pathWidth as number}
+      pathOpacity={props.pathOpacity as number}
+      gradientStartColor={props.gradientStartColor as string}
+      gradientStopColor={props.gradientStopColor as string}
+      className={props.className as string}
+      fromRef={fromRef}
+      toRef={toRef}
+    />
+  );
+}
+
+function FlipTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <FlipText
+      word={props.word as string}
+      duration={props.duration as number}
+      delayMultiple={props.delayMultiple as number}
+      className={props.className as string}
+    />
+  );
+}
 function WavyBackgroundComponent({ props, children }: ComponentRendererProps) {
   return (
     <WavyBackground
@@ -3517,12 +3792,13 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
-  // Aceternity UI (5)
+  // Aceternity UI (6)
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
   AuroraBackground: AuroraBackgroundComponent,
   WavyBackground: WavyBackgroundComponent,
+  BackgroundBeams: BackgroundBeamsComponent,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardComponent,
   NeonButton: NeonButtonComponent,

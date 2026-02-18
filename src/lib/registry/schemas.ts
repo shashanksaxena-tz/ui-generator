@@ -1065,6 +1065,10 @@ export const WavyBackgroundSchema = z.object({
   waveOpacity: z.number().default(0.5),
 });
 
+export const BackgroundBeamsSchema = z.object({
+  className: z.string().optional(),
+});
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -1712,12 +1716,13 @@ export const componentSchemas = {
   Terminal: TerminalSchema,
   CodeEditor: CodeEditorSchema,
   Markdown: MarkdownSchema,
-  // Aceternity UI (5)
+  // Aceternity UI (6)
   ThreeDCard: ThreeDCardSchema,
   ThreeDCardBody: ThreeDCardBodySchema,
   ThreeDCardItem: ThreeDCardItemSchema,
   AuroraBackground: AuroraBackgroundSchema,
   WavyBackground: WavyBackgroundSchema,
+  BackgroundBeams: BackgroundBeamsSchema,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardSchema,
   NeonButton: NeonButtonSchema,
