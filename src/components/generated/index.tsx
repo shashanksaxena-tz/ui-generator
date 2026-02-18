@@ -3511,13 +3511,14 @@ function ChakraDividerComponent({ props }: ComponentRendererProps) {
 function ChakraKbdComponent({ props }: ComponentRendererProps) {
   const keys = props.keys as string[];
   return (
-          {keys.map((key, i) => (
+    <>
+      {keys.map((key, i) => (
         <React.Fragment key={i}>
           <Kbd className={props.className as string}>{key}</Kbd>
           {i < keys.length - 1 && <span className="mx-1">+</span>}
         </React.Fragment>
       ))}
-
+    </>
   );
 }
 
