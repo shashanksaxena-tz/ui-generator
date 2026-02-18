@@ -585,6 +585,11 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "display",
     tags: ["background", "animation", "beams", "light", "canvas", "aceternity"],
   },
+  Meteors: {
+    description: "Falling meteor shower animation effect. Creates diagonal falling stars with trails and random timing.",
+    category: "display",
+    tags: ["background", "animation", "meteors", "stars", "effect", "aceternity"],
+  },
 
   // React Bits Components
   GlassmorphismCard: {

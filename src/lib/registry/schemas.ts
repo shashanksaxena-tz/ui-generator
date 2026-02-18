@@ -1069,6 +1069,11 @@ export const BackgroundBeamsSchema = z.object({
   className: z.string().optional(),
 });
 
+export const MeteorsSchema = z.object({
+  number: z.number().default(20),
+  className: z.string().optional(),
+});
+
 // ============================================================================
 // React Bits Components (18)
 // ============================================================================
@@ -1716,13 +1721,14 @@ export const componentSchemas = {
   Terminal: TerminalSchema,
   CodeEditor: CodeEditorSchema,
   Markdown: MarkdownSchema,
-  // Aceternity UI (6)
+  // Aceternity UI (7)
   ThreeDCard: ThreeDCardSchema,
   ThreeDCardBody: ThreeDCardBodySchema,
   ThreeDCardItem: ThreeDCardItemSchema,
   AuroraBackground: AuroraBackgroundSchema,
   WavyBackground: WavyBackgroundSchema,
   BackgroundBeams: BackgroundBeamsSchema,
+  Meteors: MeteorsSchema,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardSchema,
   NeonButton: NeonButtonSchema,

@@ -104,6 +104,7 @@ import { CardContainer, CardBody, CardItem } from "@/components/aceternity/3d-ca
 import { AuroraBackground } from "@/components/aceternity/aurora-background";
 import { WavyBackground } from "@/components/aceternity/wavy-background";
 import { BackgroundBeams } from "@/components/aceternity/background-beams";
+import { Meteors } from "@/components/aceternity/meteors";
 // Magic UI imports
 import { AnimatedGradient } from "@/components/magicui/animated-gradient";
 import { BlurFade } from "@/components/magicui/blur-fade";
@@ -2782,6 +2783,12 @@ function BackgroundBeamsComponent({ props }: ComponentRendererProps) {
   );
 }
 
+function MeteorsComponent({ props }: ComponentRendererProps) {
+  return (
+    <Meteors number={props.number as number} className={props.className as string} />
+  );
+}
+
 // ============================================================================
 // Magic UI Components (20)
 // ============================================================================
@@ -3792,13 +3799,14 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
-  // Aceternity UI (6)
+  // Aceternity UI (7)
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
   AuroraBackground: AuroraBackgroundComponent,
   WavyBackground: WavyBackgroundComponent,
   BackgroundBeams: BackgroundBeamsComponent,
+  Meteors: MeteorsComponent,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardComponent,
   NeonButton: NeonButtonComponent,
@@ -3838,6 +3846,27 @@ const componentMap: Record<string, ComponentRenderer> = {
   MuiDataGrid: MuiDataGridComponent,
   MuiTreeView: MuiTreeViewComponent,
   MuiTimeline: MuiTimelineComponent,
+  // Magic UI (20)
+  AnimatedGradient: AnimatedGradientComponent,
+  BlurFade: BlurFadeComponent,
+  BorderBeam: BorderBeamComponent,
+  BoxReveal: BoxRevealComponent,
+  GradientHeading: GradientHeadingComponent,
+  NumberTicker: NumberTickerComponent,
+  Ripple: RippleComponent,
+  ShimmerButton: ShimmerButtonComponent,
+  WordPullUp: WordPullUpComponent,
+  Marquee: MarqueeComponent,
+  OrbitingCircles: OrbitingCirclesComponent,
+  RetroGrid: RetroGridComponent,
+  DotPattern: DotPatternComponent,
+  GridPattern: GridPatternComponent,
+  MagicCard: MagicCardComponent,
+  TextShimmer: TextShimmerComponent,
+  SparklesText: SparklesTextComponent,
+  PulsatingButton: PulsatingButtonComponent,
+  MagicAnimatedBeam: MagicAnimatedBeamComponent,
+  FlipText: FlipTextComponent,
   MuiStepper: MuiStepperComponent,
   MuiSpeedDial: MuiSpeedDialComponent,
   MuiRating: MuiRatingComponent,
