@@ -12,19 +12,41 @@ export const categoryMappings = {
   dashboard: [
     "KPICard", "StatCard", "LineChart", "BarChart", "AreaChart", "PieChart", "RadarChart",
     "DataTable", "StatsGrid", "Progress", "Card", "Badge", "Flex", "Grid", "Container",
-    "Section", "Heading", "Text", "Alert", "Tabs"
+    "Section", "Heading", "Text", "Alert", "Tabs",
+    // New Aceternity dashboard components
+    "BentoGrid", "BentoGridItem",
+    // New Chakra UI dashboard components
+    "Stat", "StatLabel", "StatNumber", "StatHelpText", "CircularProgress",
+    // New Material UI dashboard components
+    "MuiDataGrid", "MuiStepper",
+    // New React Bits data components
+    "CountUp", "NumberTicker"
   ],
 
   "landing page": [
     "Hero", "FeatureGrid", "Testimonial", "PricingTable", "CTA", "LogoCloud",
     "FAQ", "Newsletter", "Footer", "Container", "Section", "Flex", "Grid",
-    "Heading", "Text", "Button", "Image", "Badge", "Card"
+    "Heading", "Text", "Button", "Image", "Badge", "Card",
+    // New Aceternity landing page components
+    "AuroraBackground", "WavyBackground", "BackgroundBeams", "TypewriterEffect",
+    "TextGenerateEffect", "MovingBorder", "ThreeDCard", "HoverEffect", "InfiniteMovingCards",
+    // New Magic UI landing page components
+    "AnimatedGradient", "ShimmerButton", "GradientHeading", "WordPullUp", "Marquee",
+    "OrbitingCircles", "RetroGrid", "PulsatingButton", "MagicCard",
+    // New React Bits landing page components
+    "NeonButton", "GradientText", "ShinyButton", "TiltCard", "ParallaxCard"
   ],
 
   form: [
     "Form", "Input", "Select", "Checkbox", "RadioGroup", "Switch", "Slider",
     "DatePicker", "Textarea", "Button", "FileUpload", "ColorPicker", "Rating",
-    "Flex", "Grid", "Stack", "Heading", "Text", "Alert", "Progress"
+    "Flex", "Grid", "Stack", "Heading", "Text", "Alert", "Progress",
+    // New Chakra UI form components
+    "NumberInput", "Tag",
+    // New Material UI form components
+    "MuiAutocomplete", "MuiRating",
+    // New React Bits form components
+    "FloatingLabel", "AnimatedInput"
   ],
 
   ecommerce: [
@@ -42,24 +64,47 @@ export const categoryMappings = {
   // Visual Styles
   animated: [
     "Progress", "Spinner", "Skeleton", "Toast", "Alert", "Dialog", "Drawer",
-    "Tabs", "Stepper", "Timeline", "InfiniteScroll", "Gallery"
+    "Tabs", "Stepper", "Timeline", "InfiniteScroll", "Gallery",
+    // New Aceternity animated components
+    "TypewriterEffect", "TextGenerateEffect", "MovingBorder", "InfiniteMovingCards",
+    // New Magic UI animated components
+    "AnimatedGradient", "BlurFade", "BorderBeam", "ShimmerButton", "NumberTicker",
+    "WordPullUp", "Marquee", "OrbitingCircles", "SparklesText", "PulsatingButton",
+    "MagicAnimatedBeam", "FlipText",
+    // New React Bits animated components
+    "GlitchText", "MorphingText", "RevealText", "CountUp", "TypeWriter",
+    "AnimatedInput", "RippleButton", "MagneticButton"
   ],
 
   "3d": [
-    "Card", "Image", "AspectRatio", "Container", "Section"
+    "Card", "Image", "AspectRatio", "Container", "Section",
+    // New Aceternity 3D components
+    "ThreeDCard", "ThreeDCardBody", "ThreeDCardItem",
+    // New Magic UI 3D components
+    "MagicCard",
+    // New React Bits 3D components
+    "TiltCard", "ParallaxCard"
   ],
 
   glassmorphism: [
-    "Card", "Dialog", "Popover", "Drawer", "Navbar", "Sidebar"
+    "Card", "Dialog", "Popover", "Drawer", "Navbar", "Sidebar",
+    // New React Bits glassmorphism
+    "GlassmorphismCard"
   ],
 
   neon: [
-    "Button", "Badge", "Heading", "Text", "Card", "Alert"
+    "Button", "Badge", "Heading", "Text", "Card", "Alert",
+    // New React Bits neon components
+    "NeonButton"
   ],
 
   gradient: [
     "Heading", "Text", "Button", "Card", "Hero", "Section",
-    "Progress", "Badge", "Alert"
+    "Progress", "Badge", "Alert",
+    // New Magic UI gradient components
+    "GradientHeading", "AnimatedGradient",
+    // New React Bits gradient components
+    "GradientText", "AnimatedBorder"
   ],
 
   // Component Types
@@ -68,7 +113,11 @@ export const categoryMappings = {
   ],
 
   buttons: [
-    "Button"
+    "Button",
+    // New Magic UI buttons
+    "ShimmerButton", "PulsatingButton",
+    // New React Bits buttons
+    "NeonButton", "ShinyButton", "RippleButton", "MagneticButton"
   ],
 
   charts: [
@@ -77,20 +126,39 @@ export const categoryMappings = {
 
   data: [
     "DataTable", "List", "Tree", "DescriptionList", "KPICard", "StatCard",
-    "StatsGrid", "Pagination", "EmptyState", "InfiniteScroll"
+    "StatsGrid", "Pagination", "EmptyState", "InfiniteScroll",
+    // New Chakra UI data components
+    "Stat", "StatLabel", "StatNumber", "StatHelpText",
+    // New Material UI data components
+    "MuiDataGrid", "MuiTreeView", "MuiPagination"
   ],
 
   navigation: [
     "Tabs", "Breadcrumb", "Navbar", "Sidebar", "Stepper", "MenuBar",
-    "BottomNav", "Dock", "PaginationNav", "CommandMenu", "CommandPalette"
+    "BottomNav", "Dock", "PaginationNav", "CommandMenu", "CommandPalette",
+    // New Aceternity navigation
+    "FloatingDock",
+    // New Material UI navigation
+    "MuiBreadcrumbs", "MuiPagination", "MuiStepper"
   ],
 
   backgrounds: [
-    "Container", "Section", "Card", "Hero"
+    "Container", "Section", "Card", "Hero",
+    // New Aceternity background components
+    "AuroraBackground", "WavyBackground", "BackgroundBeams", "Meteors",
+    "Particles", "GlowingStars", "SparklesCore",
+    // New Magic UI backgrounds
+    "RetroGrid", "DotPattern", "GridPattern", "Ripple"
   ],
 
   text: [
-    "Heading", "Text", "Code", "Blockquote", "Markdown"
+    "Heading", "Text", "Code", "Blockquote", "Markdown",
+    // New Aceternity text components
+    "TypewriterEffect", "TextGenerateEffect",
+    // New Magic UI text components
+    "GradientHeading", "WordPullUp", "TextShimmer", "SparklesText", "FlipText",
+    // New React Bits text components
+    "GradientText", "GlitchText", "MorphingText", "RevealText", "TypeWriter"
   ],
 
   // Special Effects

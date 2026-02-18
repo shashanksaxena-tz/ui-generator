@@ -10,8 +10,8 @@ export function buildSystemPrompt(
   theme?: ThemeConfig,
   styleHint?: string
 ): string {
-  const componentDocs = generateLLMComponentDocs();
   const allowedComponents = constraints?.allowedComponents ?? getAllComponentNames();
+  const componentDocs = generateLLMComponentDocs(allowedComponents);
 
   return `You are a Generative UI architect. Your job is to generate a React Interface Schema (a JSON AST) that composes UI components to fulfill the user's request.
 

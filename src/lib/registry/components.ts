@@ -1032,8 +1032,14 @@ export function getComponentDefinition(name: string): ComponentDefinition | unde
  * Generate LLM context documentation for all components.
  * This is the Syntux-style llmContext that's auto-generated from component schemas.
  */
-export function generateLLMComponentDocs(): string {
-  const definitions = getComponentDefinitions();
+export function generateLLMComponentDocs(allowedComponents?: string[]): string {
+  let definitions = getComponentDefinitions();
+
+  // Filter to only allowed components if specified
+  if (allowedComponents && allowedComponents.length > 0) {
+    definitions = definitions.filter(d => allowedComponents.includes(d.name));
+  }
+
   const docs: string[] = [];
 
   docs.push("# Available Components\n");
