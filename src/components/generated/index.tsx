@@ -108,6 +108,9 @@ import { Meteors } from "@/components/aceternity/meteors";
 import { Particles } from "@/components/aceternity/particles";
 import { GlowingStars } from "@/components/aceternity/glowing-stars";
 import { SparklesCore } from "@/components/aceternity/sparkles-core";
+import { TypewriterEffect } from "@/components/aceternity/typewriter-effect";
+import { TextGenerateEffect } from "@/components/aceternity/text-generate-effect";
+import { MovingBorder } from "@/components/aceternity/moving-border";
 // Magic UI imports
 import { AnimatedGradient } from "@/components/magicui/animated-gradient";
 import { BlurFade } from "@/components/magicui/blur-fade";
@@ -2820,6 +2823,39 @@ function SparklesCoreComponent({ props }: ComponentRendererProps) {
   );
 }
 
+function TypewriterEffectComponent({ props }: ComponentRendererProps) {
+  return (
+    <TypewriterEffect
+      words={props.words as string[]}
+      speed={props.speed as number}
+      loop={props.loop as boolean}
+      className={props.className as string}
+    />
+  );
+}
+
+function TextGenerateEffectComponent({ props }: ComponentRendererProps) {
+  return (
+    <TextGenerateEffect
+      words={props.words as string}
+      duration={props.duration as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function MovingBorderComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <MovingBorder
+      duration={props.duration as number}
+      borderRadius={props.borderRadius as string}
+      className={props.className as string}
+    >
+      {children}
+    </MovingBorder>
+  );
+}
+
 // ============================================================================
 // Magic UI Components (20)
 // ============================================================================
@@ -3830,7 +3866,7 @@ const componentMap: Record<string, ComponentRenderer> = {
   Terminal: TerminalComponent,
   CodeEditor: CodeEditorComponent,
   Markdown: MarkdownComponent,
-  // Aceternity UI (10)
+  // Aceternity UI (13)
   ThreeDCard: ThreeDCardComponent,
   ThreeDCardBody: ThreeDCardBodyComponent,
   ThreeDCardItem: ThreeDCardItemComponent,
@@ -3841,6 +3877,9 @@ const componentMap: Record<string, ComponentRenderer> = {
   Particles: ParticlesComponent,
   GlowingStars: GlowingStarsComponent,
   SparklesCore: SparklesCoreComponent,
+  TypewriterEffect: TypewriterEffectComponent,
+  TextGenerateEffect: TextGenerateEffectComponent,
+  MovingBorder: MovingBorderComponent,
   // React Bits (18)
   GlassmorphismCard: GlassmorphismCardComponent,
   NeonButton: NeonButtonComponent,
