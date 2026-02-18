@@ -377,3 +377,43 @@ export function suggestCategories(prompt: string): CategoryKey[] {
 
   return Array.from(suggestions);
 }
+
+import { getFullRegistry } from "./components";
+import type { IntentCategory } from "@/types";
+
+/**
+ * Get components for a category — derived from the registry.
+ * More reliable than the static categoryMappings object.
+ */
+export function getComponentsForCategoryDerived(category: CategoryKey): string[] {
+  try {
+    const registry = getFullRegistry();
+    return Object.entries(registry)
+      .filter(([_, meta]) => meta.categories?.includes(category as IntentCategory))
+      .map(([name]) => name);
+  } catch {
+    // Fallback to static mapping if derived lookup fails
+    return [...(categoryMappings[category] ?? [])];
+  }
+}
+
+/**
+ * Get components for multiple categories — derived from the registry.
+ */
+export function getComponentsForCategoriesDerived(categories: CategoryKey[]): string[] {
+  try {
+    const result = new Set<string>(["Flex", "Grid", "Container", "Section", "Stack", "Center"]);
+    const registry = getFullRegistry();
+    for (const cat of categories) {
+      for (const [name, meta] of Object.entries(registry)) {
+        if (meta.categories?.includes(cat as IntentCategory)) {
+          result.add(name);
+        }
+      }
+    }
+    return Array.from(result);
+  } catch {
+    // Fallback to static mapping
+    return getComponentsForCategories(categories);
+  }
+}
