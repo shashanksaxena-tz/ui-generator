@@ -590,6 +590,11 @@ const registry: Record<ComponentName, RegistryEntry> = {
     category: "display",
     tags: ["background", "animation", "meteors", "stars", "effect", "aceternity"],
   },
+  Particles: {
+    description: "Animated particle system with floating dots. Canvas-based particles with physics simulation and edge wrapping.",
+    category: "display",
+    tags: ["background", "animation", "particles", "canvas", "effect", "aceternity"],
+  },
 
   // React Bits Components
   GlassmorphismCard: {
