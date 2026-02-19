@@ -3,6 +3,7 @@
 import React from "react";
 import type { ReactInterfaceSchema, GenerationResult } from "@/types";
 import { renderSchemaNode } from "@/components/generated";
+import type { ExtractionConfig } from "@/components/generated";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -14,8 +15,11 @@ import {
   Check,
   Maximize2,
   RotateCcw,
+  Scissors,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useExtraction } from "@/hooks/useExtraction";
+import { ExtractionPanel } from "@/components/preview/ExtractionPanel";
 
 interface LivePreviewProps {
   schema: ReactInterfaceSchema | null;
@@ -36,6 +40,22 @@ export function LivePreview({
   const [showCode, setShowCode] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
   const [isFullscreen, setIsFullscreen] = React.useState(false);
+
+  const extraction = useExtraction();
+
+  const extractionConfig = React.useMemo(
+    (): ExtractionConfig | undefined =>
+      extraction.isExtractMode
+        ? {
+            isExtractMode: true,
+            selectedPathKeys: new Set(extraction.selectedEntries.map((e) => e.pathKey)),
+            onSelect: (node, pathKey, shiftKey) =>
+              extraction.handleNodeSelect(node, pathKey, shiftKey),
+            propsOverrides: extraction.propsOverrides,
+          }
+        : undefined,
+    [extraction.isExtractMode, extraction.selectedEntries, extraction.handleNodeSelect, extraction.propsOverrides]
+  );
 
   const viewportWidths: Record<ViewportSize, string> = {
     mobile: "max-w-[375px]",
@@ -150,6 +170,18 @@ export function LivePreview({
             )}
           </Button>
 
+          {/* Extract mode toggle */}
+          <Button
+            variant={extraction.isExtractMode ? "secondary" : "ghost"}
+            size="icon"
+            className={cn("h-7 w-7", extraction.isExtractMode && "ring-1 ring-[var(--color-primary-500)]")}
+            onClick={extraction.toggleExtractMode}
+            title={extraction.isExtractMode ? "Exit Extract Mode" : "Extract Component Code"}
+            disabled={!schema}
+          >
+            <Scissors className="h-3.5 w-3.5" />
+          </Button>
+
           {/* Fullscreen */}
           <Button
             variant="ghost"
@@ -167,46 +199,67 @@ export function LivePreview({
         </div>
       </div>
 
-      {/* Preview content */}
-      <div className="flex-1 overflow-auto p-4">
-        {showCode ? (
-          // Schema JSON view
-          <pre className="text-xs font-mono bg-[var(--color-muted)] rounded-lg p-4 overflow-auto whitespace-pre-wrap">
-            {schema ? JSON.stringify(schema, null, 2) : "No schema generated yet"}
-          </pre>
-        ) : (
-          // Rendered preview
-          <div className={cn("mx-auto transition-all duration-300", viewportWidths[viewport])}>
-            {isGenerating && !schema ? (
-              <div className="flex flex-col items-center justify-center py-20 space-y-4">
-                <div className="relative">
-                  <div className="h-16 w-16 rounded-full border-2 border-[var(--color-border)]" />
-                  <div className="absolute inset-0 h-16 w-16 rounded-full border-2 border-t-[var(--color-primary-500)] animate-spin" />
+      {/* Preview content + extraction panel */}
+      <div className="flex-1 overflow-hidden flex">
+        {/* Preview area */}
+        <div
+          className={cn(
+            "overflow-auto p-4 transition-all duration-300",
+            extraction.isPanelOpen ? "flex-[0.6]" : "flex-1"
+          )}
+        >
+          {showCode ? (
+            // Schema JSON view
+            <pre className="text-xs font-mono bg-[var(--color-muted)] rounded-lg p-4 overflow-auto whitespace-pre-wrap">
+              {schema ? JSON.stringify(schema, null, 2) : "No schema generated yet"}
+            </pre>
+          ) : (
+            // Rendered preview
+            <div className={cn("mx-auto transition-all duration-300", viewportWidths[viewport])}>
+              {isGenerating && !schema ? (
+                <div className="flex flex-col items-center justify-center py-20 space-y-4">
+                  <div className="relative">
+                    <div className="h-16 w-16 rounded-full border-2 border-[var(--color-border)]" />
+                    <div className="absolute inset-0 h-16 w-16 rounded-full border-2 border-t-[var(--color-primary-500)] animate-spin" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-medium">Generating UI</p>
+                    <p className="text-xs text-[var(--color-muted-foreground)] mt-1">
+                      Composing layout and selecting components...
+                    </p>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-sm font-medium">Generating UI</p>
-                  <p className="text-xs text-[var(--color-muted-foreground)] mt-1">
-                    Composing layout and selecting components...
-                  </p>
+              ) : schema ? (
+                <div className="animate-in fade-in-0 duration-500">
+                  {renderSchemaNode(schema.root, [], extractionConfig)}
                 </div>
-              </div>
-            ) : schema ? (
-              <div className="animate-in fade-in-0 duration-500">
-                {renderSchemaNode(schema.root)}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center py-20 text-center space-y-3">
-                <div className="h-20 w-20 rounded-2xl bg-[var(--color-muted)] flex items-center justify-center">
-                  <Monitor className="h-8 w-8 text-[var(--color-muted-foreground)]" />
+              ) : (
+                <div className="flex flex-col items-center justify-center py-20 text-center space-y-3">
+                  <div className="h-20 w-20 rounded-2xl bg-[var(--color-muted)] flex items-center justify-center">
+                    <Monitor className="h-8 w-8 text-[var(--color-muted-foreground)]" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">No UI Generated</p>
+                    <p className="text-xs text-[var(--color-muted-foreground)] mt-1">
+                      Type a prompt to generate a UI
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium">No UI Generated</p>
-                  <p className="text-xs text-[var(--color-muted-foreground)] mt-1">
-                    Type a prompt to generate a UI
-                  </p>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Extraction panel */}
+        {extraction.isPanelOpen && (
+          <div className="flex-[0.4] border-l border-[var(--color-border)] overflow-auto">
+            <ExtractionPanel
+              entries={extraction.selectedEntries}
+              onClose={extraction.closePanel}
+              onClearSelection={extraction.clearSelection}
+              onPropsChange={extraction.setPropsOverride}
+              propsOverrides={extraction.propsOverrides}
+            />
           </div>
         )}
       </div>

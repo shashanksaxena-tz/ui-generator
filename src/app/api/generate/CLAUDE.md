@@ -8,4 +8,11 @@
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
 | #10921 | 9:17 PM | 🔵 | Next.js API route implements standalone generation with demo fallback when no AI keys present | ~482 |
+
+### Feb 19, 2026
+
+| ID | Time | T | Title | Read |
+|----|------|---|-------|------|
+| #11597 | 12:25 PM | ⚖️ | Complete Generation Pipeline Architecture Understanding | ~658 |
+| #11569 | 12:21 PM | 🔵 | UI Generation API Route Architecture | ~378 |
 </claude-mem-context>

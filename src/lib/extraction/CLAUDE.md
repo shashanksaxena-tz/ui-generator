@@ -7,5 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #11572 | 12:21 PM | 🔵 | Streaming AI Generation Backend | ~481 |
+| #11645 | 2:22 PM | 🔴 | Fixed extraction panel data disconnect between display and editor | ~356 |
 </claude-mem-context>

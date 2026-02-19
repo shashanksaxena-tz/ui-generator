@@ -7,5 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #11572 | 12:21 PM | 🔵 | Streaming AI Generation Backend | ~481 |
+| #11587 | 12:23 PM | 🔵 | Component Registry Metadata Gap Analysis | ~643 |
 </claude-mem-context>

@@ -7,5 +7,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #11572 | 12:21 PM | 🔵 | Streaming AI Generation Backend | ~481 |
+| #11603 | 12:50 PM | ⚖️ | Component Extraction Panel Architecture Design | ~1088 |
 </claude-mem-context>

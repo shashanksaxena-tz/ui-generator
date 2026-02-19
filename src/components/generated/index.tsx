@@ -4021,7 +4021,67 @@ const componentMap: Record<string, ComponentRenderer> = {
 // Schema Renderer — renders a SchemaNode tree into React elements
 // ============================================================================
 
-export function renderSchemaNode(node: SchemaNode): React.ReactNode {
+export type ExtractionConfig = {
+  isExtractMode: boolean;
+  selectedPathKeys: Set<string>;
+  onSelect: (node: SchemaNode, pathKey: string, shiftKey: boolean) => void;
+  propsOverrides?: Map<string, Record<string, unknown>>;
+};
+
+function SelectableWrapper({
+  node,
+  pathKey,
+  extractionConfig,
+  children,
+}: {
+  node: SchemaNode;
+  pathKey: string;
+  extractionConfig: ExtractionConfig;
+  children: React.ReactNode;
+}) {
+  const [isHovered, setIsHovered] = React.useState(false);
+  const isSelected = extractionConfig.selectedPathKeys.has(pathKey);
+
+  const handleClick = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      extractionConfig.onSelect(node, pathKey, e.shiftKey);
+    },
+    [node, pathKey, extractionConfig]
+  );
+
+  return (
+    <div
+      onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        // display:contents makes this div invisible to layout engines (Flex/Grid)
+        // when not hovered/selected, so it doesn't break component layouts.
+        // On hover or select, switch to display:block and show the highlight ring.
+        display: isHovered || isSelected ? "block" : "contents",
+        outline: isSelected
+          ? "2px solid var(--color-primary-500)"
+          : isHovered
+          ? "2px solid var(--color-primary-300)"
+          : undefined,
+        outlineOffset: "2px",
+        borderRadius: "4px",
+        cursor: "pointer",
+        position: isHovered || isSelected ? "relative" : undefined,
+      }}
+      title={`Click to extract ${node.type}${isSelected ? " (selected)" : ""}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function renderSchemaNode(
+  node: SchemaNode,
+  path: number[] = [],
+  extractionConfig?: ExtractionConfig
+): React.ReactNode {
   const Component = componentMap[node.type];
   if (!Component) {
     console.warn(`Unknown component type: ${node.type}`);
@@ -4032,7 +4092,11 @@ export function renderSchemaNode(node: SchemaNode): React.ReactNode {
     );
   }
 
-  const props = (node.props ?? {}) as Record<string, unknown>;
+  // Compute path key once — used for both prop overrides and selectable wrapper
+  const pathKey = path.length === 0 ? "root" : path.join("-");
+
+  // Use live-edited prop override if present, otherwise fall back to original node props
+  const props = (extractionConfig?.propsOverrides?.get(pathKey) ?? node.props ?? {}) as Record<string, unknown>;
 
   let children: React.ReactNode = undefined;
   if (typeof node.children === "string") {
@@ -4040,11 +4104,30 @@ export function renderSchemaNode(node: SchemaNode): React.ReactNode {
   } else if (Array.isArray(node.children)) {
     children = node.children.map((child, i) => {
       if (typeof child === "string") return child;
-      return <React.Fragment key={i}>{renderSchemaNode(child)}</React.Fragment>;
+      return (
+        <React.Fragment key={i}>
+          {renderSchemaNode(child, [...path, i], extractionConfig)}
+        </React.Fragment>
+      );
     });
   }
 
-  return Component({ props, children });
+  const rendered = Component({ props, children });
+
+  // Wrap with SelectableWrapper when in extract mode
+  if (extractionConfig?.isExtractMode) {
+    return (
+      <SelectableWrapper
+        node={node}
+        pathKey={pathKey}
+        extractionConfig={extractionConfig}
+      >
+        {rendered}
+      </SelectableWrapper>
+    );
+  }
+
+  return rendered;
 }
 
 export { componentMap };
