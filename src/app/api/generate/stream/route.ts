@@ -4,6 +4,7 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { buildSystemPrompt, buildRefinementPrompt } from "@/lib/generation/prompts";
+import { findExplicitlyNamedComponents } from "@/lib/generation/component-selection";
 import type { ThemeConfig, ReactInterfaceSchema } from "@/types";
 
 function getStreamingProvider() {
@@ -31,13 +32,19 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const { prompt, theme, constraints, previousSchema, styleHint } = body;
 
-  const systemPrompt = buildSystemPrompt(constraints, theme as ThemeConfig, styleHint);
+  const explicitlyRequested = findExplicitlyNamedComponents(prompt);
+
+  const systemPrompt = buildSystemPrompt(constraints, theme as ThemeConfig, styleHint, explicitlyRequested);
 
   let userMessage = prompt;
+  if (explicitlyRequested.length > 0) {
+    userMessage += `\n\n[REQUIRED COMPONENTS: You MUST use these exact component types in your output: ${explicitlyRequested.join(', ')}. Do not substitute with similar components.]`;
+  }
   if (previousSchema) {
     userMessage = buildRefinementPrompt(
       JSON.stringify(previousSchema as ReactInterfaceSchema, null, 2),
-      prompt
+      prompt,
+      explicitlyRequested
     );
   }
 

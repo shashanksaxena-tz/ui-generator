@@ -1,5 +1,6 @@
 /**
  * Hybrid LLM-based component selection.
+ * Pass 0: Explicit name matching (finds components the user names directly).
  * Pass 1: Alias matching (finds components by natural language names).
  * Pass 2: LLM category selection (finds components by UI intent).
  * Merged result ensures no explicitly-named component is ever filtered out.
@@ -16,6 +17,54 @@ import {
 } from "@/lib/registry/category-mappings";
 import { getFullRegistry } from "@/lib/registry/components";
 import { getCachedSelection, cacheSelection } from "./selection-cache";
+
+export interface ComponentSelectionResult {
+  components: string[];
+  explicitlyRequested: string[];
+}
+
+/**
+ * Convert a PascalCase component name to matchable variants.
+ * "ElectricBorder" → ["electricborder", "electric border", "electric-border"]
+ */
+function getNameVariants(pascalName: string): string[] {
+  const spaced = pascalName
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+
+  const parts = spaced.split(' ').map(p => p.toLowerCase());
+
+  const variants = new Set<string>();
+  variants.add(pascalName.toLowerCase());
+  variants.add(parts.join(' '));
+  variants.add(parts.join('-'));
+
+  // Filter short variants to avoid false positives (e.g., "flex" in "flexible")
+  return Array.from(variants).filter(v => v.length > 5);
+}
+
+/**
+ * Pass 0: Find components the user explicitly names in their prompt.
+ * Matches PascalCase, space-separated, and kebab-case variants.
+ */
+export function findExplicitlyNamedComponents(userPrompt: string): string[] {
+  const prompt = userPrompt.toLowerCase();
+  const registry = getFullRegistry();
+  const matches = new Set<string>();
+
+  for (const name of Object.keys(registry)) {
+    const variants = getNameVariants(name);
+    if (variants.some(v => prompt.includes(v))) {
+      matches.add(name);
+    }
+  }
+
+  if (matches.size > 0) {
+    console.log(`[Component Selection] Explicit name matches: ${Array.from(matches).join(', ')}`);
+  }
+
+  return Array.from(matches);
+}
 
 /**
  * Get the fastest/cheapest model for component selection based on configured provider
@@ -107,18 +156,24 @@ Return ONLY the category names (comma-separated), nothing else:`;
 
 /**
  * Analyzes user prompt and selects relevant components using hybrid approach.
+ * Pass 0: Explicit name matching (finds user-named components).
  * Pass 1: Alias matching (synchronous).
  * Pass 2: LLM category selection.
- * Merge: Union of both passes + safety broadening if result is too small.
+ * Merge: Union of all passes + safety broadening if result is too small.
  */
 export async function selectRelevantComponents(
   userPrompt: string
-): Promise<string[]> {
-  // Check cache first
+): Promise<ComponentSelectionResult> {
+  // Pass 0: Explicit name matching (always runs, never cached)
+  const explicitlyRequested = findExplicitlyNamedComponents(userPrompt);
+
+  // Check cache for the rest
   const cached = getCachedSelection(userPrompt);
   if (cached) {
     console.log(`[Component Selection] Cache hit for prompt`);
-    return cached;
+    // Merge explicit matches into cached result
+    const merged = new Set([...cached, ...explicitlyRequested]);
+    return { components: Array.from(merged), explicitlyRequested };
   }
 
   // Pass 1: Alias matching (no LLM call, always runs)
@@ -152,9 +207,10 @@ export async function selectRelevantComponents(
     console.error('[Component Selection] LLM error, using alias matches only:', error);
   }
 
-  // Merge both passes
+  // Merge all passes (explicit names always included)
   const merged = new Set<string>([
     "Flex", "Grid", "Container", "Section", "Stack", "Center",
+    ...explicitlyRequested,
     ...aliasMatches,
     ...categoryComponents,
   ]);
@@ -171,8 +227,11 @@ export async function selectRelevantComponents(
 
   const result = Array.from(merged);
   console.log(`[Component Selection] Final selection: ${result.length} components`);
+  if (explicitlyRequested.length > 0) {
+    console.log(`[Component Selection] User explicitly requested: ${explicitlyRequested.join(', ')}`);
+  }
   cacheSelection(userPrompt, result);
-  return result;
+  return { components: result, explicitlyRequested };
 }
 
 /**

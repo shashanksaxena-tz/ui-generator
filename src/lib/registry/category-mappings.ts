@@ -16,11 +16,15 @@ export const categoryMappings = {
     // New Aceternity dashboard components
     "BentoGrid", "BentoGridItem",
     // New Chakra UI dashboard components
-    "Stat", "StatLabel", "StatNumber", "StatHelpText", "CircularProgress",
+    "ChakraStat", "ChakraCircularProgress",
     // New Material UI dashboard components
     "MuiDataGrid", "MuiStepper",
     // New React Bits data components
-    "CountUp", "NumberTicker"
+    "CountUp", "NumberTicker",
+
+    // New React Bits components
+    "MagicBento",
+
   ],
 
   "landing page": [
@@ -34,7 +38,15 @@ export const categoryMappings = {
     "AnimatedGradient", "ShimmerButton", "GradientHeading", "WordPullUp", "Marquee",
     "OrbitingCircles", "RetroGrid", "PulsatingButton", "MagicCard",
     // New React Bits landing page components
-    "NeonButton", "GradientText", "ShinyButton", "TiltCard", "ParallaxCard"
+    "NeonButton", "GradientText", "ShinyButton", "TiltCard", "ParallaxCard",
+
+    // New React Bits components
+    "HyperspeedBackground",
+    "GalaxyBackground",
+    "LogoLoop",
+    "ScrollReveal",
+    "SpotlightCard",
+
   ],
 
   form: [
@@ -42,7 +54,7 @@ export const categoryMappings = {
     "DatePicker", "Textarea", "Button", "FileUpload", "ColorPicker", "Rating",
     "Flex", "Grid", "Stack", "Heading", "Text", "Alert", "Progress",
     // New Chakra UI form components
-    "NumberInput", "Tag",
+    "ChakraNumberInput", "ChakraTag",
     // New Material UI form components
     "MuiAutocomplete", "MuiRating",
     // New React Bits form components
@@ -73,7 +85,25 @@ export const categoryMappings = {
     "MagicAnimatedBeam", "FlipText",
     // New React Bits animated components
     "GlitchText", "MorphingText", "RevealText", "CountUp", "TypeWriter",
-    "AnimatedInput", "RippleButton", "MagneticButton"
+    "AnimatedInput", "RippleButton", "MagneticButton",
+
+    // New React Bits components
+    "AntigravityEffect",
+    "ElectricBorder",
+    "GhostCursor",
+    "LaserFlow",
+    "LogoLoop",
+    "MagnetLines",
+    "ShapeBlur",
+    "SplashCursor",
+    "TargetCursor",
+    "DecryptedText",
+    "FuzzyText",
+    "ScrollReveal",
+    "ShinyText",
+    "SplitText",
+    "TextType",
+
   ],
 
   "3d": [
@@ -83,7 +113,11 @@ export const categoryMappings = {
     // New Magic UI 3D components
     "MagicCard",
     // New React Bits 3D components
-    "TiltCard", "ParallaxCard"
+    "TiltCard", "ParallaxCard",
+
+    // New React Bits components
+    "Lanyard",
+
   ],
 
   glassmorphism: [
@@ -109,7 +143,12 @@ export const categoryMappings = {
 
   // Component Types
   cards: [
-    "Card", "KPICard", "StatCard", "ProfileCard", "MediaCard", "InfoCard"
+    "Card", "KPICard", "StatCard", "ProfileCard", "MediaCard", "InfoCard",
+
+    // New React Bits components
+    "MagicBento",
+    "SpotlightCard",
+
   ],
 
   buttons: [
@@ -128,7 +167,7 @@ export const categoryMappings = {
     "DataTable", "List", "Tree", "DescriptionList", "KPICard", "StatCard",
     "StatsGrid", "Pagination", "EmptyState", "InfiniteScroll",
     // New Chakra UI data components
-    "Stat", "StatLabel", "StatNumber", "StatHelpText",
+    "ChakraStat",
     // New Material UI data components
     "MuiDataGrid", "MuiTreeView", "MuiPagination"
   ],
@@ -139,7 +178,14 @@ export const categoryMappings = {
     // New Aceternity navigation
     "FloatingDock",
     // New Material UI navigation
-    "MuiBreadcrumbs", "MuiPagination", "MuiStepper"
+    "MuiBreadcrumbs", "MuiPagination", "MuiStepper",
+
+    // New React Bits components
+    "BubbleMenu",
+    "CardNav",
+    "DockNav",
+    "PillNav",
+
   ],
 
   backgrounds: [
@@ -148,7 +194,22 @@ export const categoryMappings = {
     "AuroraBackground", "WavyBackground", "BackgroundBeams", "Meteors",
     "Particles", "GlowingStars", "SparklesCore",
     // New Magic UI backgrounds
-    "RetroGrid", "DotPattern", "GridPattern", "Ripple"
+    "RetroGrid", "DotPattern", "GridPattern", "Ripple",
+
+    // New React Bits components
+    "BallpitBackground",
+    "ColorBendsBackground",
+    "FaultyTerminalBackground",
+    "FloatingLinesBackground",
+    "GalaxyBackground",
+    "GradientBlindsBackground",
+    "GridDistortionBackground",
+    "HyperspeedBackground",
+    "IridescenceBackground",
+    "LiquidEtherBackground",
+    "PixelBlastBackground",
+    "RippleGridBackground",
+
   ],
 
   text: [
@@ -158,7 +219,16 @@ export const categoryMappings = {
     // New Magic UI text components
     "GradientHeading", "WordPullUp", "TextShimmer", "SparklesText", "FlipText",
     // New React Bits text components
-    "GradientText", "GlitchText", "MorphingText", "RevealText", "TypeWriter"
+    "GradientText", "GlitchText", "MorphingText", "RevealText", "TypeWriter",
+
+    // New React Bits components
+    "DecryptedText",
+    "FuzzyText",
+    "ScrollReveal",
+    "ShinyText",
+    "SplitText",
+    "TextType",
+
   ],
 
   // Special Effects
@@ -167,16 +237,35 @@ export const categoryMappings = {
   ],
 
   hover: [
-    "Card", "Button", "Image", "Tooltip", "Popover"
+    "Card", "Button", "Image", "Tooltip", "Popover",
+
+    // New React Bits components
+    "SpotlightCard",
+    "MagnetLines",
+    "GhostCursor",
+    "TargetCursor",
+
   ],
 
   scroll: [
-    "InfiniteScroll", "Navbar", "Sidebar", "Timeline", "Stepper"
+    "InfiniteScroll", "Navbar", "Sidebar", "Timeline", "Stepper",
+
+    // New React Bits components
+    "ScrollReveal",
+    "ScrollStack",
+
   ],
 
   // Additional Categories
   media: [
-    "Image", "Gallery", "VideoPlayer", "MusicPlayer", "AspectRatio"
+    "Image", "Gallery", "VideoPlayer", "MusicPlayer", "AspectRatio",
+
+    // New React Bits components
+    "ChromaGrid",
+    "CircularGallery",
+    "MasonryGrid",
+    "RbCarousel",
+
   ],
 
   profile: [
@@ -248,7 +337,11 @@ export const categoryMappings = {
   ],
 
   desktop: [
-    "Dock", "Sidebar", "MenuBar", "CommandMenu", "Tabs", "Tree"
+    "Dock", "Sidebar", "MenuBar", "CommandMenu", "Tabs", "Tree",
+
+    // New React Bits components
+    "DockNav",
+
   ],
 
   loading: [
@@ -260,14 +353,45 @@ export const categoryMappings = {
   ],
 
   // New categories added for better component discoverability
-  showcase: [] as unknown as readonly string[],
-  carousel: [] as unknown as readonly string[],
+  showcase: [
+    "ChromaGrid",
+    "CircularGallery",
+    "MagicBento",
+    "MasonryGrid",
+    "SpotlightCard",
+    "Lanyard",
+  ] as unknown as readonly string[],
+  carousel: [
+    "RbCarousel",
+    "ScrollStack",
+  ] as unknown as readonly string[],
   testimonials: [] as unknown as readonly string[],
   pricing: [] as unknown as readonly string[],
-  portfolio: [] as unknown as readonly string[],
+  portfolio: [
+    "ChromaGrid",
+    "CircularGallery",
+    "MasonryGrid",
+    "SpotlightCard",
+    "Lanyard",
+  ] as unknown as readonly string[],
   hero: [] as unknown as readonly string[],
-  dock: [] as unknown as readonly string[],
-  "backgrounds-animated": [] as unknown as readonly string[],
+  dock: [
+    "DockNav",
+  ] as unknown as readonly string[],
+  "backgrounds-animated": [
+    "BallpitBackground",
+    "ColorBendsBackground",
+    "FaultyTerminalBackground",
+    "FloatingLinesBackground",
+    "GalaxyBackground",
+    "GradientBlindsBackground",
+    "GridDistortionBackground",
+    "HyperspeedBackground",
+    "IridescenceBackground",
+    "LiquidEtherBackground",
+    "PixelBlastBackground",
+    "RippleGridBackground",
+  ] as unknown as readonly string[],
 } as const;
 
 export type CategoryKey = keyof typeof categoryMappings;

@@ -8,7 +8,8 @@ import type { GenerationConstraints, ThemeConfig } from "@/types";
 export function buildSystemPrompt(
   constraints?: GenerationConstraints,
   theme?: ThemeConfig,
-  styleHint?: string
+  styleHint?: string,
+  explicitlyRequested?: string[]
 ): string {
   const allowedComponents = constraints?.allowedComponents ?? getAllComponentNames();
   const componentDocs = generateLLMComponentDocs(allowedComponents);
@@ -153,7 +154,38 @@ ${constraints?.layout ? `## Layout Preference: ${constraints.layout}` : ""}
 ${constraints?.maxDepth ? `## Max Nesting Depth: ${constraints.maxDepth}` : ""}
 ${constraints?.preferredLibrary ? `## Preferred Library: ${constraints.preferredLibrary}` : ""}
 ${theme ? `## Theme: ${theme.name} (${theme.mode} mode)` : ""}
+${explicitlyRequested && explicitlyRequested.length > 0 ? `
+## MANDATORY: User-Requested Components
+The user explicitly requested these components: **${explicitlyRequested.join(', ')}**
 
+You MUST include ALL of these components in your output schema. This is non-negotiable. Ignore any "whenToUse" metadata that conflicts with the user's intent — the user's explicit request takes priority.
+
+### Placement Rules for Requested Components:
+
+**Background components** (names ending in "Background" like GalaxyBackground, HyperspeedBackground, etc.):
+- Place the background as the outermost wrapper inside Container, wrapping all page sections.
+- IMPORTANT: When a background is used, ensure visual coherence:
+  - Remove any conflicting background colors/classes from child Section nodes (no bg-gray-*, bg-white, etc.)
+  - Use text colors that contrast with the dark background (text-white, text-gray-200, etc.) on all child content.
+  - Keep Navbar and Footer styling compatible with the dark background.
+
+**Text effect components** (like DecryptedText, GlitchText, FuzzyText, ShinyText, MorphingText, SplitText):
+- Use as STANDALONE elements for headings — do NOT nest them inside composite components like Hero.
+- Instead of using Hero component, build the hero section manually with Flex/Section layout and place the text effect directly:
+  {"type": "Section", "children": [{"type": "DecryptedText", "props": {"text": "Your Heading"}}, {"type": "Text", "props": {"text": "subtitle"}}, {"type": "Button", ...}]}
+- Text effects are inline/block elements — they replace where a heading Text node would go.
+
+**Border/wrapper effects** (like ElectricBorder, ShapeBlur, AnimatedBorder, SpotlightCard):
+- Wrap the relevant content nodes (cards, charts, sections) with the effect as a parent node.
+
+**Cursor effects** (like GhostCursor, SplashCursor, TargetCursor):
+- Add as a sibling at the page level to apply the effect globally.
+
+**Navigation components** (like DockNav, BubbleMenu, PillNav):
+- Use INSTEAD of the default Navbar component.
+
+Refer to the Component Documentation above for exact props and usage.
+` : ""}
 IMPORTANT: Return ONLY the JSON object. No markdown code fences, no explanation, just the raw JSON.`;
 }
 
@@ -162,13 +194,29 @@ IMPORTANT: Return ONLY the JSON object. No markdown code fences, no explanation,
  */
 export function buildRefinementPrompt(
   currentSchemaJson: string,
-  refinementRequest: string
+  refinementRequest: string,
+  explicitlyRequested?: string[]
 ): string {
+  const explicitSection = explicitlyRequested && explicitlyRequested.length > 0
+    ? `\n\nCRITICAL: The user specifically requested these components: ${explicitlyRequested.join(', ')}
+You MUST add them to the schema. The user's explicit request takes priority over any "whenToUse" metadata.
+
+Placement rules:
+- **Background components** (names ending in "Background"): Wrap all page sections inside the background. Remove conflicting bg-* classes from child sections and ensure text uses contrasting colors (text-white).
+- **Text effect components** (DecryptedText, GlitchText, FuzzyText, ShinyText, etc.): Use as standalone heading elements. Do NOT nest inside Hero — instead, replace the Hero with a manual Flex/Section layout containing the text effect + subtitle + buttons.
+- **Wrapper/effect components** (ElectricBorder, ShapeBlur, AnimatedBorder): Wrap relevant nodes as parent.
+  Example: {"type": "ElectricBorder", "props": {"color": "#6366f1"}, "children": [<existing node>]}
+- **Cursor effects**: Add at page level as a sibling.
+- **Navigation components**: Replace existing Navbar.
+
+Do NOT skip these components. The user explicitly asked for them.`
+    : '';
+
   return `The user wants to refine the existing UI. Here is the current React Interface Schema:
 
 ${currentSchemaJson}
 
-Refinement request: "${refinementRequest}"
+Refinement request: "${refinementRequest}"${explicitSection}
 
 Apply the requested changes to the schema and return the updated full schema. Keep all unchanged parts intact. Return ONLY the JSON object.`;
 }

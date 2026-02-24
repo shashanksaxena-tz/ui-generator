@@ -124,10 +124,23 @@ function applyDefaultsToNode(node: SchemaNode): SchemaNode {
 
   let props = node.props ?? {};
   if (zodSchema) {
-    // Use zod's parse with defaults to fill in missing values
     const result = zodSchema.safeParse(props);
     if (result.success) {
       props = result.data as Record<string, unknown>;
+    } else {
+      // Strip only the failing fields and re-parse so Zod defaults replace invalid values.
+      // This handles cases like columns=1 when min(2) — the default (e.g. 3) gets applied
+      // instead of leaving the invalid value in place.
+      const failingKeys = new Set(
+        result.error.issues.map((issue) => String(issue.path[0]))
+      );
+      const cleanedProps = Object.fromEntries(
+        Object.entries(props).filter(([k]) => !failingKeys.has(k))
+      );
+      const retryResult = zodSchema.safeParse(cleanedProps);
+      if (retryResult.success) {
+        props = retryResult.data as Record<string, unknown>;
+      }
     }
   }
 

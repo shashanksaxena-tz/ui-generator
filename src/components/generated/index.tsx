@@ -169,14 +169,55 @@ import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepp
 import { DataGrid } from "@/components/mui/data-grid";
 import { TreeView, TreeItem } from "@/components/mui/tree-view";
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from "@/components/mui/timeline";
-import { Stepper as MuiStepperComponent, Step, StepLabel, StepContent, StepButton, StepIcon } from "@/components/mui/stepper";
+import { Stepper as MuiStepperBase, Step, StepLabel, StepContent, StepButton, StepIcon } from "@/components/mui/stepper";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@/components/mui/speed-dial";
-import { Rating as MuiRatingComponent } from "@/components/mui/rating";
-import { Autocomplete as MuiAutocompleteComponent } from "@/components/mui/autocomplete";
-import { Pagination as MuiPaginationComponent, PaginationItem } from "@/components/mui/pagination";
-import { Breadcrumbs as MuiBreadcrumbsComponent } from "@/components/mui/breadcrumbs";
+import { Rating as MuiRatingBase } from "@/components/mui/rating";
+import { Autocomplete as MuiAutocompleteBase } from "@/components/mui/autocomplete";
+import { Pagination as MuiPaginationBase, PaginationItem } from "@/components/mui/pagination";
+import { Breadcrumbs as MuiBreadcrumbsBase } from "@/components/mui/breadcrumbs";
 import { ImageList, ImageListItem, ImageListItemBar } from "@/components/mui/image-list";
 import { TextField } from "@mui/material";
+
+// React Bits imports
+import { AntigravityEffect } from "@/components/reactbits/antigravity-effect";
+import { BallpitBackground } from "@/components/reactbits/ballpit-background";
+import { BubbleMenu } from "@/components/reactbits/bubble-menu";
+import { CardNav } from "@/components/reactbits/card-nav";
+import { ChromaGrid } from "@/components/reactbits/chroma-grid";
+import { CircularGallery } from "@/components/reactbits/circular-gallery";
+import { ColorBendsBackground } from "@/components/reactbits/color-bends-background";
+import { DecryptedText } from "@/components/reactbits/decrypted-text";
+import { DockNav } from "@/components/reactbits/dock-nav";
+import { ElectricBorder } from "@/components/reactbits/electric-border";
+import { FaultyTerminalBackground } from "@/components/reactbits/faulty-terminal-background";
+import { FloatingLinesBackground } from "@/components/reactbits/floating-lines-background";
+import { FuzzyText } from "@/components/reactbits/fuzzy-text";
+import { GalaxyBackground } from "@/components/reactbits/galaxy-background";
+import { GhostCursor } from "@/components/reactbits/ghost-cursor";
+import { GradientBlindsBackground } from "@/components/reactbits/gradient-blinds-background";
+import { GridDistortionBackground } from "@/components/reactbits/grid-distortion-background";
+import { HyperspeedBackground } from "@/components/reactbits/hyperspeed-background";
+import { IridescenceBackground } from "@/components/reactbits/iridescence-background";
+import { Lanyard } from "@/components/reactbits/lanyard";
+import { LaserFlow } from "@/components/reactbits/laser-flow";
+import { LiquidEtherBackground } from "@/components/reactbits/liquid-ether-background";
+import { LogoLoop } from "@/components/reactbits/logo-loop";
+import { MagicBento } from "@/components/reactbits/magic-bento";
+import { MagnetLines } from "@/components/reactbits/magnet-lines";
+import { MasonryGrid } from "@/components/reactbits/masonry-grid";
+import { PillNav } from "@/components/reactbits/pill-nav";
+import { PixelBlastBackground } from "@/components/reactbits/pixel-blast-background";
+import { RbCarousel } from "@/components/reactbits/rb-carousel";
+import { RippleGridBackground } from "@/components/reactbits/ripple-grid-background";
+import { ScrollReveal } from "@/components/reactbits/scroll-reveal";
+import { ScrollStack } from "@/components/reactbits/scroll-stack";
+import { ShapeBlur } from "@/components/reactbits/shape-blur";
+import { ShinyText } from "@/components/reactbits/shiny-text";
+import { SplashCursor } from "@/components/reactbits/splash-cursor";
+import { SplitText } from "@/components/reactbits/split-text";
+import { SpotlightCard } from "@/components/reactbits/spotlight-card";
+import { TargetCursor } from "@/components/reactbits/target-cursor";
+import { TextType } from "@/components/reactbits/text-type";
 
 // ============================================================================
 // Icon resolver
@@ -2643,7 +2684,7 @@ function GalleryComponent({ props }: { props: Record<string, unknown> }) {
   const images = props.images as Array<{ src: string; alt: string; caption?: string }>;
   const columns = (props.columns as number) ?? 3;
   return (
-    <div className={cn("grid gap-${props.gap ?? 2}")} style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, gap: `${(props.gap as number) ?? 2 * 4}px` }}>
+    <div className="grid" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, gap: `${((props.gap as number) ?? 2) * 4}px` }}>
       {images?.map((img, i) => (
         <div key={i} className="rounded-lg overflow-hidden border border-[var(--color-border)] group cursor-pointer">
           <div className="aspect-square bg-[var(--color-muted)] flex items-center justify-center overflow-hidden">
@@ -3658,7 +3699,7 @@ function MuiStepperComponent({ props }: ComponentRendererProps) {
   const steps = props.steps as any[];
 
   return (
-    <MuiStepperComponent
+    <MuiStepperBase
       activeStep={props.activeStep as number}
       orientation={props.orientation as any}
       alternativeLabel={props.alternativeLabel as boolean}
@@ -3674,7 +3715,7 @@ function MuiStepperComponent({ props }: ComponentRendererProps) {
           )}
         </Step>
       ))}
-    </MuiStepperComponent>
+    </MuiStepperBase>
   );
 }
 
@@ -3706,7 +3747,7 @@ function MuiSpeedDialComponent({ props }: ComponentRendererProps) {
 
 function MuiRatingComponent({ props }: ComponentRendererProps) {
   return (
-    <MuiRatingComponent
+    <MuiRatingBase
       value={props.value as number}
       max={props.max as number}
       precision={props.precision as number}
@@ -3720,7 +3761,7 @@ function MuiRatingComponent({ props }: ComponentRendererProps) {
 
 function MuiAutocompleteComponent({ props }: ComponentRendererProps) {
   return (
-    <MuiAutocompleteComponent
+    <MuiAutocompleteBase
       options={props.options as any[]}
       multiple={props.multiple as boolean}
       freeSolo={props.freeSolo as boolean}
@@ -3740,7 +3781,7 @@ function MuiAutocompleteComponent({ props }: ComponentRendererProps) {
 
 function MuiPaginationComponent({ props }: ComponentRendererProps) {
   return (
-    <MuiPaginationComponent
+    <MuiPaginationBase
       count={props.count as number}
       page={props.page as number}
       variant={props.variant as any}
@@ -3758,7 +3799,7 @@ function MuiBreadcrumbsComponent({ props }: ComponentRendererProps) {
   const items = props.items as any[];
 
   return (
-    <MuiBreadcrumbsComponent
+    <MuiBreadcrumbsBase
       separator={props.separator as string}
       maxItems={props.maxItems as number}
       className={props.className as string}
@@ -3778,7 +3819,7 @@ function MuiBreadcrumbsComponent({ props }: ComponentRendererProps) {
           </div>
         );
       })}
-    </MuiBreadcrumbsComponent>
+    </MuiBreadcrumbsBase>
   );
 }
 
@@ -3814,6 +3855,494 @@ type ComponentRenderer = (p: {
   props: Record<string, unknown>;
   children?: React.ReactNode;
 }) => React.ReactNode;
+
+// React Bits wrapper functions
+
+function AntigravityEffectComponent({ props }: ComponentRendererProps) {
+  return (
+    <AntigravityEffect
+      items={(props.items as any[]) ?? []}
+      count={props.count as number}
+      speed={props.speed as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function BallpitBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <BallpitBackground
+      ballCount={props.ballCount as number}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </BallpitBackground>
+  );
+}
+
+function BubbleMenuComponent({ props }: ComponentRendererProps) {
+  return (
+    <BubbleMenu
+      items={(props.items as any[]) ?? []}
+      size={props.size as "sm" | "md" | "lg"}
+      className={props.className as string}
+    />
+  );
+}
+
+function CardNavComponent({ props }: ComponentRendererProps) {
+  return (
+    <CardNav
+      items={(props.items as any[]) ?? []}
+      columns={props.columns as any}
+      className={props.className as string}
+    />
+  );
+}
+
+function ChromaGridComponent({ props }: ComponentRendererProps) {
+  return (
+    <ChromaGrid
+      items={(props.items as any[]) ?? []}
+      columns={props.columns as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function CircularGalleryComponent({ props }: ComponentRendererProps) {
+  return (
+    <CircularGallery
+      items={(props.items as any[]) ?? []}
+      autoPlay={props.autoPlay as boolean}
+      speed={props.speed as number}
+      size={props.size as any}
+      className={props.className as string}
+    />
+  );
+}
+
+function ColorBendsBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <ColorBendsBackground
+      intensity={props.intensity as number}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </ColorBendsBackground>
+  );
+}
+
+function DecryptedTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <DecryptedText
+      text={(props.text as string) ?? ""}
+      speed={props.speed as number}
+      trigger={props.trigger as any}
+      className={props.className as string}
+    />
+  );
+}
+
+function DockNavComponent({ props }: ComponentRendererProps) {
+  return (
+    <DockNav
+      items={props.items as { icon: string; label: string; href?: string; active?: boolean }[]}
+      size={props.size as number}
+      position={props.position as "bottom" | "top" | "left" | "right"}
+      className={props.className as string}
+    />
+  );
+}
+
+function ElectricBorderComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <ElectricBorder
+      color={props.color as string}
+      speed={props.speed as number}
+      intensity={props.intensity as any}
+      className={props.className as string}
+    >
+      {children}
+    </ElectricBorder>
+  );
+}
+
+function FaultyTerminalBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <FaultyTerminalBackground
+      glitchIntensity={props.glitchIntensity as "low" | "medium" | "high"}
+      color={props.color as "green" | "amber" | "blue"}
+      className={props.className as string}
+    >
+      {children}
+    </FaultyTerminalBackground>
+  );
+}
+
+function FloatingLinesBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <FloatingLinesBackground
+      lineCount={props.lineCount as number}
+      color={props.color as string}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </FloatingLinesBackground>
+  );
+}
+
+function FuzzyTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <FuzzyText
+      text={(props.text as string) ?? ""}
+      fuzziness={props.fuzziness as number}
+      color={props.color as string}
+      tag={props.tag as any}
+      hoverEffect={props.hoverEffect as boolean}
+      className={props.className as string}
+    />
+  );
+}
+
+function GalaxyBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <GalaxyBackground
+      starCount={props.starCount as number}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </GalaxyBackground>
+  );
+}
+
+function GhostCursorComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <GhostCursor
+      color={props.color as string}
+      trailLength={props.trailLength as number}
+      size={props.size as number}
+      className={props.className as string}
+    >
+      {children}
+    </GhostCursor>
+  );
+}
+
+function GradientBlindsBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <GradientBlindsBackground
+      blindCount={props.blindCount as number}
+      animationDuration={props.animationDuration as number}
+      className={props.className as string}
+    >
+      {children}
+    </GradientBlindsBackground>
+  );
+}
+
+function GridDistortionBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <GridDistortionBackground
+      gridSize={props.gridSize as number}
+      intensity={props.intensity as number}
+      color={props.color as string}
+      lineWidth={props.lineWidth as number}
+      className={props.className as string}
+    >
+      {children}
+    </GridDistortionBackground>
+  );
+}
+
+function HyperspeedBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <HyperspeedBackground
+      speed={props.speed as number}
+      color={props.color as string}
+      lineCount={props.lineCount as number}
+      className={props.className as string}
+    >
+      {children}
+    </HyperspeedBackground>
+  );
+}
+
+function IridescenceBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <IridescenceBackground
+      speed={props.speed as number}
+      colorRange={props.colorRange as number}
+      opacity={props.opacity as number}
+      className={props.className as string}
+    >
+      {children}
+    </IridescenceBackground>
+  );
+}
+
+function LanyardComponent({ props }: ComponentRendererProps) {
+  return (
+    <Lanyard
+      name={props.name as string}
+      role={props.role as string}
+      avatar={props.avatar as string}
+      company={props.company as string}
+      cardColor={props.cardColor as string}
+      lanyardColor={props.lanyardColor as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function LaserFlowComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <LaserFlow
+      beamCount={props.beamCount as number}
+      colors={props.colors as string[]}
+      speed={props.speed as number}
+      opacity={props.opacity as number}
+      className={props.className as string}
+    >
+      {children}
+    </LaserFlow>
+  );
+}
+
+function LiquidEtherBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <LiquidEtherBackground
+      blobCount={props.blobCount as number}
+      speed={props.speed as number}
+      opacity={props.opacity as number}
+      className={props.className as string}
+    >
+      {children}
+    </LiquidEtherBackground>
+  );
+}
+
+function LogoLoopComponent({ props }: ComponentRendererProps) {
+  return (
+    <LogoLoop
+      items={(props.items as any[]) ?? []}
+      speed={props.speed as number}
+      direction={props.direction as any}
+      pauseOnHover={props.pauseOnHover as boolean}
+      gap={props.gap as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function MagicBentoComponent({ props }: ComponentRendererProps) {
+  return (
+    <MagicBento
+      items={(props.items as any[]) ?? []}
+      columns={props.columns as 2 | 3 | 4}
+      className={props.className as string}
+    />
+  );
+}
+
+function MagnetLinesComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <MagnetLines
+      rows={props.rows as number}
+      cols={props.cols as number}
+      lineLength={props.lineLength as number}
+      color={props.color as string}
+      className={props.className as string}
+    >
+      {children}
+    </MagnetLines>
+  );
+}
+
+function MasonryGridComponent({ props }: ComponentRendererProps) {
+  return (
+    <MasonryGrid
+      items={(props.items as any[]) ?? []}
+      columns={props.columns as number}
+      gap={props.gap as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function PillNavComponent({ props }: ComponentRendererProps) {
+  return (
+    <PillNav
+      items={(props.items as any[]) ?? []}
+      size={props.size as any}
+      color={props.color as string}
+      className={props.className as string}
+    />
+  );
+}
+
+function PixelBlastBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <PixelBlastBackground
+      pixelCount={props.pixelCount as number}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </PixelBlastBackground>
+  );
+}
+
+function RbCarouselComponent({ props }: ComponentRendererProps) {
+  return (
+    <RbCarousel
+      items={props.items as { src?: string; title?: string; description?: string }[]}
+      autoPlay={props.autoPlay as boolean}
+      interval={props.interval as number}
+      showDots={props.showDots as boolean}
+      showArrows={props.showArrows as boolean}
+      className={props.className as string}
+    />
+  );
+}
+
+function RippleGridBackgroundComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <RippleGridBackground
+      gridSize={props.gridSize as number}
+      rippleColor={props.rippleColor as string}
+      speed={props.speed as number}
+      className={props.className as string}
+    >
+      {children}
+    </RippleGridBackground>
+  );
+}
+
+function ScrollRevealComponent({ props }: ComponentRendererProps) {
+  return (
+    <ScrollReveal
+      text={(props.text as string) ?? ""}
+      split={props.split as any}
+      delay={props.delay as number}
+      threshold={props.threshold as number}
+      once={props.once as boolean}
+      tag={props.tag as any}
+      className={props.className as string}
+    />
+  );
+}
+
+function ScrollStackComponent({ props }: ComponentRendererProps) {
+  return (
+    <ScrollStack
+      items={(props.items as any[]) ?? []}
+      stackOffset={props.stackOffset as number}
+      className={props.className as string}
+    />
+  );
+}
+
+function ShapeBlurComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <ShapeBlur
+      shapeCount={props.shapeCount as number}
+      speed={props.speed as number}
+      size={props.size as number}
+      opacity={props.opacity as number}
+      className={props.className as string}
+    >
+      {children}
+    </ShapeBlur>
+  );
+}
+
+function ShinyTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <ShinyText
+      text={(props.text as string) ?? ""}
+      color={props.color as string}
+      shineColor={props.shineColor as string}
+      speed={props.speed as number}
+      tag={props.tag as any}
+      className={props.className as string}
+    />
+  );
+}
+
+function SplashCursorComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <SplashCursor
+      color={props.color as string}
+      ringCount={props.ringCount as number}
+      duration={props.duration as number}
+      size={props.size as number}
+      className={props.className as string}
+    >
+      {children}
+    </SplashCursor>
+  );
+}
+
+function SplitTextComponent({ props }: ComponentRendererProps) {
+  return (
+    <SplitText
+      text={(props.text as string) ?? ""}
+      animation={props.animation as any}
+      delay={props.delay as number}
+      duration={props.duration as number}
+      tag={props.tag as any}
+      className={props.className as string}
+    />
+  );
+}
+
+function SpotlightCardComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <SpotlightCard
+      title={props.title as string}
+      description={props.description as string}
+      icon={props.icon as string}
+      spotlightColor={props.spotlightColor as string}
+      className={props.className as string}
+    >
+      {children}
+    </SpotlightCard>
+  );
+}
+
+function TargetCursorComponent({ props, children }: ComponentRendererProps) {
+  return (
+    <TargetCursor
+      color={props.color as string}
+      size={props.size as number}
+      showTrail={props.showTrail as boolean}
+      className={props.className as string}
+    >
+      {children}
+    </TargetCursor>
+  );
+}
+
+function TextTypeComponent({ props }: ComponentRendererProps) {
+  return (
+    <TextType
+      words={props.words as string[]}
+      text={props.text as string}
+      typingSpeed={props.typingSpeed as number}
+      deletingSpeed={props.deletingSpeed as number}
+      pauseTime={props.pauseTime as number}
+      showCursor={props.showCursor as boolean}
+      cursorChar={props.cursorChar as string}
+      loop={props.loop as boolean}
+      className={props.className as string}
+    />
+  );
+}
 
 const componentMap: Record<string, ComponentRenderer> = {
   // Layout (8)
@@ -4015,6 +4544,46 @@ const componentMap: Record<string, ComponentRenderer> = {
   MuiPagination: MuiPaginationComponent,
   MuiBreadcrumbs: MuiBreadcrumbsComponent,
   MuiImageList: MuiImageListComponent,
+  // React Bits (39)
+  AntigravityEffect: AntigravityEffectComponent,
+  BallpitBackground: BallpitBackgroundComponent,
+  BubbleMenu: BubbleMenuComponent,
+  CardNav: CardNavComponent,
+  ChromaGrid: ChromaGridComponent,
+  CircularGallery: CircularGalleryComponent,
+  ColorBendsBackground: ColorBendsBackgroundComponent,
+  DecryptedText: DecryptedTextComponent,
+  DockNav: DockNavComponent,
+  ElectricBorder: ElectricBorderComponent,
+  FaultyTerminalBackground: FaultyTerminalBackgroundComponent,
+  FloatingLinesBackground: FloatingLinesBackgroundComponent,
+  FuzzyText: FuzzyTextComponent,
+  GalaxyBackground: GalaxyBackgroundComponent,
+  GhostCursor: GhostCursorComponent,
+  GradientBlindsBackground: GradientBlindsBackgroundComponent,
+  GridDistortionBackground: GridDistortionBackgroundComponent,
+  HyperspeedBackground: HyperspeedBackgroundComponent,
+  IridescenceBackground: IridescenceBackgroundComponent,
+  Lanyard: LanyardComponent,
+  LaserFlow: LaserFlowComponent,
+  LiquidEtherBackground: LiquidEtherBackgroundComponent,
+  LogoLoop: LogoLoopComponent,
+  MagicBento: MagicBentoComponent,
+  MagnetLines: MagnetLinesComponent,
+  MasonryGrid: MasonryGridComponent,
+  PillNav: PillNavComponent,
+  PixelBlastBackground: PixelBlastBackgroundComponent,
+  RbCarousel: RbCarouselComponent,
+  RippleGridBackground: RippleGridBackgroundComponent,
+  ScrollReveal: ScrollRevealComponent,
+  ScrollStack: ScrollStackComponent,
+  ShapeBlur: ShapeBlurComponent,
+  ShinyText: ShinyTextComponent,
+  SplashCursor: SplashCursorComponent,
+  SplitText: SplitTextComponent,
+  SpotlightCard: SpotlightCardComponent,
+  TargetCursor: TargetCursorComponent,
+  TextType: TextTypeComponent,
 };
 
 // ============================================================================

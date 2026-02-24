@@ -15,6 +15,7 @@ import { generateTheme, defaultDarkTheme } from "@/lib/theme/engine";
 import { logGeneration } from "@/lib/logging";
 import { selectRelevantComponents, getComponentsWithFallback } from "./component-selection";
 import { getAllComponentNames } from "@/lib/registry/components";
+import { enrichSchema } from "@/lib/assets/enricher";
 
 /**
  * Get the AI provider based on environment configuration.
@@ -127,11 +128,12 @@ export async function generateUI(
   const generationId = `gen-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   const loggingEnabled = process.env.ENABLE_GENERATION_LOGGING === 'true';
 
-  // Check cache first
+  // Check cache first — always re-enrich cached schemas so asset URLs stay fresh
   const cached = schemaCache.get(request.prompt);
   if (cached) {
+    const enrichedCached = await enrichSchema(cached);
     return {
-      schema: cached,
+      schema: enrichedCached,
       theme: request.theme ? generateTheme({
         brandColor: request.theme.colors?.primary?.[500],
         mode: request.theme.mode,
@@ -140,7 +142,7 @@ export async function generateUI(
         tokensUsed: 0,
         model: "cache",
         generationTimeMs: Date.now() - startTime,
-        componentsUsed: extractComponentNames(cached),
+        componentsUsed: extractComponentNames(enrichedCached),
         cachedLayout: true,
       },
     };
@@ -149,15 +151,18 @@ export async function generateUI(
 
   // Component selection using LLM
   const selectionStartTime = Date.now();
-  const selectedComponents = await selectRelevantComponents(request.prompt);
+  const selectionResult = await selectRelevantComponents(request.prompt);
   const selectionTime = Date.now() - selectionStartTime;
 
   console.log(`[Generation] Component selection took ${selectionTime}ms`);
-  console.log(`[Generation] Selected ${selectedComponents.length} components`);
+  console.log(`[Generation] Selected ${selectionResult.components.length} components`);
+  if (selectionResult.explicitlyRequested.length > 0) {
+    console.log(`[Generation] User explicitly requested: ${selectionResult.explicitlyRequested.join(', ')}`);
+  }
 
   // Get all components as fallback
   const allComponents = getAllComponentNames();
-  const componentsToUse = getComponentsWithFallback(selectedComponents, allComponents);
+  const componentsToUse = getComponentsWithFallback(selectionResult.components, allComponents);
 
   // Update constraints to use filtered components
   const updatedConstraints = {
@@ -167,17 +172,21 @@ export async function generateUI(
 
   const systemPrompt = buildSystemPrompt(
     updatedConstraints,
-
     request.theme as ThemeConfig,
-    request.styleHint
+    request.styleHint,
+    selectionResult.explicitlyRequested
   );
 
-  // Build user message
+  // Build user message — reinforce explicit component requests in the user message too
   let userMessage = request.prompt;
+  if (selectionResult.explicitlyRequested.length > 0) {
+    userMessage += `\n\n[REQUIRED COMPONENTS: You MUST use these exact component types in your output: ${selectionResult.explicitlyRequested.join(', ')}. Do not substitute with similar components.]`;
+  }
   if (request.context?.previousSchema) {
     userMessage = buildRefinementPrompt(
       JSON.stringify(request.context.previousSchema, null, 2),
-      request.prompt
+      request.prompt,
+      selectionResult.explicitlyRequested
     );
   }
 
@@ -253,6 +262,9 @@ export async function generateUI(
   }
 
   schema = applyDefaults(schema);
+
+  // Enrich schema with contextual assets (semantic photos + SVG illustrations)
+  schema = await enrichSchema(schema);
 
   // Add metadata
   schema.meta = {

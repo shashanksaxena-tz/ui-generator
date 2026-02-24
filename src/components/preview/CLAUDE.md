@@ -7,6 +7,24 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #11645 | 2:22 PM | 🔴 | Fixed extraction panel data disconnect between display and editor | ~356 |
-| #11603 | 12:50 PM | ⚖️ | Component Extraction Panel Architecture Design | ~1088 |
+| #11642 | 2:21 PM | ⚖️ | Live Edit Integrated into Mock Data Tab | ~391 |
+| #11636 | 1:59 PM | 🟣 | Props Override Integration into Preview Rendering | ~363 |
+| #11635 | 1:58 PM | 🟣 | Props Editing Tab Infrastructure in Extraction Panel | ~485 |
+| #11631 | 1:56 PM | 🟣 | LivePreview Integration for Code Extraction | ~601 |
+| #11625 | 1:21 PM | 🟣 | Complete Extraction Panel UI with Live Preview Integration | ~715 |
+| #11624 | 1:20 PM | 🟣 | Extraction Panel UI Component | ~630 |
+| #11623 | " | 🟣 | Extract Mode Toggle Button in Preview Toolbar | ~491 |
+| #11622 | " | 🟣 | Extraction State Management Integration in LivePreview | ~508 |
+| #11600 | 12:50 PM | ⚖️ | Three-Approach Architecture Blueprint for Code Extraction Feature | ~615 |
+| #11597 | 12:25 PM | ⚖️ | Complete Generation Pipeline Architecture Understanding | ~658 |
+| #11593 | 12:24 PM | 🟣 | UI Architecture Analysis for Extraction Panel Integration | ~563 |
+| #11581 | 12:22 PM | 🔵 | Live Preview Component Architecture | ~497 |
+| #11579 | " | 🔵 | Live Preview Component Structure | ~527 |
+| #11576 | " | 🔵 | UI Generator Codebase Architecture Mapping | ~540 |
+
+### Feb 25, 2026
+
+| ID | Time | T | Title | Read |
+|----|------|---|-------|------|
+| #12517 | 12:51 AM | 🔵 | Project Architecture Analysis Reveals No Traditional Canvas - Uses Schema-Based LivePreview | ~645 |
 </claude-mem-context>

@@ -1697,6 +1697,314 @@ export const FlipTextSchema = z.object({
 // Schema Map — 122 components
 // ============================================================================
 
+// React Bits (39)
+export const AntigravityEffectSchema = z.object({
+  items: z.array(z.object({
+    content: z.string(),
+    size: z.number().optional(),
+    color: z.string().optional(),
+  })),
+  count: z.number().min(1).max(30).default(10),
+  speed: z.number().min(0.5).max(3).default(1),
+  className: z.string().optional(),
+});
+export const BallpitBackgroundSchema = z.object({
+  ballCount: z.number().min(5).max(50).default(20),
+  speed: z.number().min(0.5).max(3).default(1),
+  className: z.string().optional(),
+});
+export const BubbleMenuSchema = z.object({
+  items: z.array(z.object({
+    label: z.string(),
+    href: z.string().optional(),
+  })),
+  size: z.enum(["sm","md","lg"]).default("md"),
+  className: z.string().optional(),
+});
+export const CardNavSchema = z.object({
+  items: z.array(z.object({
+    label: z.string(),
+    description: z.string().optional(),
+    icon: z.string().optional(),
+    href: z.string().optional(),
+    color: z.string().optional(),
+  })),
+  columns: z.union([z.literal(2), z.literal(3), z.literal(4)]).default(2),
+  className: z.string().optional(),
+});
+export const ChromaGridSchema = z.object({
+  items: z.array(z.object({
+    src: z.string(),
+    alt: z.string(),
+    label: z.string().optional(),
+    color: z.string().optional(),
+  })),
+  columns: z.number().min(2).max(6).default(3),
+  className: z.string().optional(),
+});
+export const CircularGallerySchema = z.object({
+  items: z.array(z.object({
+    src: z.string(),
+    alt: z.string(),
+    title: z.string().optional(),
+  })),
+  autoPlay: z.boolean().default(true),
+  speed: z.number().default(3),
+  size: z.enum(["sm","md","lg"]).default("md"),
+  className: z.string().optional(),
+});
+export const ColorBendsBackgroundSchema = z.object({
+  intensity: z.number().min(0.1).max(1).default(0.7),
+  speed: z.number().min(0.1).max(2).default(1),
+  className: z.string().optional(),
+});
+export const DecryptedTextSchema = z.object({
+  text: z.string(),
+  speed: z.number().default(30),
+  trigger: z.enum(["mount","hover"]).default("mount"),
+  className: z.string().optional(),
+});
+export const DockNavSchema = z.object({
+  items: z.array(z.object({
+    icon: z.string(),
+    label: z.string(),
+    href: z.string().optional(),
+    active: z.boolean().optional(),
+  })).min(1),
+  size: z.number().default(48),
+  position: z.enum(["bottom","top","left","right"]).default("bottom"),
+  className: z.string().optional(),
+});
+export const ElectricBorderSchema = z.object({
+  color: z.string().default("#6366f1"),
+  speed: z.number().min(0.5).max(3).default(1),
+  intensity: z.enum(["low","medium","high"]).default("medium"),
+  className: z.string().optional(),
+});
+export const FaultyTerminalBackgroundSchema = z.object({
+  glitchIntensity: z.enum(["low", "medium", "high"]).default("medium"),
+  color: z.enum(["green", "amber", "blue"]).default("green"),
+  className: z.string().optional(),
+});
+export const FloatingLinesBackgroundSchema = z.object({
+  lineCount: z.number().min(5).max(50).default(20),
+  color: z.string().default("#6366f1"),
+  speed: z.number().min(0.5).max(3).default(1),
+  className: z.string().optional(),
+});
+export const FuzzyTextSchema = z.object({
+  text: z.string(),
+  fuzziness: z.number().min(0).max(10).default(4),
+  color: z.string().default("currentColor"),
+  tag: z.enum(["h1","h2","h3","p","span"]).default("p"),
+  hoverEffect: z.boolean().default(true),
+  className: z.string().optional(),
+});
+export const GalaxyBackgroundSchema = z.object({
+  starCount: z.number().min(50).max(300).default(150),
+  speed: z.number().min(0.1).max(1).default(0.3),
+  className: z.string().optional(),
+});
+export const GhostCursorSchema = z.object({
+  color: z.string().default("#6366f1"),
+  trailLength: z.number().min(2).max(12).default(6),
+  size: z.number().min(4).max(32).default(12),
+  className: z.string().optional(),
+});
+export const GradientBlindsBackgroundSchema = z.object({
+  blindCount: z.number().min(4).max(20).default(10),
+  animationDuration: z.number().min(1).max(10).default(3),
+  className: z.string().optional(),
+});
+export const GridDistortionBackgroundSchema = z.object({
+  gridSize: z.number().min(10).max(100).default(40),
+  intensity: z.number().min(5).max(100).default(30),
+  color: z.string().default("#6366f1"),
+  lineWidth: z.number().min(0.5).max(5).default(1),
+  className: z.string().optional(),
+});
+export const HyperspeedBackgroundSchema = z.object({
+  speed: z.number().min(1).max(10).default(5),
+  color: z.string().default("#6366f1"),
+  lineCount: z.number().min(20).max(200).default(80),
+  className: z.string().optional(),
+});
+export const IridescenceBackgroundSchema = z.object({
+  speed: z.number().min(1).max(10).default(5),
+  colorRange: z.number().min(0).max(360).default(360),
+  opacity: z.number().min(0).max(1).default(0.6),
+  className: z.string().optional(),
+});
+export const LanyardSchema = z.object({
+  name: z.string(),
+  role: z.string(),
+  avatar: z.string(),
+  company: z.string().optional(),
+  cardColor: z.string().default("#1a1a2e"),
+  lanyardColor: z.string().default("#6366f1"),
+  className: z.string().optional(),
+});
+export const LaserFlowSchema = z.object({
+  beamCount: z.number().default(5),
+  colors: z.array(z.string()).default(["#ff0000","#00ff88","#0088ff"]),
+  speed: z.number().default(2),
+  opacity: z.number().default(0.7),
+  className: z.string().optional(),
+});
+export const LiquidEtherBackgroundSchema = z.object({
+  blobCount: z.number().min(2).max(6).default(4),
+  speed: z.number().min(0.5).max(3).default(1),
+  opacity: z.number().min(0.2).max(1).default(0.6),
+  className: z.string().optional(),
+});
+export const LogoLoopSchema = z.object({
+  items: z.array(z.object({
+    src: z.string().optional(),
+    label: z.string().optional(),
+    icon: z.string().optional(),
+  })),
+  speed: z.number().min(1).max(5).default(3),
+  direction: z.enum(["left","right"]).default("left"),
+  pauseOnHover: z.boolean().default(true),
+  gap: z.number().default(40),
+  className: z.string().optional(),
+});
+export const MagicBentoSchema = z.object({
+  items: z.array(z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    span: z.number().min(1).max(4).optional(),
+    image: z.string().optional(),
+    gradient: z.string().optional(),
+  })),
+  columns: z.union([z.literal(2), z.literal(3), z.literal(4)]).default(3),
+  className: z.string().optional(),
+});
+export const MagnetLinesSchema = z.object({
+  rows: z.number().min(5).max(20).default(10),
+  cols: z.number().min(5).max(25).default(15),
+  lineLength: z.number().default(20),
+  color: z.string().default("#6366f1"),
+  className: z.string().optional(),
+});
+export const MasonryGridSchema = z.object({
+  items: z.array(z.object({
+    src: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+  })),
+  columns: z.number().min(2).max(4).default(3),
+  gap: z.number().default(4),
+  className: z.string().optional(),
+});
+export const PillNavSchema = z.object({
+  items: z.array(z.object({
+    label: z.string(),
+    active: z.boolean().optional(),
+    href: z.string().optional(),
+    count: z.number().optional(),
+  })),
+  size: z.enum(["sm","md","lg"]).default("md"),
+  color: z.string().default("#6366f1"),
+  className: z.string().optional(),
+});
+export const PixelBlastBackgroundSchema = z.object({
+  pixelCount: z.number().min(20).max(100).default(50),
+  speed: z.number().min(0.5).max(3).default(1),
+  className: z.string().optional(),
+});
+export const RbCarouselSchema = z.object({
+  items: z.array(z.object({
+    src: z.string().optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+  })).min(1),
+  autoPlay: z.boolean().default(false),
+  interval: z.number().default(3000),
+  showDots: z.boolean().default(true),
+  showArrows: z.boolean().default(true),
+  className: z.string().optional(),
+});
+export const RippleGridBackgroundSchema = z.object({
+  gridSize: z.number().min(10).max(60).default(30),
+  rippleColor: z.string().default("#6366f1"),
+  speed: z.number().min(0.5).max(3).default(1),
+  className: z.string().optional(),
+});
+export const ScrollRevealSchema = z.object({
+  text: z.string(),
+  split: z.enum(["words","lines","chars"]).default("words"),
+  delay: z.number().default(100),
+  threshold: z.number().min(0).max(1).default(0.1),
+  once: z.boolean().default(true),
+  tag: z.enum(["h1","h2","h3","p"]).default("p"),
+  className: z.string().optional(),
+});
+export const ScrollStackSchema = z.object({
+  items: z.array(z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    color: z.string().optional(),
+    image: z.string().optional(),
+  })),
+  stackOffset: z.number().default(4),
+  className: z.string().optional(),
+});
+export const ShapeBlurSchema = z.object({
+  shapeCount: z.number().min(2).max(10).default(5),
+  speed: z.number().min(0.1).max(2).default(1),
+  size: z.number().default(300),
+  opacity: z.number().min(0.1).max(0.8).default(0.3),
+  className: z.string().optional(),
+});
+export const ShinyTextSchema = z.object({
+  text: z.string(),
+  color: z.string().default("#6366f1"),
+  shineColor: z.string().default("rgba(255,255,255,0.8)"),
+  speed: z.number().default(2),
+  tag: z.enum(["h1","h2","h3","p","span"]).default("span"),
+  className: z.string().optional(),
+});
+export const SplashCursorSchema = z.object({
+  color: z.string().default("#6366f1"),
+  ringCount: z.number().min(1).max(6).default(3),
+  duration: z.number().min(0.3).max(2).default(0.8),
+  size: z.number().default(100),
+  className: z.string().optional(),
+});
+export const SplitTextSchema = z.object({
+  text: z.string(),
+  animation: z.enum(["fadeUp","fadeIn","slideIn","scaleIn"]).default("fadeUp"),
+  delay: z.number().default(30),
+  duration: z.number().default(0.5),
+  tag: z.enum(["h1","h2","h3","p","span"]).default("p"),
+  className: z.string().optional(),
+});
+export const SpotlightCardSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  icon: z.string().optional(),
+  spotlightColor: z.string().default("rgba(99,102,241,0.15)"),
+  className: z.string().optional(),
+});
+export const TargetCursorSchema = z.object({
+  color: z.string().default("#6366f1"),
+  size: z.number().default(40),
+  showTrail: z.boolean().default(false),
+  className: z.string().optional(),
+});
+export const TextTypeSchema = z.object({
+  words: z.array(z.string()).optional(),
+  text: z.string().optional(),
+  typingSpeed: z.number().default(80),
+  deletingSpeed: z.number().default(40),
+  pauseTime: z.number().default(1500),
+  showCursor: z.boolean().default(true),
+  cursorChar: z.string().default("|"),
+  loop: z.boolean().default(true),
+  className: z.string().optional(),
+});
+
 export const componentSchemas = {
   // Layout (8)
   Flex: FlexSchema,
@@ -1893,6 +2201,47 @@ export const componentSchemas = {
   PulsatingButton: PulsatingButtonSchema,
   MagicAnimatedBeam: MagicAnimatedBeamSchema,
   FlipText: FlipTextSchema,
+  // React Bits (39)
+  AntigravityEffect: AntigravityEffectSchema,
+  BallpitBackground: BallpitBackgroundSchema,
+  BubbleMenu: BubbleMenuSchema,
+  CardNav: CardNavSchema,
+  ChromaGrid: ChromaGridSchema,
+  CircularGallery: CircularGallerySchema,
+  ColorBendsBackground: ColorBendsBackgroundSchema,
+  DecryptedText: DecryptedTextSchema,
+  DockNav: DockNavSchema,
+  ElectricBorder: ElectricBorderSchema,
+  FaultyTerminalBackground: FaultyTerminalBackgroundSchema,
+  FloatingLinesBackground: FloatingLinesBackgroundSchema,
+  FuzzyText: FuzzyTextSchema,
+  GalaxyBackground: GalaxyBackgroundSchema,
+  GhostCursor: GhostCursorSchema,
+  GradientBlindsBackground: GradientBlindsBackgroundSchema,
+  GridDistortionBackground: GridDistortionBackgroundSchema,
+  HyperspeedBackground: HyperspeedBackgroundSchema,
+  IridescenceBackground: IridescenceBackgroundSchema,
+  Lanyard: LanyardSchema,
+  LaserFlow: LaserFlowSchema,
+  LiquidEtherBackground: LiquidEtherBackgroundSchema,
+  LogoLoop: LogoLoopSchema,
+  MagicBento: MagicBentoSchema,
+  MagnetLines: MagnetLinesSchema,
+  MasonryGrid: MasonryGridSchema,
+  PillNav: PillNavSchema,
+  PixelBlastBackground: PixelBlastBackgroundSchema,
+  RbCarousel: RbCarouselSchema,
+  RippleGridBackground: RippleGridBackgroundSchema,
+  ScrollReveal: ScrollRevealSchema,
+  ScrollStack: ScrollStackSchema,
+  ShapeBlur: ShapeBlurSchema,
+  ShinyText: ShinyTextSchema,
+  SplashCursor: SplashCursorSchema,
+  SplitText: SplitTextSchema,
+  SpotlightCard: SpotlightCardSchema,
+  TargetCursor: TargetCursorSchema,
+  TextType: TextTypeSchema,
+
 } as const;
 
 export type ComponentName = keyof typeof componentSchemas;
