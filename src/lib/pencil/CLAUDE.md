@@ -7,9 +7,155 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #12587 | 9:07 AM | ✅ | Comprehensive Documentation: Pencil.dev Integration Architecture and Workflow | ~663 |
 | #12575 | 9:04 AM | 🟣 | Component Specifications Library: 30 Components with Visual Metadata for Pencil.dev | ~736 |
 | #12573 | " | 🟣 | Schema Builder Module with TDD: 6/6 Tests Passing for Pencil-to-React Conversion | ~622 |
 | #12571 | 9:03 AM | 🟣 | Schema Builder Implementation Complete with 6 Passing Tests | ~535 |
 | #12570 | " | 🟣 | Schema Builder Converts Pencil.dev Annotations to ReactInterfaceSchema | ~501 |
 | #12566 | 9:02 AM | 🟣 | Pencil.dev Annotation Parser for Component Name Extraction | ~431 |
 </claude-mem-context>
+
+# Pencil.dev Integration
+
+This module bridges the ui-generator component registry with Pencil.dev's visual design canvas.
+
+## Architecture
+
+```
+prompt
+  → /api/pencil/design        (selects components, builds design instructions)
+  → pencil-ui-builder skill   (creates Pencil.dev design with [ComponentName] annotations)
+  → Pencil.dev canvas         (user edits visually like Figma)
+  → pencil-extract-code skill (reads annotations → React code)
+```
+
+## The Annotation Convention
+
+Every Pencil.dev node is named `[ComponentName] Label`:
+- `[GalaxyBackground] Page Background` — the root frame
+- `[HeroSection] Main Hero` — hero section
+- `[GlowCard] Feature 1` — a card
+
+The bracket prefix is the registry key in `src/lib/registry/components.ts`.
+Unannotated nodes (e.g., plain `Frame 3`) are ignored during code extraction.
+
+## Modules
+
+### component-specs.ts
+
+Maps component names to visual specs for Pencil.dev layout generation.
+
+Key fields on each `ComponentSpec`:
+- `pencilType` — `'frame' | 'text' | 'shape'`; maps to the Pencil.dev node type
+- `suggestedWidth / suggestedHeight` — layout dimensions in pixels
+- `isBackground` — whether the component is a full-page background (becomes the root frame)
+- `isFullWidth` — whether the component spans full page width (1440px)
+- `defaultBg` — default fill color for the frame
+- `pencilNotes` — hints passed to the LLM when generating `batch_design` operations
+- `visualDescription` — plain-English description of what the component looks like
+
+Helper exports:
+- `getComponentSpec(name)` — returns the `ComponentSpec` for a single component
+- `getBackgroundComponents()` — returns names of all components with `isBackground: true`
+- `getFullWidthComponents()` — returns names of all components with `isFullWidth: true`
+
+### annotation-parser.ts
+
+Parses `[ComponentName] Label` node names from Pencil.dev `batch_get` results.
+
+Key regex: `/^\[([A-Za-z][A-Za-z0-9]*)\]\s*(.*)/`
+
+Exports:
+- `parseAnnotation(nodeName)` → `ParsedAnnotation | null` — extracts `componentName` and `label`
+- `isAnnotated(nodeName)` → `boolean` — quick check without parsing
+- `parseNodeTree(nodes)` → `AnnotatedNode[]` — recursively walks a raw Pencil.dev node tree,
+  collecting all annotated nodes and their annotated children; unannotated nodes are traversed
+  but not included in the output
+
+Interfaces:
+- `ParsedAnnotation` — `{ componentName: string, label: string }`
+- `AnnotatedNode` — `{ id, componentName, label, rawName, children: AnnotatedNode[] }`
+
+### schema-builder.ts
+
+Converts `AnnotatedNode[]` (output of `parseNodeTree`) → `ReactInterfaceSchema`.
+
+Export: `buildSchemaFromAnnotations(nodes)` — applies these rules:
+
+1. **Empty input** → `{ root: { type: 'Container', props: {}, children: [] } }`
+2. **Single node** → that node becomes root directly
+3. **Multiple nodes, background present** → background node is root; all other top-level nodes
+   become additional children of it (appended after any existing children from the tree)
+4. **Multiple nodes, no background** → all nodes are wrapped in a `Container` root
+
+The `BACKGROUND_COMPONENTS` set in this file must stay in sync with components that have
+`isBackground: true` in `component-specs.ts`. Currently includes:
+`GalaxyBackground`, `HyperspeedBackground`, `IridescenceBackground`, `FloatingLinesBackground`,
+`LiquidEtherBackground`, `RippleGridBackground`, `GradientBlindsBackground`,
+`GridDistortionBackground`, `FaultyTerminalBackground`, `PixelBlastBackground`, `ColorBendsBackground`.
+
+## API Endpoint
+
+`POST /api/pencil/design` — programmatic design instruction generation
+(source: `src/app/api/pencil/design/route.ts`)
+
+Request:
+```json
+{
+  "prompt": "SaaS landing page for a project management tool",
+  "tone": "dark"
+}
+```
+
+Response (`PencilDesignResponse`):
+```json
+{
+  "selectedComponents": ["GalaxyBackground", "Navbar", "HeroSection", "GlowCard"],
+  "backgroundComponent": "GalaxyBackground",
+  "styleGuideTags": ["dark", "futuristic", "minimal", "tech"],
+  "designInstructions": "...",
+  "annotationMap": { "GalaxyBackground_1": "[GalaxyBackground] Galaxy Background", ... }
+}
+```
+
+The endpoint uses `selectRelevantComponents` from the generation library and falls back to a
+sensible default set if component selection fails. It always ensures a background component
+is present (prepends `GalaxyBackground` if none selected).
+
+`tone` options: `"dark"` (default), `"light"`, `"colorful"`, `"corporate"`.
+
+## Claude Code Skills
+
+Two skills power the end-to-end workflow (in `~/.claude/skills/`):
+
+**`pencil-ui-builder`** — invoked as `/pencil-ui-builder [prompt]`
+1. Parses the prompt for page type, tone, sections, and brand name
+2. Selects 8-12 components from the registry
+3. Calls `get_style_guide` with tone-appropriate tags
+4. Opens a new `.pen` document via `open_document("new")`
+5. Generates the annotated layout using `batch_design` (max 15 ops per call)
+6. Takes a screenshot and reports placed components + how to extract code
+
+**`pencil-extract-code`** — invoked as `/pencil-extract-code`
+1. Calls `get_editor_state` to find the active `.pen` file
+2. Reads the full node tree via `batch_get`
+3. Parses `[ComponentName]` annotations and builds a component hierarchy
+4. Groups duplicate component types (e.g., multiple `GlowCard`s) into a grid wrapper
+5. Resolves import paths from `src/components/generated/index.tsx` (source of truth)
+6. Outputs a complete, copy-pasteable `'use client'` TypeScript React component
+
+## Adding New Components
+
+1. Add an entry to `COMPONENT_SPECS` in `component-specs.ts` with all required fields
+2. If `isBackground: true`, add the component name to `BACKGROUND_COMPONENTS` in `schema-builder.ts`
+3. Add the import path to the `pencil-extract-code` skill (`~/.claude/skills/pencil-extract-code.md`)
+4. Ensure the component is registered in `src/lib/registry/components.ts`
+
+## Tests
+
+`src/lib/pencil/__tests__/` contains unit tests for all three modules:
+- `annotation-parser.test.ts`
+- `component-specs.test.ts`
+- `schema-builder.test.ts`
+
+All 6 schema-builder tests and annotation-parser tests pass. Run with `pnpm test`.

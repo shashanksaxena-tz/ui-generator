@@ -9,3 +9,36 @@
 |----|------|---|-------|------|
 | #12562 | 8:56 AM | ⚖️ | Pencil.dev Integration Architecture: Annotation-Based Design-to-Code Bridge | ~762 |
 </claude-mem-context>
+
+# Plans
+
+This directory contains architecture and implementation plans for the ui-generator project.
+
+## Active Plans
+
+| Plan | Status | Description |
+|------|--------|-------------|
+| [pencil-integration.md](./pencil-integration.md) | In Progress | Pencil.dev visual design canvas integration using annotation-based design-to-code workflow |
+
+## How Plans Work
+
+Plans describe the intended architecture and implementation strategy before code is written.
+They are referenced during implementation and updated as decisions change.
+
+Each plan documents:
+- The problem being solved
+- The chosen architecture and why
+- Key data structures and APIs
+- Open questions and trade-offs
+
+## Pencil Integration Plan Summary
+
+The pencil integration (`feature/pencil-integration` branch) adds a visual design workflow:
+
+1. A user describes a UI in natural language
+2. `/api/pencil/design` selects components and builds design instructions
+3. The `pencil-ui-builder` skill creates an annotated Pencil.dev canvas
+4. The user edits the design visually (drag, resize, recolor)
+5. The `pencil-extract-code` skill reads `[ComponentName]` annotations and generates React code
+
+Implementation lives in `src/lib/pencil/` — see that directory's `CLAUDE.md` for module details.
